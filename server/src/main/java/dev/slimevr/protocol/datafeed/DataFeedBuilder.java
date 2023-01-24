@@ -9,9 +9,9 @@ import dev.slimevr.vr.trackers.*;
 import solarxr_protocol.data_feed.Bone;
 import solarxr_protocol.data_feed.DataFeedUpdate;
 import solarxr_protocol.data_feed.device_data.DeviceData;
-import solarxr_protocol.data_feed.device_data.DeviceDataMaskT;
+import solarxr_protocol.data_feed.device_data.DeviceDataMask;
 import solarxr_protocol.data_feed.tracker.TrackerData;
-import solarxr_protocol.data_feed.tracker.TrackerDataMaskT;
+import solarxr_protocol.data_feed.tracker.TrackerDataMask;
 import solarxr_protocol.data_feed.tracker.TrackerInfo;
 import solarxr_protocol.datatypes.DeviceId;
 import solarxr_protocol.datatypes.Ipv4Address;
@@ -65,9 +65,10 @@ public class DataFeedBuilder {
 	public static int createTrackerId(FlatBufferBuilder fbb, Tracker tracker) {
 		TrackerId.startTrackerId(fbb);
 
-		TrackerId.addTrackerNum(fbb, tracker.getTrackerNum());
+		TrackerId.addTrackerNum(fbb, (byte) tracker.getTrackerNum());
 		if (tracker.getDevice() != null)
-			TrackerId.addDeviceId(fbb, DeviceId.createDeviceId(fbb, tracker.getDevice().getId()));
+			TrackerId
+				.addDeviceId(fbb, DeviceId.createDeviceId(fbb, (byte) tracker.getDevice().getId()));
 
 		return TrackerId.endTrackerId(fbb);
 	}
@@ -155,7 +156,7 @@ public class DataFeedBuilder {
 
 	public static int createTrackerData(
 		FlatBufferBuilder fbb,
-		TrackerDataMaskT mask,
+		TrackerDataMask mask,
 		Tracker tracker
 	) {
 		int trackerInfosOffset = DataFeedBuilder.createTrackerInfos(fbb, mask.getInfo(), tracker);
@@ -168,7 +169,7 @@ public class DataFeedBuilder {
 		if (trackerInfosOffset != 0)
 			TrackerData.addInfo(fbb, trackerInfosOffset);
 		if (mask.getStatus())
-			TrackerData.addStatus(fbb, tracker.getStatus().id + 1);
+			TrackerData.addStatus(fbb, (byte) (tracker.getStatus().getId() + 1));
 		if (mask.getPosition() && tracker.hasPosition())
 			TrackerData.addPosition(fbb, DataFeedBuilder.createTrackerPosition(fbb, tracker));
 		if (mask.getRotation() && tracker.hasRotation())
@@ -201,7 +202,7 @@ public class DataFeedBuilder {
 
 	public static int createTrackersData(
 		FlatBufferBuilder fbb,
-		DeviceDataMaskT mask,
+		DeviceDataMask mask,
 		Device device
 	) {
 		if (mask.getTrackerData() == null)
@@ -221,16 +222,19 @@ public class DataFeedBuilder {
 		return fbb.endVector();
 	}
 
+	/**
+	 * @param id Unsigned byte!
+	 */
 	public static int createDeviceData(
 		FlatBufferBuilder fbb,
-		int id,
-		DeviceDataMaskT mask,
+		byte id,
+		DeviceDataMask mask,
 		Device device
 	) {
 		if (!mask.getDeviceData())
 			return 0;
 
-		if (device.getTrackers().size() <= 0)
+		if (device.getTrackers().isEmpty())
 			return 0;
 
 		Tracker firstTracker = device.getTrackers().get(0);
@@ -244,18 +248,19 @@ public class DataFeedBuilder {
 			return 0;
 
 		HardwareStatus.startHardwareStatus(fbb);
-		HardwareStatus.addErrorStatus(fbb, tracker.getStatus().id);
+		HardwareStatus.addErrorStatus(fbb, tracker.getStatus().getId());
 
+		// FIXME: A lot of casting in here, smells suspicious ඞ
 		if (tracker instanceof TrackerWithTPS)
-			HardwareStatus.addTps(fbb, (int) ((TrackerWithTPS) tracker).getTPS());
+			HardwareStatus.addTps(fbb, (byte) ((TrackerWithTPS) tracker).getTPS());
 
 		if (tracker instanceof TrackerWithBattery twb) {
 			HardwareStatus.addBatteryVoltage(fbb, twb.getBatteryVoltage());
-			HardwareStatus.addBatteryPctEstimate(fbb, (int) twb.getBatteryLevel());
+			HardwareStatus.addBatteryPctEstimate(fbb, (byte) twb.getBatteryLevel());
 		}
 
 		if (tracker instanceof TrackerWithWireless tww) {
-			HardwareStatus.addPing(fbb, tww.getPing());
+			HardwareStatus.addPing(fbb, (byte) tww.getPing());
 			HardwareStatus.addRssi(fbb, (short) tww.getSignalStrength());
 		}
 
@@ -279,10 +284,10 @@ public class DataFeedBuilder {
 
 	public static int createSyntheticTrackersData(
 		FlatBufferBuilder fbb,
-		TrackerDataMaskT trackerDataMaskT,
+		TrackerDataMask trackerDataMask,
 		List<Tracker> trackers
 	) {
-		if (trackerDataMaskT == null)
+		if (trackerDataMask == null)
 			return 0;
 
 		List<Integer> trackerOffsets = new ArrayList<>();
@@ -290,7 +295,7 @@ public class DataFeedBuilder {
 		trackers
 			.forEach(
 				(tracker) -> trackerOffsets
-					.add(DataFeedBuilder.createTrackerData(fbb, trackerDataMaskT, tracker))
+					.add(DataFeedBuilder.createTrackerData(fbb, trackerDataMask, tracker))
 			);
 
 		DataFeedUpdate.startSyntheticTrackersVector(fbb, trackerOffsets.size());
@@ -300,17 +305,17 @@ public class DataFeedBuilder {
 
 	public static int createDevicesData(
 		FlatBufferBuilder fbb,
-		DeviceDataMaskT deviceDataMaskT,
+		DeviceDataMask deviceDataMask,
 		List<Device> devices
 	) {
-		if (deviceDataMaskT == null)
+		if (deviceDataMask == null)
 			return 0;
 
 		int[] devicesDataOffsets = new int[devices.size()];
-		for (int i = 0; i < devices.size(); i++) {
+		for (byte i = 0; i < devices.size(); i++) {
 			Device device = devices.get(i);
 			devicesDataOffsets[i] = DataFeedBuilder
-				.createDeviceData(fbb, i, deviceDataMaskT, device);
+				.createDeviceData(fbb, i, deviceDataMask, device);
 		}
 
 		return DataFeedUpdate.createDevicesVector(fbb, devicesDataOffsets);
@@ -343,7 +348,7 @@ public class DataFeedBuilder {
 			Bone.addRotationG(fbb, rotGOffset);
 			var headPosGOffset = Vec3f.createVec3f(fbb, headPosG.x, headPosG.y, headPosG.z);
 			Bone.addHeadPositionG(fbb, headPosGOffset);
-			Bone.addBodyPart(fbb, bi.boneType.bodyPart);
+			Bone.addBodyPart(fbb, bi.boneType.getBodyPart());
 			Bone.addBoneLength(fbb, length);
 
 			boneOffsets[i] = Bone.endBone(fbb);

@@ -23,6 +23,7 @@ import solarxr_protocol.rpc.*;
 
 import java.util.EnumMap;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 
@@ -31,6 +32,9 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 
 	private final ProtocolAPI api;
 
+	/**
+	 * Unsigned int!
+	 */
 	private long currTransactionId = 0;
 
 	public RPCHandler(ProtocolAPI api) {
@@ -135,9 +139,9 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		if (req == null)
 			return;
 
-		SkeletonConfigOffsets joint = SkeletonConfigOffsets.getById(req.bone());
+		SkeletonConfigOffsets joint = SkeletonConfigOffsets.getById(req.getBone());
 
-		this.api.server.humanPoseProcessor.setSkeletonConfig(joint, req.value());
+		this.api.server.humanPoseProcessor.setSkeletonConfig(joint, req.getValue());
 		this.api.server.humanPoseProcessor.getSkeletonConfig().save();
 		this.api.server.getConfigManager().saveConfig();
 	}
@@ -147,7 +151,7 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		if (req == null)
 			return;
 
-		if (req.stop()) {
+		if (req.getStop()) {
 			if (this.api.server.getBvhRecorder().isRecording())
 				this.api.server.getBvhRecorder().endRecording();
 		} else {
@@ -168,11 +172,11 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		if (req == null)
 			return;
 
-		if (req.resetType() == ResetType.Quick)
+		if (req.getResetType() == ResetType.Quick)
 			this.api.server.resetTrackersYaw();
-		if (req.resetType() == ResetType.Full)
+		if (req.getResetType() == ResetType.Full)
 			this.api.server.resetTrackers();
-		if (req.resetType() == ResetType.Mounting)
+		if (req.getResetType() == ResetType.Mounting)
 			this.api.server.resetTrackersMounting();
 		LogManager.info("[WebSocketAPI] Reset performed");
 	}
@@ -183,36 +187,36 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		if (req == null)
 			return;
 
-		Tracker tracker = this.api.server.getTrackerById(req.trackerId().unpack());
+		Tracker tracker = this.api.server.getTrackerById(req.getTrackerId());
 		if (tracker == null)
 			return;
 		tracker = tracker.get();
 
-		TrackerPosition pos = TrackerPosition.getByBodyPart(req.bodyPosition()).orElse(null);
+		TrackerPosition pos = TrackerPosition.getByBodyPart(req.getBodyPosition()).orElse(null);
 		tracker.setBodyPosition(pos);
 
-		if (req.mountingOrientation() != null) {
+		if (req.getMountingOrientation() != null) {
 			if (tracker instanceof IMUTracker imu) {
 				imu
 					.setMountingOrientation(
 						new Quaternion(
-							req.mountingOrientation().x(),
-							req.mountingOrientation().y(),
-							req.mountingOrientation().z(),
-							req.mountingOrientation().w()
+							req.getMountingOrientation().getX(),
+							req.getMountingOrientation().getY(),
+							req.getMountingOrientation().getZ(),
+							req.getMountingOrientation().getW()
 						)
 					);
 			}
 		}
 
-		if (req.displayName() != null) {
+		if (req.getDisplayName() != null) {
 			if (tracker instanceof IMUTracker imu) {
-				imu.setCustomName(req.displayName());
+				imu.setCustomName(req.getDisplayName());
 			}
 		}
 
 		if (tracker instanceof IMUTracker imu) {
-			imu.setAllowDriftCompensation(req.allowDriftCompensation());
+			imu.setAllowDriftCompensation(req.getAllowDriftCompensation());
 		}
 
 		this.api.server.trackerUpdated(tracker);
@@ -221,12 +225,14 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 	@Override
 	public void onMessage(GenericConnection conn, RpcMessageHeader message) {
 		BiConsumer<GenericConnection, RpcMessageHeader> consumer = this.handlers[message
-			.messageType()];
+			.getMessageType()];
 		if (consumer != null)
 			consumer.accept(conn, message);
 		else
 			LogManager
-				.info("[ProtocolAPI] Unhandled RPC packet received id: " + message.messageType());
+				.info(
+					"[ProtocolAPI] Unhandled RPC packet received id: " + message.getMessageType()
+				);
 	}
 
 	public int createRPCMessage(FlatBufferBuilder fbb, byte messageType, int messageOffset) {
@@ -235,7 +241,11 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		RpcMessageHeader.startRpcMessageHeader(fbb);
 		RpcMessageHeader.addMessage(fbb, messageOffset);
 		RpcMessageHeader.addMessageType(fbb, messageType);
-		RpcMessageHeader.addTxId(fbb, TransactionId.createTransactionId(fbb, currTransactionId++));
+		RpcMessageHeader
+			.addTxId(
+				fbb,
+				TransactionId.createTransactionId(fbb, (int) currTransactionId++)
+			);
 		data[0] = RpcMessageHeader.endRpcMessageHeader(fbb);
 
 		int messages = MessageBundle.createRpcMsgsVector(fbb, data);
@@ -247,7 +257,7 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 
 	@Override
 	public int messagesCount() {
-		return RpcMessage.names.length;
+		return RpcMessage.Companion.getNames().length;
 	}
 
 	public void onAutoBoneProcessRequest(GenericConnection conn, RpcMessageHeader messageHeader) {
@@ -259,9 +269,20 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		conn.getContext().setUseAutoBone(true);
 		this.api.server
 			.getAutoBoneHandler()
-			.startProcessByType(AutoBoneProcessType.getById(req.processType()));
+			.startProcessByType(
+				Objects.requireNonNull(AutoBoneProcessType.getById(req.getProcessType()))
+			);
 	}
 
+	/**
+	 *
+	 * @param processType
+	 * @param message
+	 * @param current Unsigned int!
+	 * @param total Unsigned int!
+	 * @param completed
+	 * @param success
+	 */
 	@Override
 	public void onAutoBoneProcessStatus(
 		AutoBoneProcessType processType,
@@ -282,13 +303,15 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 
 						Integer messageOffset = message != null ? fbb.createString(message) : null;
 
-						AutoBoneProcessStatusResponse.startAutoBoneProcessStatusResponse(fbb);
-						AutoBoneProcessStatusResponse.addProcessType(fbb, processType.id);
+						AutoBoneProcessStatusResponse
+							.startAutoBoneProcessStatusResponse(fbb);
+						AutoBoneProcessStatusResponse
+							.addProcessType(fbb, processType.getId());
 						if (messageOffset != null)
 							AutoBoneProcessStatusResponse.addMessage(fbb, messageOffset);
 						if (total > 0 && current >= 0) {
-							AutoBoneProcessStatusResponse.addCurrent(fbb, current);
-							AutoBoneProcessStatusResponse.addTotal(fbb, total);
+							AutoBoneProcessStatusResponse.addCurrent(fbb, (int) current);
+							AutoBoneProcessStatusResponse.addTotal(fbb, (int) total);
 						}
 						AutoBoneProcessStatusResponse.addCompleted(fbb, completed);
 						AutoBoneProcessStatusResponse.addSuccess(fbb, success);
@@ -335,7 +358,7 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 							skeletonPartOffsets[i++] = SkeletonPart
 								.createSkeletonPart(
 									fbb,
-									skeletonConfig.getKey().id,
+									skeletonConfig.getKey().getId(),
 									skeletonConfig.getValue()
 								);
 						}

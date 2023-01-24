@@ -1,6 +1,6 @@
 package dev.slimevr.protocol.pubsub;
 
-import solarxr_protocol.pub_sub.TopicIdT;
+import solarxr_protocol.pub_sub.TopicId;
 
 import java.util.Objects;
 
@@ -10,10 +10,10 @@ import java.util.Objects;
 // because equals hashcode does not mean equals strings
 public class HashedTopicId {
 
-	private final TopicIdT inner;
+	private final TopicId inner;
 	private final int hashcode;
 
-	public HashedTopicId(TopicIdT topicIdT) {
+	public HashedTopicId(TopicId topicIdT) {
 		this.inner = topicIdT;
 		this.hashcode = (inner.getAppName()
 			+ "."
@@ -22,7 +22,7 @@ public class HashedTopicId {
 			+ inner.getTopic()).hashCode();
 	}
 
-	public TopicIdT getInner() {
+	public TopicId getInner() {
 		return inner;
 	}
 

@@ -28,7 +28,7 @@ import io.eiren.util.ann.ThreadSafe;
 import io.eiren.util.ann.ThreadSecure;
 import io.eiren.util.collections.FastList;
 import io.eiren.util.logging.LogManager;
-import solarxr_protocol.datatypes.TrackerIdT;
+import solarxr_protocol.datatypes.TrackerId;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -366,7 +366,7 @@ public class VRServer extends Thread {
 		return new FastList<>(trackers);
 	}
 
-	public Tracker getTrackerById(TrackerIdT id) {
+	public Tracker getTrackerById(TrackerId id) {
 		for (Tracker tracker : trackers) {
 			if (tracker.getTrackerNum() != id.getTrackerNum()) {
 				continue;

@@ -23,22 +23,22 @@ public enum TrackerPosition {
 	CHEST("body:chest", TrackerRole.CHEST, BodyPart.CHEST),
 	WAIST("body:waist", Optional.empty(), BodyPart.WAIST),
 	HIP("body:hip", TrackerRole.WAIST, BodyPart.HIP),
-	LEFT_UPPER_LEG("body:left_upper_leg", TrackerRole.LEFT_KNEE, BodyPart.LEFT_UPPER_LEG),
-	RIGHT_UPPER_LEG("body:right_upper_leg", TrackerRole.RIGHT_KNEE, BodyPart.RIGHT_UPPER_LEG),
-	LEFT_LOWER_LEG("body:left_lower_leg", Optional.empty(), BodyPart.LEFT_LOWER_LEG),
-	RIGHT_LOWER_LEG("body:right_lower_leg", Optional.empty(), BodyPart.RIGHT_LOWER_LEG),
-	LEFT_FOOT("body:left_foot", TrackerRole.LEFT_FOOT, BodyPart.LEFT_FOOT),
-	RIGHT_FOOT("body:right_foot", TrackerRole.RIGHT_FOOT, BodyPart.RIGHT_FOOT),
-	LEFT_CONTROLLER("body:left_controller", TrackerRole.LEFT_CONTROLLER, BodyPart.LEFT_CONTROLLER),
-	RIGHT_CONTROLLER("body:right_controller", TrackerRole.RIGHT_CONTROLLER, BodyPart.RIGHT_CONTROLLER),
-	LEFT_LOWER_ARM("body:left_lower_arm", TrackerRole.LEFT_ELBOW, BodyPart.LEFT_LOWER_ARM),
-	RIGHT_LOWER_ARM("body:right_lower_arm", TrackerRole.RIGHT_ELBOW, BodyPart.RIGHT_LOWER_ARM),
-	LEFT_UPPER_ARM("body:left_upper_arm", TrackerRole.LEFT_SHOULDER, BodyPart.LEFT_UPPER_ARM),
-	RIGHT_UPPER_ARM("body:right_upper_arm", TrackerRole.RIGHT_SHOULDER, BodyPart.RIGHT_UPPER_ARM),
-	LEFT_HAND("body:left_hand", TrackerRole.LEFT_HAND, BodyPart.LEFT_HAND),
-	RIGHT_HAND("body:right_hand", TrackerRole.RIGHT_HAND, BodyPart.RIGHT_HAND),
-	LEFT_SHOULDER("body:left_shoulder", TrackerRole.LEFT_SHOULDER, BodyPart.LEFT_SHOULDER),
-	RIGHT_SHOULDER("body:right_shoulder", TrackerRole.RIGHT_SHOULDER, BodyPart.RIGHT_SHOULDER);
+	LEFT_UPPER_LEG("body:left_upper_leg", TrackerRole.LEFT_KNEE, BodyPart.LEFTUPPERLEG),
+	RIGHT_UPPER_LEG("body:right_upper_leg", TrackerRole.RIGHT_KNEE, BodyPart.RIGHTUPPERLEG),
+	LEFT_LOWER_LEG("body:left_lower_leg", Optional.empty(), BodyPart.LEFTLOWERLEG),
+	RIGHT_LOWER_LEG("body:right_lower_leg", Optional.empty(), BodyPart.RIGHTLOWERLEG),
+	LEFT_FOOT("body:left_foot", TrackerRole.LEFT_FOOT, BodyPart.LEFTFOOT),
+	RIGHT_FOOT("body:right_foot", TrackerRole.RIGHT_FOOT, BodyPart.RIGHTFOOT),
+	LEFT_CONTROLLER("body:left_controller", TrackerRole.LEFT_CONTROLLER, BodyPart.LEFTCONTROLLER),
+	RIGHT_CONTROLLER("body:right_controller", TrackerRole.RIGHT_CONTROLLER, BodyPart.RIGHTCONTROLLER),
+	LEFT_LOWER_ARM("body:left_lower_arm", TrackerRole.LEFT_ELBOW, BodyPart.LEFTLOWERARM),
+	RIGHT_LOWER_ARM("body:right_lower_arm", TrackerRole.RIGHT_ELBOW, BodyPart.RIGHTLOWERARM),
+	LEFT_UPPER_ARM("body:left_upper_arm", TrackerRole.LEFT_SHOULDER, BodyPart.LEFTUPPERARM),
+	RIGHT_UPPER_ARM("body:right_upper_arm", TrackerRole.RIGHT_SHOULDER, BodyPart.RIGHTUPPERARM),
+	LEFT_HAND("body:left_hand", TrackerRole.LEFT_HAND, BodyPart.LEFTHAND),
+	RIGHT_HAND("body:right_hand", TrackerRole.RIGHT_HAND, BodyPart.RIGHTHAND),
+	LEFT_SHOULDER("body:left_shoulder", TrackerRole.LEFT_SHOULDER, BodyPart.LEFTSHOULDER),
+	RIGHT_SHOULDER("body:right_shoulder", TrackerRole.RIGHT_SHOULDER, BodyPart.RIGHTSHOULDER);
 	// @formatter:on
 
 	public static final TrackerPosition[] values = values();
@@ -46,13 +46,13 @@ public enum TrackerPosition {
 	public final String designation;
 	public final Optional<TrackerRole> trackerRole;
 	/** The associated `BodyPart` */
-	public final int bodyPart;
+	public final byte bodyPart;
 
-	TrackerPosition(String designation, TrackerRole nullableTrackerRole, int bodyPart) {
+	TrackerPosition(String designation, TrackerRole nullableTrackerRole, byte bodyPart) {
 		this(designation, Optional.ofNullable(nullableTrackerRole), bodyPart);
 	}
 
-	TrackerPosition(String designation, Optional<TrackerRole> trackerRole, int bodyPart) {
+	TrackerPosition(String designation, Optional<TrackerRole> trackerRole, byte bodyPart) {
 		this.designation = designation;
 		this.trackerRole = trackerRole;
 		this.bodyPart = bodyPart;

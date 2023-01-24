@@ -9,10 +9,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.io.ByteArrayOutputStream
 
 plugins {
-	kotlin("jvm") version "1.7.21"
+	kotlin("jvm")
 	application
 	id("com.github.johnrengelman.shadow") version "7.1.2"
-	id("com.diffplug.spotless") version "6.12.0"
+	id("com.diffplug.spotless") version "6.12.1"
 	id("com.github.gmazzo.buildconfig") version "3.1.0"
 }
 
@@ -141,7 +141,7 @@ configure<com.diffplug.gradle.spotless.SpotlessExtension> {
 // 			"max_line_length" to 88,
 			"ktlint_experimental" to "enabled"
 		)
-	val ktlintVersion = "0.47.1"
+	val ktlintVersion = "0.48.1"
 	kotlinGradle {
 		target("*.gradle.kts") // default target for kotlinGradle
 		ktlint(ktlintVersion)

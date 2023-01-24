@@ -22,6 +22,9 @@ public class Device {
 		this.id = nextLocalDeviceId.incrementAndGet();
 	}
 
+	/**
+	 * @return an unsigned byte!
+	 */
 	public int getId() {
 		return id;
 	}

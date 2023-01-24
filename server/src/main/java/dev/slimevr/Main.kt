@@ -61,7 +61,7 @@ fun main(args: Array<String>) {
 				null,
 				"SlimeVR start-up error! A minimum of Java 17 is required.",
 				"SlimeVR: Java Runtime Mismatch",
-				JOptionPane.ERROR_MESSAGE
+				JOptionPane.ERROR_MESSAGE,
 			)
 		return
 	}
@@ -74,7 +74,7 @@ fun main(args: Array<String>) {
 		LogManager
 			.severe(
 				"SlimeVR start-up error! Required ports are busy. " +
-					"Make sure there is no other instance of SlimeVR Server running."
+					"Make sure there is no other instance of SlimeVR Server running.",
 			)
 		JOptionPane
 			.showMessageDialog(
@@ -82,7 +82,7 @@ fun main(args: Array<String>) {
 				"SlimeVR start-up error! Required ports are busy. " +
 					"Make sure there is no other instance of SlimeVR Server running.",
 				"SlimeVR: Ports are busy",
-				JOptionPane.ERROR_MESSAGE
+				JOptionPane.ERROR_MESSAGE,
 			)
 		return
 	}

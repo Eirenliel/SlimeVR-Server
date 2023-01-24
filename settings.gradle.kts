@@ -9,9 +9,8 @@
 
 rootProject.name = "SlimeVR Server"
 
-
 include(":solarxr-protocol")
-project(":solarxr-protocol").projectDir = File("solarxr-protocol/protocol/java")
+project(":solarxr-protocol").projectDir = File("solarxr-protocol/protocol/kotlin")
 
 include(":server")
 project(":server").projectDir = File("server")

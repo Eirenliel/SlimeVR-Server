@@ -1,11 +1,14 @@
 package dev.slimevr.protocol.pubsub;
 
 import com.google.flatbuffers.FlatBufferBuilder;
+import com.google.flatbuffers.Table;
 import dev.slimevr.protocol.GenericConnection;
 import dev.slimevr.protocol.ProtocolAPI;
 import dev.slimevr.protocol.ProtocolHandler;
 import io.eiren.util.logging.LogManager;
 import solarxr_protocol.MessageBundle;
+import solarxr_protocol.datatypes.Bytes;
+import solarxr_protocol.datatypes.StringTable;
 import solarxr_protocol.pub_sub.*;
 
 import java.util.HashMap;
@@ -19,8 +22,8 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 	private final ProtocolAPI api;
 
 	// Two ways maps for faster reading when handling lots of packets
-	public HashMap<HashedTopicId, Integer> topicsHandle = new HashMap<>();
-	public HashMap<Integer, HashedTopicId> handleTopics = new HashMap<>();
+	public HashMap<HashedTopicId, Short> topicsHandle = new HashMap<>();
+	public HashMap<Short, HashedTopicId> handleTopics = new HashMap<>();
 
 	public AtomicInteger nextLocalHandle = new AtomicInteger();
 
@@ -33,18 +36,30 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 		registerPacketListener(PubSubUnion.Message, this::onTopicMessage);
 	}
 
-	private int getTopicHandle(TopicIdT topicIdT) {
-		HashedTopicId hashedTopicId = new HashedTopicId(topicIdT);
-		Integer handleT = topicsHandle.get(hashedTopicId);
+	/**
+	 * @return Returns an unsigned short!
+	 */
+	private short getTopicHandle(TopicId topicId) {
+		HashedTopicId hashedTopicId = new HashedTopicId(topicId);
+		Short handleT = topicsHandle.get(hashedTopicId);
 		// if no handle exists for this topic id we create one and return it
 		// anyway
 		if (handleT == null) {
-			handleT = nextLocalHandle.incrementAndGet();
+			handleT = (short) nextLocalHandle.incrementAndGet();
 			topicsHandle.put(hashedTopicId, handleT);
 			handleTopics.put(handleT, hashedTopicId);
 		}
 
 		return handleT;
+	}
+
+	private int createTopicIdOffset(FlatBufferBuilder fbb, TopicId topicId) {
+		return TopicId.createTopicId(
+				fbb,
+				fbb.createString(topicId.getOrganizationAsByteBuffer()),
+				fbb.createString(topicId.getAppNameAsByteBuffer()),
+				fbb.createString(topicId.getTopicAsByteBuffer())
+		);
 	}
 
 	public void onSubscriptionRequest(GenericConnection conn, PubSubHeader messageHeader) {
@@ -53,20 +68,21 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 		if (req == null)
 			return;
 
-		int subHandle = -1;
-		if (req.topicType() == Topic.TopicHandle) {
+		// Unsigned short!
+		short subHandle = -1;
+		if (req.getTopicType() == Topic.TopicHandle) {
 			TopicHandle handle = (TopicHandle) req.topic(new TopicHandle());
-			if (handle != null && handleTopics.containsKey(handle.id()))
-				subHandle = handle.id();
-		} else if (req.topicType() == Topic.TopicId) {
+			if (handle != null && handleTopics.containsKey(handle.getId()))
+				subHandle = handle.getId();
+		} else if (req.getTopicType() == Topic.TopicId) {
 			TopicId topicId = (TopicId) req.topic(new TopicId());
 			if (topicId != null)
-				subHandle = getTopicHandle(topicId.unpack());
+				subHandle = getTopicHandle(topicId);
 		}
 
 		assert subHandle != -1;
 
-		final int finalSubHandle = subHandle;
+		final short finalSubHandle = subHandle;
 		Optional<Integer> first = conn
 			.getContext()
 			.getSubscribedTopics()
@@ -74,12 +90,12 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 			.filter((handle) -> handle == finalSubHandle)
 			.findFirst();
 		if (first.isEmpty()) {
-			conn.getContext().getSubscribedTopics().add(finalSubHandle);
+			conn.getContext().getSubscribedTopics().add((int) finalSubHandle);
 		}
 
 
 		FlatBufferBuilder fbb = new FlatBufferBuilder(32);
-		int topicIdOffset = TopicId.pack(fbb, handleTopics.get(finalSubHandle).getInner());
+		int topicIdOffset = createTopicIdOffset(fbb, handleTopics.get(finalSubHandle).getInner());
 		int topicHandleOffset = TopicHandle.createTopicHandle(fbb, finalSubHandle);
 
 		int outbound = createMessage(
@@ -93,16 +109,15 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 
 	public void onTopicHandleRequest(GenericConnection conn, PubSubHeader messageHeader) {
 
-		TopicHandleRequest req = (TopicHandleRequest) messageHeader.u(new TopicHandleRequest());
+		TopicHandleRequest topicRequest = (TopicHandleRequest) messageHeader.u(new TopicHandleRequest());
 
-		if (req == null)
+		if (topicRequest == null)
 			return;
 
-		TopicHandleRequestT topicRequest = req.unpack();
-		int handle = getTopicHandle(topicRequest.getId());
+		short handle = getTopicHandle(topicRequest.getId());
 
 		FlatBufferBuilder fbb = new FlatBufferBuilder(32);
-		int topicIdOffset = TopicId.pack(fbb, topicRequest.getId());
+		int topicIdOffset = createTopicIdOffset(fbb, topicRequest.getId());
 		int topicHandleOffset = TopicHandle.createTopicHandle(fbb, handle);
 
 		int outbound = createMessage(
@@ -116,18 +131,16 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 
 
 	public void onTopicMessage(GenericConnection c, PubSubHeader messageHeader) {
-		Message req = (Message) messageHeader.u(new Message());
+		Message message = (Message) messageHeader.u(new Message());
 
-		if (req == null)
+		if (message == null)
 			return;
 
-		MessageT messageT = req.unpack();
-
-		int subHandle = 1;
-		if (messageT.getTopic().getType() == Topic.TopicHandle) {
-			subHandle = messageT.getTopic().asTopicHandle().getId();
-		} else if (messageT.getTopic().getType() == Topic.TopicId) {
-			subHandle = getTopicHandle(messageT.getTopic().asTopicId());
+		short subHandle = 1;
+		if (message.getTopicType() == Topic.TopicHandle) {
+			subHandle = ((TopicHandle) message.topic(new TopicHandle())).getId();
+		} else if (message.getTopicType() == Topic.TopicId) {
+			subHandle = getTopicHandle((TopicId) message.topic(new TopicId()));
 		}
 
 
@@ -147,13 +160,48 @@ public class PubSubHandler extends ProtocolHandler<PubSubHeader> {
 					int outbound = createMessage(
 						fbb,
 						PubSubUnion.Message,
-						Message.pack(fbb, messageT)
+						createMessageMessageOffset(fbb, message)
 					);
 					fbb.finish(outbound);
 					conn.send(fbb.dataBuffer());
 				}
 			});
 		});
+	}
+
+	private int createMessageMessageOffset(FlatBufferBuilder fbb, Message msg) {
+		int topicOffset = switch(msg.getTopicType()) {
+			case Topic.TopicHandle -> TopicHandle.createTopicHandle(
+				fbb, ((TopicHandle) msg.topic(new TopicHandle())).getId()
+			);
+			case Topic.TopicId -> createTopicIdOffset(
+				fbb, (TopicId) msg.topic(new TopicId())
+			);
+			default -> throw new RuntimeException("Unknown message type");
+		};
+		int payloadOffset = switch(msg.getPayloadType()) {
+			case Payload.solarxrProtocolDatatypesStringTable ->
+				StringTable.createStringTable(
+					fbb,
+					fbb.createString(((StringTable) msg.payload(new StringTable())).getSAsByteBuffer())
+				);
+			case Payload.solarxrProtocolDatatypesBytes ->
+				Bytes.createBytes(
+					fbb,
+					fbb.createByteVector(((Bytes) msg.payload(new Bytes())).getBAsByteBuffer())
+				);
+			case Payload.KeyValues -> {
+				KeyValues keyValues = (KeyValues) msg.payload(new KeyValues());
+				keyValues.getByteBuffer()
+			}
+		};
+		return Message.createMessage(
+				fbb,
+				msg.getTopicType(),
+				topicOffset,
+				msg.getPayloadType(),
+				payloadOffset
+		);
 	}
 
 	@Override

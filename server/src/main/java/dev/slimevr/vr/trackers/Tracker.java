@@ -56,8 +56,14 @@ public interface Tracker {
 
 	boolean isComputed();
 
+	/**
+	 * @return an unsigned byte!
+	 */
 	int getTrackerId();
 
+	/**
+	 * @return an unsigned byte!
+	 */
 	int getTrackerNum();
 
 	Device getDevice();
