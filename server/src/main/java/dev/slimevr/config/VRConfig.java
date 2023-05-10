@@ -7,7 +7,6 @@ import com.github.jonpeterson.jackson.module.versioning.JsonVersionedModel;
 import dev.slimevr.config.serializers.BridgeConfigMapDeserializer;
 import dev.slimevr.config.serializers.TrackerConfigMapDeserializer;
 import dev.slimevr.tracking.trackers.Tracker;
-import dev.slimevr.tracking.trackers.TrackerRole;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,32 +50,7 @@ public class VRConfig {
 	private final OverlayConfig overlay = new OverlayConfig();
 
 	public VRConfig() {
-		// Initialize default settings for OSC Router
-		oscRouter.setPortIn(9002);
-		oscRouter.setPortOut(9000);
 
-		// Initialize default settings for VRC OSC
-		vrcOSC.setPortIn(9001);
-		vrcOSC.setPortOut(9000);
-		vrcOSC
-			.setOSCTrackerRole(
-				TrackerRole.WAIST,
-				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
-			);
-		vrcOSC
-			.setOSCTrackerRole(
-				TrackerRole.LEFT_FOOT,
-				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
-			);
-		vrcOSC
-			.setOSCTrackerRole(
-				TrackerRole.RIGHT_FOOT,
-				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
-			);
-
-		// Initialize default settings for VMC
-		vmc.setPortIn(39540);
-		vmc.setPortOut(39539);
 	}
 
 

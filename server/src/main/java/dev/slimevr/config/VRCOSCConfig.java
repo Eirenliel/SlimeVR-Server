@@ -19,6 +19,11 @@ public class VRCOSCConfig extends OSCConfig {
 	public Map<String, Boolean> trackers = new HashMap<>();
 
 	public VRCOSCConfig() {
+		super.setPortIn(9001);
+		super.setPortOut(9000);
+		getOSCTrackerRole(TrackerRole.WAIST, getOSCTrackerRole(TrackerRole.WAIST, true));
+		getOSCTrackerRole(TrackerRole.LEFT_FOOT, getOSCTrackerRole(TrackerRole.WAIST, true));
+		getOSCTrackerRole(TrackerRole.RIGHT_FOOT, getOSCTrackerRole(TrackerRole.WAIST, true));
 	}
 
 	public boolean getOSCTrackerRole(TrackerRole role, boolean def) {

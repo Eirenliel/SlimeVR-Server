@@ -7,10 +7,10 @@ public class OSCConfig {
 	private boolean enabled = false;
 
 	// Port to receive OSC messages from
-	private int portIn;
+	private int portIn = 9002;
 
 	// Port to send out OSC messages at
-	private int portOut;
+	private int portOut = 9000;
 
 	// Address to send out OSC messages at
 	private String address = "127.0.0.1";
