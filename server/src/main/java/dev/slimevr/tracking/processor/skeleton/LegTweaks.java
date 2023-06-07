@@ -250,7 +250,7 @@ public class LegTweaks {
 	}
 
 	public void updateConfig() {
-		LegTweaks.updateHyperParameters(config.getCorrectionStrength());
+		LegTweaks.updateHyperParameters(config.correctionStrength);
 
 		floorclipEnabled = skeleton.humanPoseManager.getToggle(SkeletonConfigToggles.FLOOR_CLIP);
 		skatingCorrectionEnabled = skeleton.humanPoseManager

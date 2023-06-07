@@ -22,7 +22,7 @@ public class Keybinding implements HotkeyListener {
 	public Keybinding(VRServer server) {
 		this.server = server;
 
-		this.config = server.getConfigManager().getVrConfig().getKeybindings();
+		this.config = server.getConfigManager().getVrConfig().keybindings;
 
 		if (OperatingSystem.getCurrentPlatform() != OperatingSystem.WINDOWS) {
 			LogManager
@@ -36,15 +36,15 @@ public class Keybinding implements HotkeyListener {
 			if (JIntellitype.getInstance() instanceof JIntellitype) {
 				JIntellitype.getInstance().addHotKeyListener(this);
 
-				String fullResetBinding = this.config.getFullResetBinding();
+				String fullResetBinding = this.config.fullResetBinding;
 				JIntellitype.getInstance().registerHotKey(FULL_RESET, fullResetBinding);
 				LogManager.info("[Keybinding] Bound full reset to " + fullResetBinding);
 
-				String yawResetBinding = this.config.getYawResetBinding();
+				String yawResetBinding = this.config.yawResetBinding;
 				JIntellitype.getInstance().registerHotKey(YAW_RESET, yawResetBinding);
 				LogManager.info("[Keybinding] Bound yaw reset to " + yawResetBinding);
 
-				String mountingResetBinding = this.config.getMountingResetBinding();
+				String mountingResetBinding = this.config.mountingResetBinding;
 				JIntellitype.getInstance().registerHotKey(MOUNTING_RESET, mountingResetBinding);
 				LogManager.info("[Keybinding] Bound reset mounting to " + mountingResetBinding);
 			}
@@ -62,18 +62,18 @@ public class Keybinding implements HotkeyListener {
 		switch (identifier) {
 			case FULL_RESET -> {
 				server.getResetHandler().sendStarted(ResetType.Full);
-				server.scheduleResetTrackersFull(resetSourceName, this.config.getFullResetDelay());
+				server.scheduleResetTrackersFull(resetSourceName, this.config.fullResetDelay);
 			}
 			case YAW_RESET -> {
 				server.getResetHandler().sendStarted(ResetType.Yaw);
-				server.scheduleResetTrackersYaw(resetSourceName, this.config.getYawResetDelay());
+				server.scheduleResetTrackersYaw(resetSourceName, this.config.yawResetDelay);
 			}
 			case MOUNTING_RESET -> {
 				server.getResetHandler().sendStarted(ResetType.Mounting);
 				server
 					.scheduleResetTrackersMounting(
 						resetSourceName,
-						this.config.getMountingResetDelay()
+						this.config.mountingResetDelay
 					);
 			}
 		}

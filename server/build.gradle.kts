@@ -83,7 +83,9 @@ dependencies {
 	implementation("org.java-websocket:Java-WebSocket:1.+")
 	implementation("com.melloware:jintellitype:1.+")
 	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.0-RC")
+	implementation("com.charleskorn.kaml:kaml:0.54.0")
 	implementation("it.unimi.dsi:fastutil:8.5.12")
+	implementation("com.squareup.okio:okio:3.3.0")
 
 	testImplementation(kotlin("test"))
 	// Use JUnit test framework

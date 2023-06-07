@@ -1,5 +1,8 @@
 package dev.slimevr.config
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class AutoBoneConfig {
 	var cursorIncrement = 2
 	var minDataDistance = 1
@@ -20,6 +23,6 @@ class AutoBoneConfig {
 	var randomizeFrameOrder = true
 	var scaleEachStep = true
 	var sampleCount = 1000
-	var sampleRateMs: Long = 20
+	var sampleRateMs = 20L
 	var saveRecordings = false
 }

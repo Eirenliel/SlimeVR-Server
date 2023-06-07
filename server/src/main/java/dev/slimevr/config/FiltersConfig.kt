@@ -1,7 +1,9 @@
 package dev.slimevr.config
 
 import dev.slimevr.vrServer
+import kotlinx.serialization.Serializable
 
+@Serializable
 class FiltersConfig {
 
 	// Type of filtering applied (none, smoothing or prediction)

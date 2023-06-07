@@ -46,38 +46,38 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 				RPCSettingsBuilder
 					.createFilterSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getFilters()
+						this.api.server.getConfigManager().getVrConfig().filters
 					),
 				RPCSettingsBuilder
 					.createDriftCompensationSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getDriftCompensation()
+						this.api.server.getConfigManager().getVrConfig().driftCompensation
 					),
 				RPCSettingsBuilder
 					.createOSCRouterSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getOscRouter()
+						this.api.server.getConfigManager().getVrConfig().oscRouter
 					),
 				RPCSettingsBuilder
 					.createVRCOSCSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getVrcOSC()
+						this.api.server.getConfigManager().getVrConfig().vrcOSC
 					),
 				RPCSettingsBuilder
 					.createVMCOSCSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getVMC()
+						this.api.server.getConfigManager().getVrConfig().getVmc()
 					),
 				RPCSettingsBuilder
 					.createModelSettings(
 						fbb,
 						this.api.server.humanPoseManager,
-						this.api.server.getConfigManager().getVrConfig().getLegTweaks()
+						this.api.server.getConfigManager().getVrConfig().legTweaks
 					),
 				RPCSettingsBuilder
 					.createTapDetectionSettings(
 						fbb,
-						this.api.server.getConfigManager().getVrConfig().getTapDetection()
+						this.api.server.getConfigManager().getVrConfig().tapDetection
 					)
 			);
 		int outbound = rpcHandler.createRPCMessage(fbb, RpcMessage.SettingsResponse, settings);
@@ -114,8 +114,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 			if (type != null) {
 				FiltersConfig filtersConfig = this.api.server
 					.getConfigManager()
-					.getVrConfig()
-					.getFilters();
+					.getVrConfig().filters;
 				filtersConfig.setType(type.getConfigKey());
 				filtersConfig.setAmount(req.filtering().amount());
 				filtersConfig.updateTrackersFilters();
@@ -125,8 +124,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 		if (req.driftCompensation() != null) {
 			DriftCompensationConfig driftCompensationConfig = this.api.server
 				.getConfigManager()
-				.getVrConfig()
-				.getDriftCompensation();
+				.getVrConfig().driftCompensation;
 			driftCompensationConfig.setEnabled(req.driftCompensation().enabled());
 			driftCompensationConfig.setAmount(req.driftCompensation().amount());
 			driftCompensationConfig.setMaxResets(req.driftCompensation().maxResets());
@@ -136,8 +134,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 		if (req.oscRouter() != null) {
 			OSCConfig oscRouterConfig = this.api.server
 				.getConfigManager()
-				.getVrConfig()
-				.getOscRouter();
+				.getVrConfig().oscRouter;
 			if (oscRouterConfig != null) {
 				OSCRouter oscRouter = this.api.server.getOSCRouter();
 				var osc = req.oscRouter().oscSettings();
@@ -155,8 +152,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 		if (req.vrcOsc() != null) {
 			VRCOSCConfig vrcOSCConfig = this.api.server
 				.getConfigManager()
-				.getVrConfig()
-				.getVrcOSC();
+				.getVrConfig().vrcOSC;
 			if (vrcOSCConfig != null) {
 				VRCOSCHandler VRCOSCHandler = this.api.server.getVrcOSCHandler();
 				var osc = req.vrcOsc().oscSettings();
@@ -190,7 +186,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 			VMCConfig vmcConfig = this.api.server
 				.getConfigManager()
 				.getVrConfig()
-				.getVMC();
+				.getVmc();
 			if (vmcConfig != null) {
 				VMCHandler VMCHandler = this.api.server.getVMCHandler();
 				var osc = req.vmcOsc().oscSettings();
@@ -212,8 +208,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 		if (req.tapDetectionSettings() != null) {
 			TapDetectionConfig tapDetectionConfig = this.api.server
 				.getConfigManager()
-				.getVrConfig()
-				.getTapDetection();
+				.getVrConfig().tapDetection;
 			var tapDetectionSettings = req.tapDetectionSettings();
 
 			if (tapDetectionSettings != null) {
@@ -257,7 +252,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 		var modelSettings = req.modelSettings();
 		if (modelSettings != null) {
 			var hpm = this.api.server.humanPoseManager;
-			var legTweaksConfig = this.api.server.getConfigManager().getVrConfig().getLegTweaks();
+			var legTweaksConfig = this.api.server.getConfigManager().getVrConfig().legTweaks;
 			var toggles = modelSettings.toggles();
 			var ratios = modelSettings.ratios();
 			var legTweaks = modelSettings.legTweaks();
@@ -343,7 +338,7 @@ public record RPCSettingsHandler(RPCHandler rpcHandler, ProtocolAPI api) {
 
 			if (legTweaks != null) {
 				if (legTweaks.hasCorrectionStrength()) {
-					legTweaksConfig.setCorrectionStrength(legTweaks.correctionStrength());
+					legTweaksConfig.correctionStrength = legTweaks.correctionStrength();
 				}
 				this.api.server.humanPoseManager.updateLegTweaksConfig();
 			}

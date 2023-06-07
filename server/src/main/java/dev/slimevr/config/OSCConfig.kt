@@ -1,5 +1,8 @@
 package dev.slimevr.config
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 open class OSCConfig {
 
 	// Are the OSC receiver and sender enabled?

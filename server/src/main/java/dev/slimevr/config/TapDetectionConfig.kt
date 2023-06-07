@@ -1,10 +1,12 @@
 package dev.slimevr.config
 
 import com.jme3.math.FastMath
+import kotlinx.serialization.Serializable
 
 // handles the tap detection config
 // this involves the number of taps, the delay, and whether or not the feature is enabled
 // for each reset type
+@Serializable
 class TapDetectionConfig {
 	var yawResetDelay = 0.2f
 	var fullResetDelay = 1.0f

@@ -1,5 +1,8 @@
 package dev.slimevr.config
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 class VMCConfig : OSCConfig() {
 
 	// Anchor the tracking at the hip?

@@ -115,7 +115,7 @@ public class VRServer extends Thread {
 		List<Tracker> computedTrackers = humanPoseManager.getComputedTrackers();
 
 		// Start server for SlimeVR trackers
-		int trackerPort = configManager.getVrConfig().getServer().getTrackerPort();
+		int trackerPort = configManager.getVrConfig().server.trackerPort;
 		LogManager.info("Starting the tracker server on port " + trackerPort + "...");
 		trackersServer = new TrackersUDPServer(
 			trackerPort,
@@ -211,13 +211,13 @@ public class VRServer extends Thread {
 			this,
 			humanPoseManager,
 			driverBridge,
-			getConfigManager().getVrConfig().getVrcOSC(),
+			getConfigManager().getVrConfig().vrcOSC,
 			computedTrackers
 		);
 		vmcHandler = new VMCHandler(
 			this,
 			humanPoseManager,
-			getConfigManager().getVrConfig().getVMC(),
+			getConfigManager().getVrConfig().getVmc(),
 			computedTrackers
 		);
 
@@ -225,7 +225,7 @@ public class VRServer extends Thread {
 		FastList<OSCHandler> oscHandlers = new FastList<>();
 		oscHandlers.add(vrcOSCHandler);
 		oscHandlers.add(vmcHandler);
-		oscRouter = new OSCRouter(getConfigManager().getVrConfig().getOscRouter(), oscHandlers);
+		oscRouter = new OSCRouter(getConfigManager().getVrConfig().oscRouter, oscHandlers);
 
 		bvhRecorder = new BVHRecorder(this);
 

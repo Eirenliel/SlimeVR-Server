@@ -756,10 +756,8 @@ public class HumanPoseManager {
 			if (server != null) {
 				server
 					.getConfigManager()
-					.getVrConfig()
-					.getSkeleton()
-					.getToggles()
-					.put(SkeletonConfigToggles.FLOOR_CLIP.configKey, value);
+					.getVrConfig().skeleton.toggles
+						.put(SkeletonConfigToggles.FLOOR_CLIP.configKey, value);
 				server.getConfigManager().saveConfig();
 			}
 		}
@@ -772,10 +770,8 @@ public class HumanPoseManager {
 			if (server != null) {
 				server
 					.getConfigManager()
-					.getVrConfig()
-					.getSkeleton()
-					.getToggles()
-					.put(SkeletonConfigToggles.SKATING_CORRECTION.configKey, value);
+					.getVrConfig().skeleton.toggles
+						.put(SkeletonConfigToggles.SKATING_CORRECTION.configKey, value);
 				server.getConfigManager().saveConfig();
 			}
 		}

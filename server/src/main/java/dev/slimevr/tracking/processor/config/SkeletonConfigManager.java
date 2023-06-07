@@ -377,10 +377,8 @@ public class SkeletonConfigManager {
 			Main
 				.getVrServer()
 				.getConfigManager()
-				.getVrConfig()
-				.getSkeleton()
-				.getToggles()
-				.remove(value.configKey);
+				.getVrConfig().skeleton.toggles
+					.remove(value.configKey);
 			// Set default in skeleton
 			setToggle(value, value.defaultValue);
 		}
@@ -402,10 +400,8 @@ public class SkeletonConfigManager {
 			Main
 				.getVrServer()
 				.getConfigManager()
-				.getVrConfig()
-				.getSkeleton()
-				.getValues()
-				.remove(value.configKey);
+				.getVrConfig().skeleton.values
+					.remove(value.configKey);
 			// Set default in skeleton
 			setValue(value, value.defaultValue);
 		}
@@ -446,10 +442,10 @@ public class SkeletonConfigManager {
 	}
 
 	public void loadFromConfig(ConfigManager configManager) {
-		SkeletonConfig skeletonConfig = configManager.getVrConfig().getSkeleton();
+		SkeletonConfig skeletonConfig = configManager.getVrConfig().skeleton;
 
 		// Load offsets
-		Map<String, Float> offsets = skeletonConfig.getOffsets();
+		Map<String, Float> offsets = skeletonConfig.offsets;
 		for (SkeletonConfigOffsets configValue : SkeletonConfigOffsets.values) {
 			Float val = offsets.get(configValue.configKey);
 			if (val != null) {
@@ -460,7 +456,7 @@ public class SkeletonConfigManager {
 		}
 
 		// Load toggles
-		Map<String, Boolean> toggles = skeletonConfig.getToggles();
+		Map<String, Boolean> toggles = skeletonConfig.toggles;
 		for (SkeletonConfigToggles configValue : SkeletonConfigToggles.values) {
 			Boolean val = toggles.get(configValue.configKey);
 			if (val != null) {
@@ -471,7 +467,7 @@ public class SkeletonConfigManager {
 		}
 
 		// Load values
-		Map<String, Float> values = skeletonConfig.getValues();
+		Map<String, Float> values = skeletonConfig.values;
 		for (SkeletonConfigValues configValue : SkeletonConfigValues.values) {
 			Float val = values.get(configValue.configKey);
 			if (val != null) {
@@ -491,24 +487,23 @@ public class SkeletonConfigManager {
 		dev.slimevr.config.SkeletonConfig skeletonConfig = Main
 			.getVrServer()
 			.getConfigManager()
-			.getVrConfig()
-			.getSkeleton();
+			.getVrConfig().skeleton;
 
 		// Write all possible values to keep consistent even if defaults changed
 		for (SkeletonConfigOffsets value : SkeletonConfigOffsets.values) {
-			skeletonConfig.getOffsets().put(value.configKey, getOffset(value));
+			skeletonConfig.offsets.put(value.configKey, getOffset(value));
 		}
 
 		// Only write changed values to keep using defaults if not changed
 		for (SkeletonConfigToggles value : SkeletonConfigToggles.values) {
 			if (changedToggles[value.id - 1])
-				skeletonConfig.getToggles().put(value.configKey, getToggle(value));
+				skeletonConfig.toggles.put(value.configKey, getToggle(value));
 		}
 
 		// Only write changed values to keep using defaults if not changed
 		for (SkeletonConfigValues value : SkeletonConfigValues.values) {
 			if (changedValues[value.id - 1])
-				skeletonConfig.getValues().put(value.configKey, getValue(value));
+				skeletonConfig.values.put(value.configKey, getValue(value));
 		}
 	}
 }

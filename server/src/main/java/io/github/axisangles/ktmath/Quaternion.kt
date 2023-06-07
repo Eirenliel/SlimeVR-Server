@@ -2,8 +2,10 @@
 
 package io.github.axisangles.ktmath
 
+import kotlinx.serialization.Serializable
 import kotlin.math.*
 
+@Serializable
 data class Quaternion(val w: Float, val x: Float, val y: Float, val z: Float) {
 	companion object {
 		val NULL = Quaternion(0f, 0f, 0f, 0f)

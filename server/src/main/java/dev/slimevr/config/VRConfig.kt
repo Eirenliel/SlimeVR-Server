@@ -1,0 +1,128 @@
+package dev.slimevr.config
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize
+import com.fasterxml.jackson.databind.annotation.JsonSerialize
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers
+import com.github.jonpeterson.jackson.module.versioning.JsonVersionedModel
+import dev.slimevr.config.serializers.BridgeConfigMapDeserializer
+import dev.slimevr.config.serializers.TrackerConfigMapDeserializer
+import dev.slimevr.tracking.trackers.Tracker
+import dev.slimevr.tracking.trackers.TrackerRole
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.descriptors.SerialDescriptor
+
+@JsonVersionedModel(
+	currentVersion = "8",
+	defaultDeserializeToVersion = "8",
+	toCurrentConverterClass = CurrentVRConfigConverter::class
+)
+@Serializable
+class VRConfig {
+	@JvmField
+	val server = ServerConfig()
+
+	@JvmField
+	val filters = FiltersConfig()
+
+	@JvmField
+	val driftCompensation = DriftCompensationConfig()
+
+	@JvmField
+	val oscRouter = OSCConfig()
+
+	@JvmField
+	val vrcOSC = VRCOSCConfig()
+	val vmc = VMCConfig()
+	val autoBone = AutoBoneConfig()
+
+	@JvmField
+	val keybindings = KeybindingsConfig()
+
+	@JvmField
+	val skeleton = SkeletonConfig()
+
+	@JvmField
+	val legTweaks = LegTweaksConfig()
+
+	@JvmField
+	val tapDetection = TapDetectionConfig()
+
+	@JsonDeserialize(using = TrackerConfigMapDeserializer::class)
+	@JsonSerialize(keyUsing = StdKeySerializers.StringKeySerializer::class)
+	val trackers: MutableMap<String, TrackerConfig> = HashMap()
+
+	@JsonDeserialize(using = BridgeConfigMapDeserializer::class)
+	@JsonSerialize(keyUsing = StdKeySerializers.StringKeySerializer::class)
+	val bridges: MutableMap<String, BridgeConfig> = HashMap()
+
+	@JvmField
+	val overlay = OverlayConfig()
+
+	init {
+		// Initialize default settings for OSC Router
+		oscRouter.portIn = 9002
+		oscRouter.portOut = 9000
+
+		// Initialize default settings for VRC OSC
+		vrcOSC.portIn = 9001
+		vrcOSC.portOut = 9000
+		vrcOSC
+			.setOSCTrackerRole(
+				TrackerRole.WAIST,
+				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
+			)
+		vrcOSC
+			.setOSCTrackerRole(
+				TrackerRole.LEFT_FOOT,
+				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
+			)
+		vrcOSC
+			.setOSCTrackerRole(
+				TrackerRole.RIGHT_FOOT,
+				vrcOSC.getOSCTrackerRole(TrackerRole.WAIST, true)
+			)
+
+		// Initialize default settings for VMC
+		vmc.portIn = 39540
+		vmc.portOut = 39539
+	}
+
+	fun getTracker(tracker: Tracker): TrackerConfig {
+		var config = trackers[tracker.name]
+		if (config == null) {
+			config = TrackerConfig(tracker)
+			trackers[tracker.name] = config
+		}
+		return config
+	}
+
+	fun readTrackerConfig(tracker: Tracker) {
+		if (tracker.userEditable) {
+			val config = getTracker(tracker)
+			tracker.readConfig(config)
+			if (tracker.isImu()) tracker.resetsHandler.readDriftCompensationConfig(driftCompensation)
+			if (tracker.allowFiltering) {
+				tracker
+					.filteringHandler
+					.readFilteringConfig(filters, tracker.getRawRotation())
+			}
+		}
+	}
+
+	fun writeTrackerConfig(tracker: Tracker) {
+		if (tracker.userEditable) {
+			val tc = getTracker(tracker)
+			tracker.writeConfig(tc)
+		}
+	}
+
+	fun getBridge(bridgeKey: String): BridgeConfig {
+		var config = bridges[bridgeKey]
+		if (config == null) {
+			config = BridgeConfig()
+			bridges[bridgeKey] = config
+		}
+		return config
+	}
+}

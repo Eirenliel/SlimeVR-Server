@@ -1,7 +1,9 @@
 package dev.slimevr.config
 
 import dev.slimevr.vrServer
+import kotlinx.serialization.Serializable
 
+@Serializable
 class DriftCompensationConfig {
 
 	// Is drift compensation enabled
@@ -12,6 +14,7 @@ class DriftCompensationConfig {
 
 	// Max resets for the calculated average drift
 	var maxResets = 6
+
 	fun updateTrackersDriftCompensation() {
 		for (t in vrServer.allTrackers) {
 			if (t.allowFiltering) {

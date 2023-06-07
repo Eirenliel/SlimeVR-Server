@@ -111,9 +111,9 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 		RpcMessageHeader messageHeader
 	) {
 		FlatBufferBuilder fbb = new FlatBufferBuilder(32);
-		OverlayConfig config = this.api.server.getConfigManager().getVrConfig().getOverlay();
+		OverlayConfig config = this.api.server.getConfigManager().getVrConfig().overlay;
 		int response = OverlayDisplayModeResponse
-			.createOverlayDisplayModeResponse(fbb, config.isVisible(), config.isMirrored());
+			.createOverlayDisplayModeResponse(fbb, config.visible, config.mirrored);
 		int outbound = this.createRPCMessage(fbb, RpcMessage.OverlayDisplayModeResponse, response);
 		fbb.finish(outbound);
 		conn.send(fbb.dataBuffer());
@@ -127,9 +127,9 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader>
 			.message(new OverlayDisplayModeChangeRequest());
 		if (req == null)
 			return;
-		OverlayConfig config = this.api.server.getConfigManager().getVrConfig().getOverlay();
-		config.setMirrored(req.isMirrored());
-		config.setVisible(req.isVisible());
+		OverlayConfig config = this.api.server.getConfigManager().getVrConfig().overlay;
+		config.mirrored = req.isMirrored();
+		config.visible = req.isVisible();
 
 		this.api.server.getConfigManager().saveConfig();
 	}
