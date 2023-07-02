@@ -87,6 +87,11 @@ public class WebsocketAPI extends WebSocketServer implements ProtocolAPIServer {
 
 	@Override
 	public void onError(WebSocket conn, Exception ex) {
+		if (ex instanceof java.net.BindException) {
+			LogManager.warning("[WebSocket] Port was already in use!");
+			return;
+		}
+
 		LogManager
 			.severe(
 				"[WebSocket] Exception on connection " + connAddr(conn),
