@@ -10,12 +10,9 @@ import {
   SkeletonConfigRequestT,
 } from 'solarxr-protocol';
 import { useWebsocketAPI } from '../../../../hooks/websocket-api';
-import saveAs from 'file-saver';
-import { save } from '@tauri-apps/api/dialog';
-import { writeTextFile } from '@tauri-apps/api/fs';
 import { useIsTauri } from '../../../../hooks/breakpoint';
 import { useAppContext } from '../../../../hooks/app';
-import { error } from '../../../../utils/logging';
+import { saveFile } from '../../../../utils/a11y';
 
 export const MIN_HEIGHT = 0.4;
 export const MAX_HEIGHT = 4;
@@ -51,28 +48,19 @@ export function ProportionsChoose() {
   useRPCPacket(
     RpcMessage.SkeletonConfigResponse,
     (data: SkeletonConfigResponseT) => {
-      const blob = new Blob([JSON.stringify(data)], {
+      const file = new File([JSON.stringify(data)], 'body-proportions.json', {
         type: 'application/json',
       });
-      if (isTauri) {
-        save({
-          filters: [
-            {
-              name: l10n.getString('onboarding-choose_proportions-file_type'),
-              extensions: ['json'],
-            },
-          ],
-          defaultPath: 'body-proportions.json',
-        })
-          .then((path) =>
-            path ? writeTextFile(path, JSON.stringify(data)) : undefined
-          )
-          .catch((err) => {
-            error(err);
-          });
-      } else {
-        saveAs(blob, 'body-proportions.json');
-      }
+      saveFile({
+        isTauri,
+        file,
+        filters: [
+          {
+            name: l10n.getString('onboarding-choose_proportions-file_type'),
+            extensions: ['json'],
+          },
+        ],
+      });
     }
   );
 

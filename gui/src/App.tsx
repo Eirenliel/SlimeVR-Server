@@ -13,6 +13,7 @@ import { Serial } from './components/settings/pages/Serial';
 import { SettingsLayoutRoute } from './components/settings/SettingsLayout';
 import {
   useProvideWebsocketApi,
+  useWebsocketAPI,
   WebSocketApiContext,
 } from './hooks/websocket-api';
 
@@ -48,10 +49,17 @@ import { CalibrationTutorialPage } from './components/onboarding/pages/Calibrati
 import { AssignmentTutorialPage } from './components/onboarding/pages/assignment-preparation/AssignmentTutorial';
 import { open } from '@tauri-apps/api/shell';
 import semver from 'semver';
-import { useBreakpoint } from './hooks/breakpoint';
+import { useBreakpoint, useIsTauri } from './hooks/breakpoint';
 import { VRModePage } from './components/vr-mode/VRModePage';
 import { InterfaceSettings } from './components/settings/pages/InterfaceSettings';
 import { error, log } from './utils/logging';
+import {
+  ComputerDirectory,
+  RpcMessage,
+  SaveFileNotificationT,
+} from 'solarxr-protocol';
+import mime from 'mime-types';
+import { resolveDir, saveFile } from './utils/a11y';
 
 export const GH_REPO = 'SlimeVR/SlimeVR-Server';
 export const VersionContext = createContext('');
@@ -60,10 +68,43 @@ export const SLIMEVR_DISCORD = 'https://discord.gg/slimevr';
 
 function Layout() {
   const { loading } = useConfig();
+  const { isMobile } = useBreakpoint('mobile');
+  const isTauri = useIsTauri();
+  const { useRPCPacket } = useWebsocketAPI();
+
+  useRPCPacket(
+    RpcMessage.SaveFileNotification,
+    async (fileSave: SaveFileNotificationT) => {
+      if (!fileSave.data) return;
+      let filename =
+        typeof fileSave.expectedFilename === 'string'
+          ? fileSave.expectedFilename
+          : 'data';
+
+      let mimeType = 'application/octet-stream';
+      if (typeof fileSave.fileExtension === 'string') {
+        filename += fileSave.fileExtension;
+      } else if (typeof fileSave.mimeType === 'string') {
+        mimeType = fileSave.mimeType;
+        filename += mime.extension(mimeType);
+      }
+
+      const file = new File([Uint8Array.from(fileSave.data)], filename, {
+        type: mimeType,
+      });
+
+      saveFile({
+        isTauri,
+        file,
+        defaultPath: await resolveDir(
+          fileSave.expectedDir ?? ComputerDirectory.Documents
+        ).catch(() => undefined),
+      });
+    }
+  );
 
   if (loading) return <></>;
 
-  const { isMobile } = useBreakpoint('mobile');
   return (
     <>
       <SerialDetectionModal></SerialDetectionModal>
