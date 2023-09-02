@@ -42,6 +42,7 @@ body_part-LEFT_HAND = Left hand
 body_part-LEFT_UPPER_LEG = Left thigh
 body_part-LEFT_LOWER_LEG = Left ankle
 body_part-LEFT_FOOT = Left foot
+body_part-ACCESSORY = Accessory
 
 ## Proportions
 skeleton_bone-NONE = None
@@ -453,6 +454,8 @@ settings-osc-vrchat = VRChat OSC Trackers
 settings-osc-vrchat-description =
     Change VRChat-specific settings to receive HMD data and send
     tracker data for FBT without SteamVR (ex. Quest standalone).
+    This also allows you to receive trackers under the OSCTrackers standard.
+    This will also send accessory trackers' rotations for custom avatars.
 settings-osc-vrchat-enable = Enable
 settings-osc-vrchat-enable-description = Toggle the sending and receiving of data.
 settings-osc-vrchat-enable-label = Enable
@@ -480,7 +483,7 @@ settings-osc-vmc = Virtual Motion Capture
 # This cares about multilines
 settings-osc-vmc-description =
     Change settings specific to the VMC (Virtual Motion Capture) protocol
-        to send SlimeVR's bone data and receive bone data from other apps.
+        to send and received bone and tracker data from and to other apps.
 settings-osc-vmc-enable = Enable
 settings-osc-vmc-enable-description = Toggle the sending and receiving of data.
 settings-osc-vmc-enable-label = Enable

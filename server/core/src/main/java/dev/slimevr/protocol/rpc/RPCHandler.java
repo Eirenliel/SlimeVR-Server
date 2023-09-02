@@ -270,6 +270,10 @@ public class RPCHandler extends ProtocolHandler<RpcMessageHeader> {
 			tracker.getResetsHandler().setAllowDriftCompensation(req.allowDriftCompensation());
 		}
 
+		if (req.accessoryId() != 0) {
+			tracker.setAccessoryId(req.accessoryId());
+		}
+
 		this.api.server.trackerUpdated(tracker);
 	}
 

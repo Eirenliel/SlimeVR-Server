@@ -53,6 +53,7 @@ export function ManualMountingPage() {
       assignreq.trackerId = td.tracker.trackerId;
       assignreq.allowDriftCompensation =
         td.tracker.info?.allowDriftCompensation ?? true;
+      assignreq.accessoryId = td.tracker.info?.accessoryId || 0;
 
       sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
     });

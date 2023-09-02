@@ -92,6 +92,7 @@ export function TrackerSettingsPage() {
     assignreq.trackerId = tracker?.tracker.trackerId;
     if (allowDriftCompensation != null)
       assignreq.allowDriftCompensation = allowDriftCompensation;
+    assignreq.accessoryId = 1; // TODO
     sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
     setSelectBodypart(false);
   };

@@ -59,7 +59,6 @@ class VRServer @JvmOverloads constructor(
 	val trackersServer: TrackersUDPServer
 	private val bridges: MutableList<Bridge> = FastList()
 	private val tasks: Queue<Runnable> = LinkedBlockingQueue()
-	private val newTrackersConsumers: MutableList<Consumer<Tracker>> = FastList()
 	private val onTick: MutableList<Runnable> = FastList()
 	val oSCRouter: OSCRouter
 
@@ -186,16 +185,6 @@ class VRServer @JvmOverloads constructor(
 	}
 
 	@ThreadSafe
-	fun addNewTrackerConsumer(consumer: Consumer<Tracker>) {
-		queueTask {
-			newTrackersConsumers.add(consumer)
-			for (tracker in trackers) {
-				consumer.accept(tracker)
-			}
-		}
-	}
-
-	@ThreadSafe
 	fun trackerUpdated(tracker: Tracker?) {
 		queueTask {
 			humanPoseManager.trackerUpdated(tracker)
@@ -203,6 +192,11 @@ class VRServer @JvmOverloads constructor(
 			refreshTrackersDriftCompensationEnabled()
 			configManager.vrConfig.writeTrackerConfig(tracker)
 			configManager.saveConfig()
+			if (tracker != null) {
+				if (tracker.trackerPosition == TrackerPosition.ACCESSORY) {
+					vrcOSCHandler.addAccessoryTracker(tracker)
+				}
+			}
 		}
 	}
 
@@ -258,6 +252,9 @@ class VRServer @JvmOverloads constructor(
 		if (tracker.isComputed) {
 			vMCHandler.addComputedTracker(tracker)
 		}
+		if (tracker.trackerPosition == TrackerPosition.ACCESSORY) {
+			vrcOSCHandler.addAccessoryTracker(tracker)
+		}
 		refreshTrackersDriftCompensationEnabled()
 	}
 
@@ -267,9 +264,6 @@ class VRServer @JvmOverloads constructor(
 		queueTask {
 			trackers.add(tracker)
 			trackerAdded(tracker)
-			for (tc in newTrackersConsumers) {
-				tc.accept(tracker)
-			}
 		}
 	}
 

@@ -28,7 +28,8 @@ import io.github.axisangles.ktmath.Vector3
 import java.io.IOException
 import java.net.InetAddress
 import java.net.InetSocketAddress
-import java.util.*
+import java.util.Timer
+import java.util.TimerTask
 
 private const val OFFSET_SLERP_FACTOR = 0.5f // Guessed from eyeing VRChat
 
@@ -63,6 +64,7 @@ class VRCOSCHandler(
 	private val postReceivingOffset = EulerAngles(EulerOrder.YXZ, 0f, FastMath.PI, 0f).toQuaternion()
 	private var timeAtLastReceivedRotationOffset = System.currentTimeMillis()
 	private var fpsTimer: NanoTimer? = null
+	private val accessoryTrackers: MutableList<Tracker> = FastList()
 
 	init {
 		refreshSettings(false)
@@ -329,6 +331,7 @@ class VRCOSCHandler(
 			// Create new bundle
 			val bundle = OSCBundle()
 
+			// Send computed trackers as OSC Trackers
 			for (i in computedTrackers.indices) {
 				if (trackersEnabled[i]) {
 					// Send regular trackers' positions
@@ -353,12 +356,7 @@ class VRCOSCHandler(
 					// Y quaternion represents a rotation from z to x
 					// When we negate the z direction, X and Y quaternion
 					// components must be negated.
-					val (_, x2, y2, z2) = Quaternion(
-						w,
-						-x1,
-						-y1,
-						z1
-					).toEulerAngles(EulerOrder.YXZ)
+					val (_, x2, y2, z2) = Quaternion(w, -x1, -y1, z1).toEulerAngles(EulerOrder.YXZ)
 					oscArgs.clear()
 					oscArgs.add(x2 * FastMath.RAD_TO_DEG)
 					oscArgs.add(y2 * FastMath.RAD_TO_DEG)
@@ -383,6 +381,27 @@ class VRCOSCHandler(
 							oscArgs.clone()
 						)
 					)
+				}
+			}
+
+			// Send accessory trackers for custom avatars
+			for (i in accessoryTrackers.indices) {
+				if (accessoryTrackers[i].trackerPosition == TrackerPosition.ACCESSORY && accessoryTrackers[i].status.sendData) {
+					val (_, x, y, z) = accessoryTrackers[i].getRotation().toEulerAngles(EulerOrder.YZX)
+					// Note: we must send the rotations as -1 to 1
+					// https://creators.vrchat.com/avatars/animator-parameters/#parameter-types
+					// Horizontal
+					oscArgs.clear()
+					oscArgs.add(x / FastMath.PI)
+					bundle.addPacket(OSCMessage("/avatar/parameters/SVRAccessory${accessoryTrackers[i].accessoryId}X", oscArgs.clone()))
+					// Vertical
+					oscArgs.clear()
+					oscArgs.add(y / FastMath.PI)
+					bundle.addPacket(OSCMessage("/avatar/parameters/SVRAccessory${accessoryTrackers[i].accessoryId}Y", oscArgs.clone()))
+					// Twist
+					oscArgs.clear()
+					oscArgs.add(z / FastMath.PI)
+					bundle.addPacket(OSCMessage("/avatar/parameters/SVRAccessory${accessoryTrackers[i].accessoryId}Z", oscArgs.clone()))
 				}
 			}
 
@@ -448,6 +467,17 @@ class VRCOSCHandler(
 				LogManager
 					.warning("[VRCOSCHandler] Error sending OSC message to VRChat: $e")
 			}
+		}
+	}
+
+	/**
+	 * Adds an accessory tracker to the list of trackers to send.
+	 *
+	 * @param tracker the accessory tracker
+	 */
+	fun addAccessoryTracker(tracker: Tracker) {
+		if (!accessoryTrackers.contains(tracker)) {
+			accessoryTrackers.add(tracker)
 		}
 	}
 

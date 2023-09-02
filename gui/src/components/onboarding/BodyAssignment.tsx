@@ -293,6 +293,19 @@ export function BodyAssignment({
                 direction="left"
               />
             </div>
+
+            {advanced && (
+              <div className="flex flex-col gap-2">
+                <TrackerPartCard
+                  onlyAssigned={onlyAssigned}
+                  roleError={rolesWithErrors[BodyPart.ACCESSORY]?.label}
+                  td={trackerPartGrouped[BodyPart.ACCESSORY]}
+                  role={BodyPart.ACCESSORY}
+                  onClick={() => onRoleSelected(BodyPart.ACCESSORY)}
+                  direction="left"
+                />
+              </div>
+            )}
           </div>
         }
       ></BodyInteractions>

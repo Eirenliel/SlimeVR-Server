@@ -195,6 +195,7 @@ export function TrackersAssignPage() {
       assignreq.trackerId = trackerId;
       assignreq.allowDriftCompensation =
         tracker?.tracker?.info?.allowDriftCompensation ?? true;
+      assignreq.accessoryId = 1; // TODO
 
       sendRPCPacket(RpcMessage.AssignTrackerRequest, assignreq);
     };

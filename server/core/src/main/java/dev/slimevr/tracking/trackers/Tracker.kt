@@ -77,6 +77,7 @@ class Tracker @JvmOverloads constructor(
 	var signalStrength: Int? = null
 	var temperature: Float? = null
 	var customName: String? = null
+	var accessoryId: Int? = null
 
 	/**
 	 * If the tracker has gotten disconnected after it was initialized first time
@@ -209,6 +210,9 @@ class Tracker @JvmOverloads constructor(
 		config.customName?.let {
 			customName = it
 		}
+		config.accessoryId?.let {
+			accessoryId = it
+		}
 		config.designation?.let { designation ->
 			getByDesignation(designation)?.let { trackerPosition = it }
 		} ?: run { trackerPosition = null }
@@ -238,6 +242,7 @@ class Tracker @JvmOverloads constructor(
 	fun writeConfig(config: TrackerConfig) {
 		trackerPosition?.let { config.designation = it.designation } ?: run { config.designation = null }
 		customName?.let { config.customName = it }
+		accessoryId?.let { config.accessoryId = it }
 		if (needsMounting) {
 			config.mountingOrientation = resetsHandler.mountingOrientation
 		}
