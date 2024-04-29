@@ -17,7 +17,7 @@ object FloatMath {
 	const val ZERO_TOLERANCE_D: Double = 0.0001
 
 	val SQRT_TWO: Float = kotlin.math.sqrt(2.0).toFloat()
-	val INV_SQRT_TWO: Float = 1f / SQRT_TWO
+	val INV_SQRT_TWO: Float = (1.0 / kotlin.math.sqrt(2.0)).toFloat()
 	val SQRT_THREE: Float = kotlin.math.sqrt(3.0).toFloat()
 	val INV_SQRT_THREE: Float = 1f / SQRT_THREE
 	const val TWO_FPI: Float = PI * 2
