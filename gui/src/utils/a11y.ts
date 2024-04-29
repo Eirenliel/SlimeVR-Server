@@ -15,7 +15,7 @@ export function waitUntil(
   tries?: number
 ): Promise<void> {
   return new Promise((resolve, rej) => {
-    const isPromise = typeof condition() === 'boolean';
+    const isPromise = typeof condition() !== 'boolean';
     const interval = setInterval(() => {
       if (tries && --tries === 0) {
         error(new Error('waitUntil ran out of tries'));

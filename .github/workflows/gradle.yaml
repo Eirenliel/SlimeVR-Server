@@ -255,7 +255,7 @@ jobs:
 
       - name: Build
         run: |
-          rustup target add aarch64-apple-darwin
+          rustup target add x86_64-apple-darwin
           pnpm i
           pnpm run tauri build --target universal-apple-darwin
 
