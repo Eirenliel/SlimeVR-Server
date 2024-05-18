@@ -2,7 +2,7 @@
 * @Eirenliel
 
 # Make everyone be able to approve SolarXR submodule changes
-/solarxr-protocol @ButterscotchV @Louka3000 @ImUrX
+/solarxr-protocol @ButterscotchV @Erimelowo @ImUrX
 
 # Make Loucas and Uriel the owners of all GUI stuff
 /gui/ @ImUrX
@@ -10,26 +10,26 @@
 /pnpm-workspace.yaml @ImUrX
 
 # Uriel and Erimel responsible for i18n
-/gui/public/i18n/ @ImUrX @Louka3000
-/gui/src/i18n/ @ImUrX @Louka3000
-/l10n.toml @ImUrX @Louka3000
+/gui/public/i18n/ @ImUrX @Erimelowo
+/gui/src/i18n/ @ImUrX @Erimelowo
+/l10n.toml @ImUrX @Erimelowo
 
-/gui/src/components/settings/ @Louka3000 @ImUrX
+/gui/src/components/settings/ @Erimelowo @ImUrX
 
 # Rust part of the GUI
 /gui/src-tauri/ @ImUrX
 /Cargo.lock @ImUrX
 
 # Some server code~
-/server/ @ButterscotchV @Eirenliel @Louka3000
+/server/ @ButterscotchV @Eirenliel @Erimelowo
 
 /server/src/main/java/dev/slimevr/autobone/ @ButterscotchV
 /server/src/main/java/dev/slimevr/poserecorder/ @ButterscotchV
 /server/src/main/java/dev/slimevr/posestreamer/ @ButterscotchV
 
-/server/src/main/java/dev/slimevr/osc/ @Louka3000
-/server/src/main/java/dev/slimevr/tracking/processor/ @Louka3000
-/server/src/main/java/dev/slimevr/filtering/ @Louka3000
+/server/src/main/java/dev/slimevr/osc/ @Erimelowo
+/server/src/main/java/dev/slimevr/tracking/processor/ @Erimelowo
+/server/src/main/java/dev/slimevr/filtering/ @Erimelowo
 
 # Linux files
 *.nix @ImUrX
