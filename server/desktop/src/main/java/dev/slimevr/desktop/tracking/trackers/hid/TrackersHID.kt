@@ -235,8 +235,7 @@ class TrackersHID(name: String, private val trackersConsumer: Consumer<Tracker>)
 						// x y z w -> w x y z
 						var rot = Quaternion(q[3].toFloat(), q[0].toFloat(), q[1].toFloat(), q[2].toFloat())
 						val scaleRot = 1 / (1 shl 15).toFloat() // compile time evaluation
-						rot *= scaleRot // no division
-						rot = axisOffset(rot)
+						rot = axisOffset(rot * scaleRot) // no division
 						tracker.setRotation(rot)
 						// TODO: I think the acceleration is wrong???
 						// Yes it was. And rotation was wrong too.
