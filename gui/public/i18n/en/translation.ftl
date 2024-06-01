@@ -44,6 +44,7 @@ body_part-LEFT_HAND = Left hand
 body_part-LEFT_UPPER_LEG = Left thigh
 body_part-LEFT_LOWER_LEG = Left ankle
 body_part-LEFT_FOOT = Left foot
+body_part-PLAYSPACE = Playspace (motion compensation)
 
 ## Proportions
 skeleton_bone-NONE = None

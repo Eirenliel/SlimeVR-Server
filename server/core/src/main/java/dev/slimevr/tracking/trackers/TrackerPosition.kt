@@ -36,6 +36,7 @@ enum class TrackerPosition(
 	RIGHT_HAND("body:right_hand", TrackerRole.RIGHT_HAND, BodyPart.RIGHT_HAND),
 	LEFT_SHOULDER("body:left_shoulder", TrackerRole.LEFT_SHOULDER, BodyPart.LEFT_SHOULDER),
 	RIGHT_SHOULDER("body:right_shoulder", TrackerRole.RIGHT_SHOULDER, BodyPart.RIGHT_SHOULDER),
+	PLAYSPACE("body:playspace", null, BodyPart.PLAYSPACE),
 	;
 
 	/**

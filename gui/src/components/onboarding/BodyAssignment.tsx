@@ -307,6 +307,16 @@ export function BodyAssignment({
                 onClick={() => onRoleSelected(SIDES[right].foot)}
                 direction="left"
               />
+              {advanced && (
+                <TrackerPartCard
+                  onlyAssigned={onlyAssigned}
+                  roleError={rolesWithErrors[BodyPart.PLAYSPACE]?.label}
+                  td={trackerPartGrouped[BodyPart.PLAYSPACE]}
+                  role={BodyPart.PLAYSPACE}
+                  onClick={() => onRoleSelected(BodyPart.PLAYSPACE)}
+                  direction="left"
+                />
+              )}
             </div>
           </div>
         }

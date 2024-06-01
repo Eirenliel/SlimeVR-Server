@@ -342,7 +342,7 @@ class HumanPoseManager(val server: VRServer?) {
 	 */
 	val trackersToReset: List<Tracker?>
 		get() =
-			server?.allTrackers ?: skeleton.localTrackers
+			server?.allTrackers ?: skeleton.trackersToReset
 
 	/**
 	 * @return the head bone, which is the root of the skeleton

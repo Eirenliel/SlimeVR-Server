@@ -185,6 +185,7 @@ export class BoneKind extends Bone {
 
   get boneColor(): Color {
     switch (this.boneT.bodyPart) {
+      case BodyPart.PLAYSPACE:
       case BodyPart.NONE:
         throw 'Unexpected body part';
       case BodyPart.HEAD:
@@ -230,6 +231,7 @@ export class BoneKind extends Bone {
 
   static children(part: BodyPart): BodyPart[] {
     switch (part) {
+      case BodyPart.PLAYSPACE:
       case BodyPart.NONE:
         throw 'Unexpected body part';
       case BodyPart.HEAD:
@@ -283,6 +285,7 @@ export class BoneKind extends Bone {
 
   static parent(part: BodyPart): BodyPart | null {
     switch (part) {
+      case BodyPart.PLAYSPACE:
       case BodyPart.NONE:
         throw 'Unexpected body part';
       case BodyPart.HEAD:
