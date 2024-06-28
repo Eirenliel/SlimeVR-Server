@@ -42,6 +42,7 @@ enum class BoardType(val id: UInt) {
 	WRANGLER(14u),
 	MOCOPI(15u),
 	WEMOSWROOM02(16u),
+	GESTURES1(17u),
 	DEV_RESERVED(250u),
 	;
 
@@ -63,6 +64,7 @@ enum class BoardType(val id: UInt) {
 		WRANGLER -> "Wrangler Joycons"
 		MOCOPI -> "Sony Mocopi"
 		WEMOSWROOM02 -> "Wemos Wroom-02 D1 Mini"
+		GESTURES1 -> "Gestures Mark 1"
 		DEV_RESERVED -> "Prototype"
 	}
 
