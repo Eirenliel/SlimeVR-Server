@@ -42,6 +42,7 @@ typealias SteamBridgeProvider = (
 ) -> ISteamVRBridge?
 
 const val SLIMEVR_IDENTIFIER = "dev.slimevr.SlimeVR"
+const val CONFIG_FILENAME = "vrconfig.yml"
 
 class VRServer @JvmOverloads constructor(
 	driverBridgeProvider: SteamBridgeProvider = { _, _ -> null },

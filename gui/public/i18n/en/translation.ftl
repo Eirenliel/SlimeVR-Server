@@ -280,6 +280,7 @@ settings-sidebar-utils = Utilities
 settings-sidebar-serial = Serial console
 settings-sidebar-appearance = Appearance
 settings-sidebar-notifications = Notifications
+settings-sidebar-profiles = Profiles
 settings-sidebar-advanced = Advanced
 
 ## SteamVR settings
@@ -603,6 +604,44 @@ settings-osc-vmc-anchor_hip-label = Anchor at hips
 settings-osc-vmc-mirror_tracking = Mirror tracking
 settings-osc-vmc-mirror_tracking-description = Mirror the tracking horizontally.
 settings-osc-vmc-mirror_tracking-label = Mirror tracking
+
+## Profile settings
+settings-utils-profiles = Profiles
+settings-utils-profiles-description = Manage your settings profiles to quickly switch between settings: GUI, tracking, body proportions, etc.
+
+settings-utils-profiles-default = Default profile
+
+settings-utils-profiles-profile = Current profile
+settings-utils-profiles-profile-description = Choose a profile to load or save your settings to.
+
+settings-utils-profiles-new = Create new profile
+settings-utils-profiles-new-description = Create a new profile with the defaults or your current settings.
+settings-utils-profiles-new-label = Create
+settings-utils-profiles-modal =
+    Would you like to use the default settings or copy your current
+    settings for your new profile?
+settings-utils-profiles-modal-default = Default settings
+settings-utils-profiles-modal-copy = Copy settings
+settings-utils-profiles-modal-cancel = Cancel
+
+settings-utils-profiles-new-cant =
+    This profile name contains invalid characters or already exists.
+    Please choose another name.
+settings-utils-profiles-new-cant-ok = OK
+
+settings-utils-profiles-delete = Delete profile
+settings-utils-profiles-delete-description = Delete the selected profile.
+settings-utils-profiles-delete-label = Delete profile
+settings-utils-profiles-delete-warning =
+    <b>Warning:</b> This will delete the selected profile ({ $name }).
+    Are you sure you want to do this?
+settings-utils-profiles-delete-warning-done = Yes
+settings-utils-profiles-delete-warning-cancel = Cancel
+
+settings-utils-profiles-delete-cant =
+    You cannot delete this profile ({ $name }). Please select
+    another profile to delete.
+settings-utils-profiles-delete-cant-ok = OK
 
 ## Advanced settings
 settings-utils-advanced = Advanced

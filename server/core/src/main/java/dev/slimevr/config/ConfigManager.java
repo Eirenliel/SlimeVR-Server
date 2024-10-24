@@ -20,7 +20,7 @@ import java.nio.file.*;
 
 public class ConfigManager {
 
-	private final String configPath;
+	private String configPath;
 
 	private final ObjectMapper om;
 
@@ -53,7 +53,11 @@ public class ConfigManager {
 
 		if (this.vrConfig == null) {
 			this.vrConfig = new VRConfig();
+			LogManager.info("VRConfig not found, using default values");
+			return;
 		}
+
+		LogManager.info("Config loaded from \"" + configPath + "\"");
 	}
 
 	public void atomicMove(Path from, Path to) throws IOException {
@@ -142,6 +146,16 @@ public class ConfigManager {
 	public void resetConfig() {
 		this.vrConfig = new VRConfig();
 		saveConfig();
+	}
+
+	public void setConfigPath(String newPath) {
+		if (newPath.equals(configPath)) {
+			return;
+		}
+		this.configPath = newPath;
+		loadConfig();
+		saveConfig();
+		LogManager.info("Config path set to \"" + configPath + "\"");
 	}
 
 	public VRConfig getVrConfig() {

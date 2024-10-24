@@ -7,6 +7,7 @@ import android.net.wifi.WifiManager
 import androidx.appcompat.app.AppCompatActivity
 import dev.slimevr.Keybinding
 import dev.slimevr.VRServer
+import dev.slimevr.CONFIG_FILENAME
 import dev.slimevr.android.serial.AndroidSerialHandler
 import io.eiren.util.logging.LogManager
 import io.ktor.http.CacheControl
@@ -50,7 +51,7 @@ fun main(activity: AppCompatActivity) {
 
 		try {
 			vrServer = VRServer(
-				configPath = File(activity.filesDir, "vrconfig.yml").absolutePath,
+				configPath = File(activity.filesDir, CONFIG_FILENAME).absolutePath,
 				serialHandlerProvider = { _ -> AndroidSerialHandler(activity) },
 				acquireMulticastLock = {
 					val wifi = activity.getSystemService(Context.WIFI_SERVICE) as WifiManager

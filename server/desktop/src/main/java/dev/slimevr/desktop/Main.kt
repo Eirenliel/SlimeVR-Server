@@ -4,6 +4,7 @@ package dev.slimevr.desktop
 
 import dev.slimevr.Keybinding
 import dev.slimevr.SLIMEVR_IDENTIFIER
+import dev.slimevr.CONFIG_FILENAME
 import dev.slimevr.VRServer
 import dev.slimevr.bridge.ISteamVRBridge
 import dev.slimevr.desktop.platform.SteamVRBridge
@@ -235,7 +236,6 @@ fun provideFeederBridge(
 	return feederBridge
 }
 
-const val CONFIG_FILENAME = "vrconfig.yml"
 fun resolveConfig(): String {
 	// If config folder exists, then save config on relative path
 	if (Path("config/").exists()) {

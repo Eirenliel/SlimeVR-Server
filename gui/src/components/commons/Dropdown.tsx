@@ -156,7 +156,7 @@ export function Dropdown({
     //    Works but have a slight delay when resizing, kinda looks laggy
     // 2 - We close the dropdown on resize.
     //     We could consider this as the same as clicking outside of the dropdown
-    //     This is the approach choosen RN
+    //     This is the approach chosen RN
     setOpen(false);
   };
 

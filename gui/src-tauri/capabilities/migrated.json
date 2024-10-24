@@ -22,13 +22,15 @@
     "core:window:allow-show",
     "core:window:allow-set-focus",
     "core:window:allow-set-decorations",
-    "store:default",
     "os:allow-os-type",
     "dialog:allow-save",
     "shell:allow-open",
-    "store:allow-get",
-    "store:allow-set",
-    "store:allow-save",
-    "fs:allow-write-text-file"
+    "store:default",
+    "fs:default",
+    "fs:allow-config-write-recursive",
+    {
+      "identifier": "fs:scope",
+      "allow": [{ "path": "$APP" }, { "path": "$APP/*" }]
+    }
   ]
 }

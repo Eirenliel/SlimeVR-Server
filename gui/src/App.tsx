@@ -55,6 +55,7 @@ import { AppLayout } from './AppLayout';
 import { Preload } from './components/Preload';
 import { UnknownDeviceModal } from './components/UnknownDeviceModal';
 import { useDiscordPresence } from './hooks/discord-presence';
+import { ProfileSettings } from './components/settings/pages/Profiles';
 import { AdvancedSettings } from './components/settings/pages/AdvancedSettings';
 
 export const GH_REPO = 'SlimeVR/SlimeVR-Server';
@@ -111,6 +112,7 @@ function Layout() {
             <Route path="osc/vrchat" element={<VRCOSCSettings />} />
             <Route path="osc/vmc" element={<VMCSettings />} />
             <Route path="interface" element={<InterfaceSettings />} />
+            <Route path="profiles" element={<ProfileSettings />} />
             <Route path="advanced" element={<AdvancedSettings />} />
           </Route>
           <Route
@@ -197,7 +199,7 @@ export default function App() {
         setUpdateFound(releases[0].tag_name);
       }
     }
-    fetchReleases().catch(() => error('failed to fetch releases'));
+    fetchReleases().catch((e) => error(`Failed to fetch releases: ${e}`));
   }, []);
 
   if (isTauri) {
@@ -237,11 +239,11 @@ export default function App() {
               )
             );
           } else if (eventType === 'error') {
-            error('Error: %s', s);
+            error(`Error: ${s}`);
           } else if (eventType === 'terminated') {
-            error('Server Process Terminated: %s', s);
+            error(`Server Process Terminated: ${s}`);
           } else if (eventType === 'other') {
-            log('Other process event: %s', s);
+            log(`Other process event: ${s}`);
           }
         }
       );

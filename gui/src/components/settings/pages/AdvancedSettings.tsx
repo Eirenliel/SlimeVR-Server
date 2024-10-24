@@ -42,8 +42,8 @@ export function AdvancedSettings() {
     try {
       const configPath = await appConfigDir();
       await open('file://' + configPath);
-    } catch (err) {
-      error('Failed to open config folder:', err);
+    } catch (e) {
+      error('Failed to open config folder:', e);
     }
   };
 

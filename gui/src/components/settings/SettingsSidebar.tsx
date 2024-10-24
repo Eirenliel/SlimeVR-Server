@@ -102,6 +102,11 @@ export function SettingsSidebar() {
             </SettingsLink>
           </div>
           <div className="flex flex-col gap-2">
+            <SettingsLink to="/settings/profiles">
+              {l10n.getString('settings-sidebar-profiles')}
+            </SettingsLink>
+          </div>
+          <div className="flex flex-col gap-2">
             <SettingsLink to="/settings/advanced">
               {l10n.getString('settings-sidebar-advanced')}
             </SettingsLink>
