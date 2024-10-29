@@ -4,6 +4,7 @@ import dev.slimevr.VRServer
 import dev.slimevr.config.TrackerConfig
 import dev.slimevr.tracking.trackers.TrackerPosition.Companion.getByDesignation
 import dev.slimevr.tracking.trackers.udp.IMUType
+import io.eiren.math.FloatMath.INV_SQRT_TWO
 import io.eiren.util.BufferedTimer
 import io.github.axisangles.ktmath.Quaternion
 import io.github.axisangles.ktmath.Vector3
@@ -391,4 +392,12 @@ class Tracker @JvmOverloads constructor(
 	 */
 	val tps: Float
 		get() = timer.averageFPS
+
+	companion object {
+		/**
+		 * Changes from IMU axis to OpenGL/SteamVR axis
+		 */
+		fun axisOffset(v: Vector3): Vector3 = Vector3(v.x, v.z, -v.y)
+		fun axisOffset(q: Quaternion): Quaternion = Quaternion(INV_SQRT_TWO, -INV_SQRT_TWO, 0f, 0f) * q
+	}
 }

@@ -1,15 +1,13 @@
 package dev.slimevr.tracking.trackers.udp
 
-import com.jme3.math.FastMath
 import dev.slimevr.NetworkProtocol
 import dev.slimevr.VRServer
 import dev.slimevr.tracking.trackers.Tracker
+import dev.slimevr.tracking.trackers.Tracker.Companion.axisOffset
 import dev.slimevr.tracking.trackers.TrackerStatus
 import io.eiren.util.Util
 import io.eiren.util.collections.FastList
 import io.eiren.util.logging.LogManager
-import io.github.axisangles.ktmath.Quaternion.Companion.fromRotationVector
-import io.github.axisangles.ktmath.Vector3
 import org.apache.commons.lang3.ArrayUtils
 import solarxr_protocol.rpc.ResetType
 import java.net.DatagramPacket
@@ -317,13 +315,12 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 
 			is RotationPacket -> {
 				var rot = packet.rotation
-				rot = AXES_OFFSET.times(rot)
+				rot = axisOffset(rot)
 				tracker = connection?.getTracker(packet.sensorId)
 				if (tracker == null) return
 				tracker.setRotation(rot)
 				if (packet is UDPPacket23RotationAndAcceleration) {
-					// Switch x and y around to adjust for different axes
-					tracker.setAcceleration(Vector3(packet.acceleration.y, packet.acceleration.x, packet.acceleration.z))
+					tracker.setAcceleration(axisOffset(packet.acceleration))
 				}
 				tracker.dataTick()
 			}
@@ -332,7 +329,7 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 				tracker = connection?.getTracker(packet.sensorId)
 				if (tracker == null) return
 				var rot17 = packet.rotation
-				rot17 = AXES_OFFSET * rot17
+				rot17 = axisOffset(rot17)
 				when (packet.dataType) {
 					UDPPacket17RotationData.DATA_TYPE_NORMAL -> {
 						tracker.setRotation(rot17)
@@ -355,8 +352,7 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 			is UDPPacket4Acceleration -> {
 				tracker = connection?.getTracker(packet.sensorId)
 				if (tracker == null) return
-				// Switch x and y around to adjust for different axes
-				tracker.setAcceleration(Vector3(packet.acceleration.y, packet.acceleration.x, packet.acceleration.z))
+				tracker.setAcceleration(axisOffset(packet.acceleration))
 			}
 
 			is UDPPacket10PingPong -> {
@@ -495,10 +491,6 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 	}
 
 	companion object {
-		/**
-		 * Change between IMU axes and OpenGL/SteamVR axes
-		 */
-		private val AXES_OFFSET = fromRotationVector(-FastMath.HALF_PI, 0f, 0f)
 		private const val RESET_SOURCE_NAME = "TrackerServer"
 		private fun packetToString(packet: DatagramPacket?): String {
 			val sb = StringBuilder()

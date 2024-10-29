@@ -1,14 +1,13 @@
 package dev.slimevr.desktop.tracking.trackers.hid
 
-import com.jme3.math.FastMath
 import dev.slimevr.VRServer
 import dev.slimevr.tracking.trackers.Device
 import dev.slimevr.tracking.trackers.Tracker
+import dev.slimevr.tracking.trackers.Tracker.Companion.axisOffset
 import dev.slimevr.tracking.trackers.TrackerStatus
 import dev.slimevr.tracking.trackers.udp.IMUType
 import io.eiren.util.logging.LogManager
 import io.github.axisangles.ktmath.Quaternion
-import io.github.axisangles.ktmath.Quaternion.Companion.fromRotationVector
 import io.github.axisangles.ktmath.Vector3
 import org.hid4java.HidDevice
 import org.hid4java.HidException
@@ -252,13 +251,14 @@ class TrackersHID(name: String, private val trackersConsumer: Consumer<Tracker>)
 						// x y z w -> w x y z
 						var rot = Quaternion(q[3].toFloat(), q[0].toFloat(), q[1].toFloat(), q[2].toFloat())
 						val scaleRot = 1 / (1 shl 15).toFloat() // compile time evaluation
-						rot = AXES_OFFSET.times(scaleRot).times(rot) // no division
+						rot = axisOffset(rot * scaleRot) // no division
 						tracker.setRotation(rot)
 						// TODO: I think the acceleration is wrong???
 						// Yes it was. And rotation was wrong too.
 						// At lease we have fixed the fixed point decoding.
 						val scaleAccel = 1 / (1 shl 7).toFloat() // compile time evaluation
 						var acceleration = Vector3(a[0].toFloat(), a[1].toFloat(), a[2].toFloat()).times(scaleAccel) // no division
+						acceleration = axisOffset(acceleration)
 						tracker.setAcceleration(acceleration)
 						tracker.dataTick()
 						i += 20
@@ -323,10 +323,6 @@ class TrackersHID(name: String, private val trackersConsumer: Consumer<Tracker>)
 	}
 
 	companion object {
-		/**
-		 * Change between IMU axes and OpenGL/SteamVR axes
-		 */
-		private val AXES_OFFSET = fromRotationVector(-FastMath.HALF_PI, 0f, 0f)
 		private const val resetSourceName = "TrackerServer"
 	}
 }
