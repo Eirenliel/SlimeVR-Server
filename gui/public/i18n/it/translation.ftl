@@ -131,7 +131,7 @@ widget-drift_compensation-clear = Rimuovi compensazione per il drift
 
 ## Widget: Clear Reset Mounting
 
-widget-clear_mounting = Ripristina impostazioni di reset posizionamento
+widget-clear_mounting = Cancella tutti i ripristini posizionamento
 
 ## Widget: Developer settings
 
@@ -193,7 +193,7 @@ tracker-rotation-back = Dietro
 tracker-rotation-back_left = Posteriore sinistra
 tracker-rotation-back_right = Posteriore destra
 tracker-rotation-custom = Personalizzata
-tracker-rotation-overriden = (sovrascritto dal reset posizionamento)
+tracker-rotation-overriden = (sovrascritto dal ripristino posizionamento)
 
 ## Tracker information
 
@@ -367,7 +367,7 @@ settings-general-tracker_mechanics-filtering-type-smoothing-description = Attenu
 settings-general-tracker_mechanics-filtering-type-prediction = Predizione
 settings-general-tracker_mechanics-filtering-type-prediction-description = Riduce ritardo e rende movimenti più istantanei, ma può introdurre tremolio.
 settings-general-tracker_mechanics-filtering-amount = Quantità
-settings-general-tracker_mechanics-yaw-reset-smooth-time = Tempo di attenuazione del reset orientamento (0 secondi disabilita l'attenuazione)
+settings-general-tracker_mechanics-yaw-reset-smooth-time = Tempo di attenuazione del ripristino orientamento (0 secondi disabilita l'attenuazione)
 settings-general-tracker_mechanics-drift_compensation = Compensazione per il drift
 # This cares about multilines
 settings-general-tracker_mechanics-drift_compensation-description = Compensa il drift di orientamento degli IMU applicando una rotazione inversa. Modifica la forza della compensazione e il massimo numero di reset che sono presi in considerazione.
@@ -379,20 +379,20 @@ settings-general-tracker_mechanics-drift_compensation-prediction-description =
     Abilita questa opzione se i tuoi tracker perdono continuano l'orientamento.
 settings-general-tracker_mechanics-drift_compensation-prediction-label = Compensazione del drift predittiva
 settings-general-tracker_mechanics-drift_compensation_warning =
-    <b>Attenzione:</b> Utilizzare la compensazione del drift solo se è necessario il reset
+    <b>Attenzione:</b> Utilizzare la compensazione del drift solo se è necessario il ripristino 
     molto spesso (ogni ~5-10 minuti).
     
-    Alcune IMU soggetti a frequenti reset includono:
+    Alcune IMU che sono soggetti a frequenti ripristini includono:
     Joy-Con, owoTrack e MPU (senza firmware recente).
 settings-general-tracker_mechanics-drift_compensation_warning-cancel = Annulla
 settings-general-tracker_mechanics-drift_compensation_warning-done = Capisco
 settings-general-tracker_mechanics-drift_compensation-amount-label = Grado di compensazione
-settings-general-tracker_mechanics-drift_compensation-max_resets-label = Utilizza fino a x ultimi reset
-settings-general-tracker_mechanics-save_mounting_reset = Salva automaticamente la calibrazione del posizionamento
+settings-general-tracker_mechanics-drift_compensation-max_resets-label = Utilizza fino a x ultimi ripristini
+settings-general-tracker_mechanics-save_mounting_reset = Salva automaticamente la calibrazione del ripristino del posizionamento
 settings-general-tracker_mechanics-save_mounting_reset-description =
-    Salva in automatico la calibrazione del posizionamento per i tracker tra un riavvio e l'altro. Utile
+    Salva in automatico la calibrazione del ripristino del posizionamento per i tracker tra un riavvio e l'altro. Utile
     quando si indossa una tuta in cui la posizione e orientamento dei tracker non cambia tra una sessione e l'altra. <b>Non raccomandato per gli utenti standard!</b>
-settings-general-tracker_mechanics-save_mounting_reset-enabled-label = Salva reset posizionamento
+settings-general-tracker_mechanics-save_mounting_reset-enabled-label = Salva il ripristino del posizionamento
 settings-general-tracker_mechanics-use_mag_on_all_trackers = Utilizza il magnetometro su tutti i tracker IMU che lo supportano
 settings-general-tracker_mechanics-use_mag_on_all_trackers-description =
     Utilizza il magnetometro su tutti i tracker che dispongono di un firmware compatibile, riducendo il drift in ambienti magnetici stabili.
@@ -414,26 +414,26 @@ settings-general-fk_settings-leg_tweak-skating_correction = Correzione slittamen
 settings-general-fk_settings-leg_tweak-toe_snap = Dita dei piedi piantate
 settings-general-fk_settings-leg_tweak-foot_plant = Piedi piantati
 settings-general-fk_settings-leg_tweak-skating_correction-amount = Forza fattore di correzione slittamento
-settings-general-fk_settings-leg_tweak-skating_correction-description = "Correzione slittamento" corregge l'effetto che fa sembrare che pattini sul ghiaccio, ma può peggiorare la precisione di certi movimenti. Quando abiliti questa funzione é necessario eseguire un reset completo e ri-calibrazione in gioco per il corretto funzionamento.
-settings-general-fk_settings-leg_tweak-floor_clip-description = "Compenetrazione pavimento" può ridurre o anche eliminare completamente la compenetrazione con il pavimento. Quando abiliti questa funzione é necessario eseguire un reset completo e ri-calibrazione in gioco per il corretto funzionamento.
+settings-general-fk_settings-leg_tweak-skating_correction-description = "Correzione slittamento" corregge l'effetto che fa sembrare che pattini sul ghiaccio, ma può peggiorare la precisione di certi movimenti. Quando abiliti questa funzione é necessario eseguire un ripristino completo e ri-calibrazione in gioco per il corretto funzionamento.
+settings-general-fk_settings-leg_tweak-floor_clip-description = "Compenetrazione pavimento" può ridurre o anche eliminare completamente la compenetrazione con il pavimento. Quando abiliti questa funzione é necessario eseguire un ripristino completo e ri-calibrazione in gioco per il corretto funzionamento.
 settings-general-fk_settings-leg_tweak-toe_snap-description = "Dita dei piedi piantate" prova ad indovinare la rotazione dei tuoi piedi quando non stai usando dei tracker per i piedi.
 settings-general-fk_settings-leg_tweak-foot_plant-description = "Piedi piantati" ruota i piedi in modo tale che siano paralleli al terreno quando in contatto con esso.
 settings-general-fk_settings-leg_fk = Tracking delle gambe
-settings-general-fk_settings-leg_fk-reset_mounting_feet-description = Abilita Reset posizionamento dei piedi mettendosi in punta di piedi.
-settings-general-fk_settings-leg_fk-reset_mounting_feet = Reset posizionamento dei piedi
+settings-general-fk_settings-leg_fk-reset_mounting_feet-description = Abilita il ripristino di posizionamento dei piedi mettendosi in punta di piedi.
+settings-general-fk_settings-leg_fk-reset_mounting_feet = Ripristino del posizionamento dei piedi
 settings-general-fk_settings-arm_fk = Tracking delle braccia
 settings-general-fk_settings-arm_fk-description = Forza il calcolo della posizione delle braccia a utilizzare il visore anche se la posizione delle mani é disponibile.
 settings-general-fk_settings-arm_fk-force_arms = Forza il calcolo delle braccia dal visore
 settings-general-fk_settings-reset_settings = Ripristina impostazioni
 settings-general-fk_settings-reset_settings-reset_hmd_pitch-description = Ripristina l'inclinazione dell'HMD (rotazione verticale) dopo un reset completo. Utile se si indossa un HMD sulla fronte per VTubing o mocap. Non abilitare per VR.
 settings-general-fk_settings-reset_settings-reset_hmd_pitch = Ripristina l'inclinazione dell'HMD
-settings-general-fk_settings-arm_fk-reset_mode-description = Cambia la posa delle braccia usata per il reset posizionamento.
+settings-general-fk_settings-arm_fk-reset_mode-description = Cambia la posa delle braccia usata per il ripristino del posizionamento.
 settings-general-fk_settings-arm_fk-back = Indietro
 settings-general-fk_settings-arm_fk-back-description = La modalità predefinita, con la parte superiori delle braccia che vanno indietro e le parte inferiori delle braccia che vanno avanti.
 settings-general-fk_settings-arm_fk-tpose_up = Posa a T (in alto)
-settings-general-fk_settings-arm_fk-tpose_up-description = Si aspetta che le braccia siano abbassate sui lati durante il Reset Completo e a 90 gradi con il busto ai lati per il Reset Posizionamento.
+settings-general-fk_settings-arm_fk-tpose_up-description = Si aspetta che le braccia siano abbassate sui lati durante il Ripristino Completo e a 90 gradi con il busto ai lati per il Ripristino Posizionamento.
 settings-general-fk_settings-arm_fk-tpose_down = Posa a T (in basso)
-settings-general-fk_settings-arm_fk-tpose_down-description = Si aspetta che le braccia siano a 90 gradi con il busto ai lati durante il Reset Completo e abbassate sui lati per il Reset Posizionamento.
+settings-general-fk_settings-arm_fk-tpose_down-description = Si aspetta che le braccia siano a 90 gradi con il busto ai lati durante il Ripristino Completo e abbassate sui lati per il Ripristino Posizionamento.
 settings-general-fk_settings-arm_fk-forward = Avanti
 settings-general-fk_settings-arm_fk-forward-description = Si aspetta che le tue braccia siano alzate di 90 gradi in avanti. Utile per VTubing.
 settings-general-fk_settings-skeleton_settings-toggles = Interruttori per lo scheletro
@@ -459,8 +459,8 @@ settings-general-fk_settings-vive_emulation-label = Abilita l'imitazione Vive
 ## Gesture control settings (tracker tapping)
 
 settings-general-gesture_control = Controllo con gesti
-settings-general-gesture_control-subtitle = Reset toccando un tracker
-settings-general-gesture_control-description = Abilita o disabilita il reset toccando un tracker. Il tracker più in alto sul torso viene utilizzato per il reset orientamento, il tracker più in alto sulla gamba sinistra viene utilizzato per il reset completo e il tracker più in alto sulla gamba destra viene utilizzato per il reset posizionamento. Si deve tener presente che i tocchi devono avvenire entro 0,6 secondi per essere registrati.
+settings-general-gesture_control-subtitle = Ripristino toccando un tracker
+settings-general-gesture_control-description = Abilita o disabilita il ripristino toccando un tracker. Il tracker più in alto sul torso viene utilizzato per il ripristino dell'orientamento, il tracker più in alto sulla gamba sinistra viene utilizzato per il ripristino completo e il tracker più in alto sulla gamba destra viene utilizzato per il ripristino del posizionamento. Si deve tener presente che i tocchi devono avvenire entro 0,6 secondi per essere registrati.
 # This is a unit: 3 taps, 2 taps, 1 tap
 # $amount (Number) - Amount of taps (touches to the tracker's case)
 settings-general-gesture_control-taps =
@@ -476,15 +476,15 @@ settings-general-gesture_control-trackers =
         [many] { $amount } tracker
        *[other] { $amount } tracker
     }
-settings-general-gesture_control-yawResetEnabled = Abilita tocco per il reset orientamento
-settings-general-gesture_control-yawResetDelay = Ritardo per il reset orientamento
-settings-general-gesture_control-yawResetTaps = Numero di tocchi per il reset orientamento
-settings-general-gesture_control-fullResetEnabled = Abilita tocco per il reset completo
-settings-general-gesture_control-fullResetDelay = Ritardo per il reset completo
-settings-general-gesture_control-fullResetTaps = Numero di tocchi per il reset completo
-settings-general-gesture_control-mountingResetEnabled = Abilita tocco per reset posizionamento
-settings-general-gesture_control-mountingResetDelay = Ritardo per il reset posizionamento
-settings-general-gesture_control-mountingResetTaps = Numero di tocchi per il reset posizionamento
+settings-general-gesture_control-yawResetEnabled = Abilita tocco per il ripristino dell'orientamento
+settings-general-gesture_control-yawResetDelay = Ritardo per il ripristino dell'orientamento
+settings-general-gesture_control-yawResetTaps = Numero di tocchi per il ripristino dell'orientamento
+settings-general-gesture_control-fullResetEnabled = Abilita tocco per il ripristino completo
+settings-general-gesture_control-fullResetDelay = Ritardo per il ripristino completo
+settings-general-gesture_control-fullResetTaps = Numero di tocchi per il ripristino completo
+settings-general-gesture_control-mountingResetEnabled = Abilita tocco per ripristino del posizionamento
+settings-general-gesture_control-mountingResetDelay = Ritardo per il ripristino del posizionamento
+settings-general-gesture_control-mountingResetTaps = Numero di tocchi per il ripristino del posizionamento
 # The number of trackers that can have higher acceleration before a tap is rejected
 settings-general-gesture_control-numberTrackersOverThreshold = Tracker sopra il limite
 settings-general-gesture_control-numberTrackersOverThreshold-description = Aumenta questo valore se il rilevamento del tocco non funziona. Non aumentarlo al di sopra di quanto necessario per far funzionare il rilevamento del tocco in quanto causerebbe più falsi positivi.
@@ -521,7 +521,7 @@ settings-general-interface-serial_detection = Rilevazione nuovi dispositivi seri
 settings-general-interface-serial_detection-description = Questa opzione mostrerà un pop-up ogni volta che colleghi un nuovo dispositivo seriale che potrebbe essere un tracker. Aiuta a facilitare la configurazione iniziale di un tracker
 settings-general-interface-serial_detection-label = Rilevazione nuovi dispositivi seriali
 settings-general-interface-feedback_sound = Suono di feedback
-settings-general-interface-feedback_sound-description = Questa opzione riprodurrà un suono quando viene effettuato un reset
+settings-general-interface-feedback_sound-description = Questa opzione riprodurrà un suono quando viene effettuato un ripristino
 settings-general-interface-feedback_sound-label = Suono di feedback
 settings-general-interface-feedback_sound-volume = Volume del suono di feedback
 settings-general-interface-connected_trackers_warning = Avviso di tracker connessi
