@@ -80,10 +80,15 @@ skeleton_bone-ELBOW_OFFSET = Correzione per il gomito
 
 ## Tracker reset buttons
 
-reset-reset_all = Reset di tutte le proporzioni
-reset-full = Reset completo
-reset-mounting = Reset posizionamento
-reset-yaw = Reset orientamento
+reset-reset_all = Ripristina tutte le proporzioni
+reset-reset_all_warning =
+    <b>Attenzione:</b> Questo ripristinerà le tue proporzioni in modo che siano basate solo sulla tua altezza.
+    Sei sicuro di volerlo fare?
+reset-reset_all_warning-reset = Ripristina le proporzioni
+reset-reset_all_warning-cancel = Annulla
+reset-full = Ripristino completo
+reset-mounting = Ripristina posizionamento
+reset-yaw = Ripristina orientamento
 
 ## Serial detection stuff
 
@@ -142,9 +147,12 @@ widget-developer_mode-more_info = Ulteriori informazioni
 ## Widget: IMU Visualizer
 
 widget-imu_visualizer = Rotazione
+widget-imu_visualizer-preview = Anteprima
+widget-imu_visualizer-hide = Nascondi
 widget-imu_visualizer-rotation_raw = Non processato
 widget-imu_visualizer-rotation_preview = Anteprima
-widget-imu_visualizer-rotation_hide = Nascondi
+widget-imu_visualizer-acceleration = Accelerazione
+widget-imu_visualizer-position = Posizione
 
 ## Widget: Skeleton Visualizer
 
@@ -199,6 +207,13 @@ tracker-infos-hardware_identifier = Hardware ID
 tracker-infos-imu = Sensore IMU
 tracker-infos-board_type = Scheda principale
 tracker-infos-network_version = Versione del protocollo
+tracker-infos-magnetometer = Magnetometro
+tracker-infos-magnetometer-status-v1 =
+    { $status ->
+        [DISABLED] Disattivato
+        [ENABLED] Attivato
+       *[NOT_SUPPORTED] Non supportato
+    }
 
 ## Tracker settings
 
@@ -213,11 +228,19 @@ tracker-settings-mounting_section-edit = Modifica posizionamento
 tracker-settings-drift_compensation_section = Consenti compensazione per il drift
 tracker-settings-drift_compensation_section-description = Questo tracker dovrebbe compensare per il drift quando la compensazione per il drift è abilitata?
 tracker-settings-drift_compensation_section-edit = Consenti compensazione per il drift
+tracker-settings-use_mag = Consenti il magnetometro su questo tracker
+# Multiline!
+tracker-settings-use_mag-description =
+    Vuoi consentire al tracker l'utilizzo del magnetometro per ridurre il drift quando l'uso del magnetometro è consentito? <b>Per favore non spegnere il tracker durante l'attivazione!</b>
+    
+    È necessario prima consentire l'utilizzo del magnetometro, <magSetting>fare clic qui per accedere alle impostazioni</magSetting>.
+tracker-settings-use_mag-label = Consenti magnetometro
 # The .<name> means it's an attribute and it's related to the top key.
 # In this case that is the settings for the assignment section.
 tracker-settings-name_section = Nome del tracker
 tracker-settings-name_section-description = Scegli un soprannome carino :)
 tracker-settings-name_section-placeholder = Gamba destra di NightyQueer
+tracker-settings-name_section-label = Nome del tracker
 tracker-settings-forget = Dimentica il tracker
 tracker-settings-forget-description = Rimuove il tracker dal SlimeVR server e impedisce che si riconnetta ad fino al riavvio del server. Le impostazioni del tracker non andranno perse.
 tracker-settings-forget-label = Dimentica il tracker
@@ -272,7 +295,7 @@ tracker_selection_menu-dont_assign = Non assegnare
 # This line cares about multilines.
 # <b>text</b> means that the text should be bold.
 tracker_selection_menu-neck_warning =
-    <b>Avvertimento:</b> Un tracker per il collo può essere mortale se indossato troppo stretto,
+    <b>Attenzione:</b> Un tracker per il collo può essere mortale se indossato troppo stretto,
     Il cinturino potrebbe bloccare la circolazione alla tua testa!
 tracker_selection_menu-neck_warning-done = Comprendo i rischi
 tracker_selection_menu-neck_warning-cancel = Annulla
@@ -296,6 +319,7 @@ settings-sidebar-utils = Strumenti
 settings-sidebar-serial = Console seriale
 settings-sidebar-appearance = Aspetto
 settings-sidebar-notifications = Notifiche
+settings-sidebar-advanced = Avanzate
 
 ## SteamVR settings
 
@@ -346,8 +370,22 @@ settings-general-tracker_mechanics-filtering-amount = Quantità
 settings-general-tracker_mechanics-yaw-reset-smooth-time = Tempo di attenuazione del reset orientamento (0 secondi disabilita l'attenuazione)
 settings-general-tracker_mechanics-drift_compensation = Compensazione per il drift
 # This cares about multilines
-settings-general-tracker_mechanics-drift_compensation-description = Compensa il drift degli IMU applicando una rotazione inversa. Modifica la forza della compensazione e il massimo numero di reset che sono presi in considerazione.
+settings-general-tracker_mechanics-drift_compensation-description = Compensa il drift di orientamento degli IMU applicando una rotazione inversa. Modifica la forza della compensazione e il massimo numero di reset che sono presi in considerazione.
 settings-general-tracker_mechanics-drift_compensation-enabled-label = Compensazione per il drift
+settings-general-tracker_mechanics-drift_compensation-prediction = Compensazione del drift predittiva
+# This cares about multilines
+settings-general-tracker_mechanics-drift_compensation-prediction-description =
+    Predice la compensazione del drift oltre la quantità misurata in precedenza.
+    Abilita questa opzione se i tuoi tracker perdono continuano l'orientamento.
+settings-general-tracker_mechanics-drift_compensation-prediction-label = Compensazione del drift predittiva
+settings-general-tracker_mechanics-drift_compensation_warning =
+    <b>Attenzione:</b> Utilizzare la compensazione del drift solo se è necessario il reset
+    molto spesso (ogni ~5-10 minuti).
+    
+    Alcune IMU soggetti a frequenti reset includono:
+    Joy-Con, owoTrack e MPU (senza firmware recente).
+settings-general-tracker_mechanics-drift_compensation_warning-cancel = Annulla
+settings-general-tracker_mechanics-drift_compensation_warning-done = Capisco
 settings-general-tracker_mechanics-drift_compensation-amount-label = Grado di compensazione
 settings-general-tracker_mechanics-drift_compensation-max_resets-label = Utilizza fino a x ultimi reset
 settings-general-tracker_mechanics-save_mounting_reset = Salva automaticamente la calibrazione del posizionamento
@@ -355,6 +393,11 @@ settings-general-tracker_mechanics-save_mounting_reset-description =
     Salva in automatico la calibrazione del posizionamento per i tracker tra un riavvio e l'altro. Utile
     quando si indossa una tuta in cui la posizione e orientamento dei tracker non cambia tra una sessione e l'altra. <b>Non raccomandato per gli utenti standard!</b>
 settings-general-tracker_mechanics-save_mounting_reset-enabled-label = Salva reset posizionamento
+settings-general-tracker_mechanics-use_mag_on_all_trackers = Utilizza il magnetometro su tutti i tracker IMU che lo supportano
+settings-general-tracker_mechanics-use_mag_on_all_trackers-description =
+    Utilizza il magnetometro su tutti i tracker che dispongono di un firmware compatibile, riducendo il drift in ambienti magnetici stabili.
+    Può essere disabilitato per ogni tracker nelle impostazioni del tracker. <b>Per favore non spegnere nessuno dei tracker durante l'attivazione!</b>
+settings-general-tracker_mechanics-use_mag_on_all_trackers-label = Usa il magnetometro sui tracker
 
 ## FK/Tracking settings
 
@@ -453,6 +496,9 @@ settings-general-interface-dev_mode = Modalità sviluppatore
 settings-general-interface-dev_mode-description = Questa modalità è utile se hai bisogno di dati approfonditi o devi interagire in maniera più avanzata con i tracker connessi.
 settings-general-interface-dev_mode-label = Modalità sviluppatore
 settings-general-interface-theme = Colore di tema
+settings-general-interface-show-navbar-onboarding = Mostra "{ navbar-onboarding }" sulla barra di navigazione
+settings-general-interface-show-navbar-onboarding-description = Cambia se il pulsante "{ navbar-onboarding }" viene visualizzato nella barra di navigazione.
+settings-general-interface-show-navbar-onboarding-label = Mostra "{ navbar-onboarding }"
 settings-general-interface-lang = Seleziona la lingua
 settings-general-interface-lang-description = Seleziona la lingua che vuoi utilizzare
 settings-general-interface-lang-placeholder = Seleziona la lingua da utilizzare
@@ -464,6 +510,9 @@ settings-interface-appearance-font-os_font = Font di sistema
 settings-interface-appearance-font-slime_font = Font predefinito
 settings-interface-appearance-font_size = Ridimensionamento del font di base
 settings-interface-appearance-font_size-description = Questo influisce sulla dimensione del font dell'intera interfaccia ad eccezione di questo pannello delle impostazioni.
+settings-interface-appearance-decorations = Usa le decorazioni native del sistema
+settings-interface-appearance-decorations-description = L'applicazione non eseguirà il rendering della barra superiore dell'interfaccia e utilizzerà invece quella del sistema operativo.
+settings-interface-appearance-decorations-label = Usa decorazioni native
 
 ## Notification settings
 
@@ -504,7 +553,7 @@ settings-serial-factory_reset = Ripristino delle impostazioni di fabbrica
 # This cares about multilines
 # <b>text</b> means that the text should be bold
 settings-serial-factory_reset-warning =
-    <b>Avvertimento:</b> Questa azione ripristinerà il tracker alle impostazioni di fabbrica.
+    <b>Attenzione:</b> Questa azione ripristinerà il tracker alle impostazioni di fabbrica.
     Ciò significa che le impostazioni Wi-Fi e di calibrazione <b>andranno tutte perse!</b>
 settings-serial-factory_reset-warning-ok = Capisco cosa sto facendo
 settings-serial-factory_reset-warning-cancel = Annulla
@@ -608,6 +657,36 @@ settings-osc-vmc-anchor_hip-label = Ancoraggio sul bacino
 settings-osc-vmc-mirror_tracking = Tracciamento speculare
 settings-osc-vmc-mirror_tracking-description = Specchia il tracciamento orizzontalmente.
 settings-osc-vmc-mirror_tracking-label = Tracciamento speculare
+
+## Advanced settings
+
+settings-utils-advanced = Avanzato
+settings-utils-advanced-reset-gui = Ripristina impostazioni della GUI
+settings-utils-advanced-reset-gui-description = Ripristina le impostazioni predefinite per l'interfaccia.
+settings-utils-advanced-reset-gui-label = Ripristina GUI
+settings-utils-advanced-reset-server = Reimpostare le impostazioni di tracciamento
+settings-utils-advanced-reset-server-description = Ripristina le impostazioni predefinite per il tracciamento.
+settings-utils-advanced-reset-server-label = Ripristina il tracciamento
+settings-utils-advanced-reset-all = Ripristina tutte le impostazioni
+settings-utils-advanced-reset-all-description = Ripristina le impostazioni predefinite sia per l'interfaccia che per il tracciamento.
+settings-utils-advanced-reset-all-label = Ripristina tutto
+settings-utils-advanced-reset_warning =
+    { $type ->
+        [gui]
+            <b>Attenzione:</b> Tutte le impostazioni della GUI verranno ripristinate ai valori predefiniti.
+            Sei sicuro di volerlo fare?
+        [server]
+            <b>Attenzione:</b> Tutte le impostazioni di tracciento verranno ripristinate ai valori predefiniti.
+            Sei sicuro di volerlo fare?
+       *[all]
+            <b>Attenzione:</b> Tutte le impostazioni verranno ripristinate ai valori predefiniti.
+            Sei sicuro di volerlo fare?
+    }
+settings-utils-advanced-reset_warning-reset = Ripristina impostazioni
+settings-utils-advanced-reset_warning-cancel = Annulla
+settings-utils-advanced-open_data = Cartella dei dati
+settings-utils-advanced-open_data-description = Aprire la cartella dati di SlimeVR in Esplora Risorse, contenente i file di configurazione e di registro.
+settings-utils-advanced-open_data-label = Apri cartella
 
 ## Setup/onboarding menu
 
@@ -720,6 +799,7 @@ onboarding-calibration_tutorial-status-waiting = Ti aspettiamo
 onboarding-calibration_tutorial-status-calibrating = Calibrazione in corso
 onboarding-calibration_tutorial-status-success = Bene!
 onboarding-calibration_tutorial-status-error = Il tracker è stato mosso
+onboarding-calibration_tutorial-skip = Salta il tutorial
 
 ## Tracker assignment tutorial
 
@@ -843,11 +923,11 @@ onboarding-choose_mounting = Quale metodo di calibrazione del posizionamento vuo
 # Multiline text
 onboarding-choose_mounting-description = L'orientamento di posizionamento corregge la posizione dei tracker sul corpo.
 onboarding-choose_mounting-auto_mounting = Posizionamento automatico
-# Italized text
+# Italicized text
 onboarding-choose_mounting-auto_mounting-label-v2 = Raccomandato
 onboarding-choose_mounting-auto_mounting-description = Questo processo identificherá automaticamente le direzioni per la posizione di montaggio di tutti i traker facendo 2 pose
 onboarding-choose_mounting-manual_mounting = Posizionamento manuale
-# Italized text
+# Italicized text
 onboarding-choose_mounting-manual_mounting-label-v2 = Potrebbe non essere abbastanza preciso
 onboarding-choose_mounting-manual_mounting-description = Questo processo ti lascerá scegliere manualmente le direzioni per la posizione di montaggio di tutti i tracker
 # Multiline text
@@ -896,14 +976,14 @@ onboarding-choose_proportions-description-v1 =
     Quando le proporzioni del tuo corpo non corrispondono a quelle salvate, la precisione di tracciamento sarà peggiore e noterai cose come slittamento o come la posizione del tuo corpo che no corrisponde con quella del tuo avatar.
     <b>Devi misurare il tuo corpo solo una volta!</b> A meno che non siano sbagliate o il tuo corpo non sia cambiato, non è necessario rifarlo.
 onboarding-choose_proportions-auto_proportions = Proporzioni automatiche
-# Italized text
+# Italicized text
 onboarding-choose_proportions-auto_proportions-subtitle = Raccomandato
 onboarding-choose_proportions-auto_proportions-descriptionv3 =
     Questo indovinerà le tue proporzioni registrando un campione dei tuoi movimenti e passandolo attraverso un algoritmo.
     
     <b>Ciò richiede che il tuo visore (HMD) sia collegato a SlimeVR e indossato  correttaments sulla tua testa</b>
 onboarding-choose_proportions-manual_proportions = Proporzioni manuali
-# Italized text
+# Italicized text
 onboarding-choose_proportions-manual_proportions-subtitle = Per piccole modifiche
 onboarding-choose_proportions-manual_proportions-description = Questo processo ti permetterà di regolare manualmente le proporzioni del corpo modificandole direttamente.
 onboarding-choose_proportions-export = Esporta le proporzioni del corpo
@@ -984,9 +1064,10 @@ onboarding-automatic_proportions-verify_results-redo = Rifai registrazione
 onboarding-automatic_proportions-verify_results-confirm = Sono corretti
 onboarding-automatic_proportions-done-title = Corpo misurato e salvato.
 onboarding-automatic_proportions-done-description = La calibrazione delle proporzioni del tuo corpo è completa!
-onboarding-automatic_proportions-error_modal =
-    <b>Avvertimento:</b> È stato riscontrato un errore durante la stima delle proporzioni!
-    Per piacere, <docs>controlla la documentazione</docs> o unisciti al nostro <discord>Discord</discord> per ricevere aiuto ^_^
+onboarding-automatic_proportions-error_modal-v2 =
+    <b>Attenzione:</b> C'è stato un errore durante la stima delle proporzioni!
+    Si tratta probabilmente di un problema di calibrazione del montaggio. Assicurati che il tracciamento funzioni correttamente prima di riprovare.
+    Controlla <docs>i documenti</docs> o entra nel nostro server <discord>Discord</discord> per assistenza ^_^
 onboarding-automatic_proportions-error_modal-confirm = Ho capito!
 
 ## Home
