@@ -84,11 +84,11 @@ reset-reset_all = Ripristina tutte le proporzioni
 reset-reset_all_warning =
     <b>Attenzione:</b> Questo ripristinerà le tue proporzioni in modo che siano basate solo sulla tua altezza.
     Sei sicuro di volerlo fare?
-reset-reset_all_warning-reset = Ripristina le proporzioni
+reset-reset_all_warning-reset = Ripristino delle proporzioni
 reset-reset_all_warning-cancel = Annulla
 reset-full = Ripristino completo
-reset-mounting = Ripristina posizionamento
-reset-yaw = Ripristina orientamento
+reset-mounting = Ripristino del posizionamento
+reset-yaw = Ripristina dell'orientamento
 
 ## Serial detection stuff
 
@@ -131,7 +131,7 @@ widget-drift_compensation-clear = Rimuovi compensazione per il drift
 
 ## Widget: Clear Reset Mounting
 
-widget-clear_mounting = Cancella tutti i ripristini posizionamento
+widget-clear_mounting = Cancella tutti i ripristini del posizionamento
 
 ## Widget: Developer settings
 
@@ -193,7 +193,7 @@ tracker-rotation-back = Dietro
 tracker-rotation-back_left = Posteriore sinistra
 tracker-rotation-back_right = Posteriore destra
 tracker-rotation-custom = Personalizzata
-tracker-rotation-overriden = (sovrascritto dal ripristino posizionamento)
+tracker-rotation-overriden = (sovrascritto dal ripristino del posizionamento)
 
 ## Tracker information
 
@@ -367,10 +367,10 @@ settings-general-tracker_mechanics-filtering-type-smoothing-description = Attenu
 settings-general-tracker_mechanics-filtering-type-prediction = Predizione
 settings-general-tracker_mechanics-filtering-type-prediction-description = Riduce ritardo e rende movimenti più istantanei, ma può introdurre tremolio.
 settings-general-tracker_mechanics-filtering-amount = Quantità
-settings-general-tracker_mechanics-yaw-reset-smooth-time = Tempo di attenuazione del ripristino orientamento (0 secondi disabilita l'attenuazione)
+settings-general-tracker_mechanics-yaw-reset-smooth-time = Tempo di attenuazione del ripristino dell'orientamento (0 secondi disabilita l'attenuazione)
 settings-general-tracker_mechanics-drift_compensation = Compensazione per il drift
 # This cares about multilines
-settings-general-tracker_mechanics-drift_compensation-description = Compensa il drift di orientamento degli IMU applicando una rotazione inversa. Modifica la forza della compensazione e il massimo numero di reset che sono presi in considerazione.
+settings-general-tracker_mechanics-drift_compensation-description = Compensa il drift di orientamento degli IMU applicando una rotazione inversa. Modifica la forza della compensazione e il massimo numero di ripristini che sono presi in considerazione.
 settings-general-tracker_mechanics-drift_compensation-enabled-label = Compensazione per il drift
 settings-general-tracker_mechanics-drift_compensation-prediction = Compensazione del drift predittiva
 # This cares about multilines
@@ -424,7 +424,7 @@ settings-general-fk_settings-leg_fk-reset_mounting_feet = Ripristino del posizio
 settings-general-fk_settings-arm_fk = Tracking delle braccia
 settings-general-fk_settings-arm_fk-description = Forza il calcolo della posizione delle braccia a utilizzare il visore anche se la posizione delle mani é disponibile.
 settings-general-fk_settings-arm_fk-force_arms = Forza il calcolo delle braccia dal visore
-settings-general-fk_settings-reset_settings = Ripristina impostazioni
+settings-general-fk_settings-reset_settings = Ripristino delle impostazioni
 settings-general-fk_settings-reset_settings-reset_hmd_pitch-description = Ripristina l'inclinazione dell'HMD (rotazione verticale) dopo un reset completo. Utile se si indossa un HMD sulla fronte per VTubing o mocap. Non abilitare per VR.
 settings-general-fk_settings-reset_settings-reset_hmd_pitch = Ripristina l'inclinazione dell'HMD
 settings-general-fk_settings-arm_fk-reset_mode-description = Cambia la posa delle braccia usata per il ripristino del posizionamento.
@@ -720,25 +720,25 @@ onboarding-wifi_creds-password =
 ## Mounting setup
 
 onboarding-reset_tutorial-back = Torna alla calibrazione posizionamento
-onboarding-reset_tutorial = Tutorial di reset
+onboarding-reset_tutorial = Tutorial di ripristino
 onboarding-reset_tutorial-explanation = Mentre usi i tuoi tracker, potrebbero perdere l'allineamento a causa del drift dell'orientamento dell'IMU, o perché potresti averli spostati fisicamente. Hai diversi modi per risolvere questo problema.
 onboarding-reset_tutorial-skip = Salta passaggio
 # Cares about multiline
 onboarding-reset_tutorial-0 =
-    Tocca { $taps } volte il tracker evidenziato per eseguire il reset orientamento
+    Tocca { $taps } volte il tracker evidenziato per eseguire il ripristino dell'orientamento. 
     
     Ciò farà sì che i tracker siano rivolti nella stessa direzione del tuo HMD.
 # Cares about multiline
 onboarding-reset_tutorial-1 =
-    Tocca { $taps } volte il tracker evidenziato per eseguire il reset completo.
+    Tocca { $taps } volte il tracker evidenziato per eseguire il ripristino completo.
     
     Devi stare in piedi drittə per questo (I-pose). C'è un ritardo di 3 secondi (configurabile) prima che accada effettivamente.
     Questo ripristinerà  completamente la posizione e la rotazione di tutti i tuoi tracker. Dovrebbe risolvere la maggior parte dei problemi.
 # Cares about multiline
 onboarding-reset_tutorial-2 =
-    Tocca { $taps } volte il tracker evidenziato per eseguire il reset posizionamento.
+    Tocca { $taps } volte il tracker evidenziato per eseguire il ripristino del posizionamento. 
     
-    Il reset posizionamento aiuta su come i tracker vengono effettivamente posizionati su di te, quindi se li hai spostati accidentalmente e hai cambiato il modo in cui sono orientati di una grande quantità, questo aiuterà.
+    Il ripristino del posizionamento aiuta a determinare come i tracker vengono effettivamente posizionati su di te, quindi se li hai spostati accidentalmente e hai cambiato il modo in cui sono orientati di una grande quantità, questo aiuterà.
     
     Devi essere in posa come se stessi sciando come mostrato nella procedura guidata di posizionamento automatico e ha un ritardo di 3 secondi (configurabile) prima che venga attivato.
 
@@ -957,12 +957,12 @@ onboarding-automatic_mounting-prev_step = Passaggio precedente
 onboarding-automatic_mounting-done-title = Rotazione delle posizioni di montaggio calibrate.
 onboarding-automatic_mounting-done-description = La calibrazione della posizione é completa!
 onboarding-automatic_mounting-done-restart = Torna all'inizio
-onboarding-automatic_mounting-mounting_reset-title = Reset posizionamento
+onboarding-automatic_mounting-mounting_reset-title = Ripristino del posizionamento
 onboarding-automatic_mounting-mounting_reset-step-0 = 1. Piegati come per sciare: con le gambe leggermente piegate e unite, la parte superiore del corpo inclinata in avanti e le braccia piegate.
-onboarding-automatic_mounting-mounting_reset-step-1 = 2. Premere il pulsante "Reset posizionamento" e attendere 3 secondi prima che le rotazioni delle posizioni di montaggio dei tracker vengano ripristinate.
+onboarding-automatic_mounting-mounting_reset-step-1 = 2. Premere il pulsante "Ripristino del posizionamento" e attendere 3 secondi prima che le rotazioni delle posizioni di montaggio dei tracker vengano ripristinate.
 onboarding-automatic_mounting-preparation-title = Preparazione
 onboarding-automatic_mounting-preparation-step-0 = 1. Stai in piedi drittə con le braccia lungo i fianchi.
-onboarding-automatic_mounting-preparation-step-1 = 2. Premi il pulsante "Reset completo" e attendi 3 secondi prima che i tracker vengano ripristinati.
+onboarding-automatic_mounting-preparation-step-1 = 2. Premi il pulsante "Ripristino completo" e attendi 3 secondi prima che i tracker vengano ripristinati.
 onboarding-automatic_mounting-put_trackers_on-title = Indossa i tuoi tracker
 onboarding-automatic_mounting-put_trackers_on-description = Per calibrare le rotazioni delle posizioni di montaggio useremo i tracker che hai appena assegnato. Indossa tutti i tuoi tracker, puoi vedere quali sono quali nella figura a destra.
 onboarding-automatic_mounting-put_trackers_on-next = Sto indossando tutti i miei tracker
@@ -994,7 +994,7 @@ onboarding-choose_proportions-file_type = File delle proporzioni del corpo
 
 ## Tracker manual proportions setup
 
-onboarding-manual_proportions-back = Torna al tutorial di reset
+onboarding-manual_proportions-back = Torna al tutorial di ripristino
 onboarding-manual_proportions-title = Impostazione manuale delle proporzioni del corpo
 onboarding-manual_proportions-precision = Regolazione di precisione
 onboarding-manual_proportions-auto = Calibrazione automatica
@@ -1002,7 +1002,7 @@ onboarding-manual_proportions-ratio = Regolazione tramite gruppi di rapporti
 
 ## Tracker automatic proportions setup
 
-onboarding-automatic_proportions-back = Torna al tutorial di reset
+onboarding-automatic_proportions-back = Torna al tutorial di ripristino
 onboarding-automatic_proportions-title = Misura il tuo corpo
 onboarding-automatic_proportions-description = Affinché i tracker di SlimeVR funzionino dobbiamo conoscere la lunghezza dei tuoi arti. Questa breve calibrazione le misurerà per te.
 onboarding-automatic_proportions-manual = Proporzioni manuali
@@ -1018,7 +1018,7 @@ onboarding-automatic_proportions-requirements-descriptionv2 =
     I tuoi tracker e il visore sono connessi al server di SlimeVR e stanno funzionando correttamente (e.g. non si bloccano, disconnettono, etc.)
     Il tuo visore sta riportando dati di posizione al server di SlimeVR (ciò significa generalmente avere SteamVR in esecuzione e connesso a SlimeVR usando il driver di SlimeVR per SteamVR).
     Il tuo visore sta riportando dati di posizione al server di SlimeVR (ciò significa generalmente avere SteamVR in esecuzione e connesso a SlimeVR usando il driver di SlimeVR per SteamVR).
-    Il tuo tracciamento funziona e rappresenta accuratamente i tuoi movimenti (e.g. hai eseguito un reset completo e i traker si muovono nella giusta direzione quando calci, ti pieghi, ti siedi, ecc.).
+    Il tuo tracciamento funziona e rappresenta accuratamente i tuoi movimenti (e.g. hai eseguito un ripristino completo e i traker si muovono nella giusta direzione quando calci, ti pieghi, ti siedi, ecc.).
 onboarding-automatic_proportions-requirements-next = Ho letto i requisiti.
 onboarding-automatic_proportions-check_height-title = Controlla la tua altezza
 onboarding-automatic_proportions-check_height-description = Usiamo la tua altezza come base delle nostre misurazioni utilizzando l'altezza dell'HMD come approssimazione della tua altezza effettiva, ma è meglio controllare se il valore è giusto!
@@ -1085,7 +1085,7 @@ trackers_still_on-modal-cancel = Attendi un momento...
 
 ## Status system
 
-status_system-StatusTrackerReset = É consigliato eseguire un reset completo poiché uno o più tracker non sono regolati.
+status_system-StatusTrackerReset = É consigliato eseguire un ripristino completo poiché uno o più tracker non sono regolati.
 status_system-StatusSteamVRDisconnected =
     { $type ->
         [steamvr_feeder] Attualmente non è connesso a SlimeVR Feeder App.
