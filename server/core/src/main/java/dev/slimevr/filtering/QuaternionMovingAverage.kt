@@ -21,6 +21,7 @@ class QuaternionMovingAverage(
 	initialRotation: Quaternion,
 ) {
 	var filteredQuaternion = IDENTITY
+	var filteringImpact = 0f
 	private var smoothFactor = 0f
 	private var predictFactor = 0f
 	private lateinit var rotBuffer: CircularArrayList<Quaternion>
@@ -91,6 +92,8 @@ class QuaternionMovingAverage(
 			// Smooth towards the target rotation by the slerp factor
 			filteredQuaternion = smoothingQuaternion.interpR(latestQuaternion, amt)
 		}
+
+		filteringImpact = latestQuaternion.angleToR(filteredQuaternion)
 	}
 
 	@Synchronized

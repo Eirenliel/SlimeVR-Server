@@ -32,6 +32,11 @@ class TransformNode(val localRotation: Boolean) {
 		}
 	}
 
+	@ThreadSafe
+	fun updateThisNode() {
+		updateWorldTransforms()
+	}
+
 	@Synchronized
 	private fun updateWorldTransforms() {
 		worldTransform.set(localTransform)

@@ -7,7 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 /**
  * Represents a bone composed of 2 joints: headNode and tailNode.
  */
-class Bone(val boneType: BoneType) {
+class Bone(val boneType: BoneType, val rotationConstraint: Constraint) {
 	private val headNode = TransformNode(true)
 	private val tailNode = TransformNode(false)
 	var parent: Bone? = null
@@ -59,6 +59,14 @@ class Bone(val boneType: BoneType) {
 	}
 
 	/**
+	 * Computes the rotations and positions of this bone.
+	 */
+	fun updateThisNode() {
+		headNode.updateThisNode()
+		tailNode.updateThisNode()
+	}
+
+	/**
 	 * Returns the world-aligned rotation of the bone
 	 */
 	fun getGlobalRotation(): Quaternion = headNode.worldTransform.rotation
@@ -73,6 +81,13 @@ class Bone(val boneType: BoneType) {
 	 */
 	fun setRotation(rotation: Quaternion) {
 		headNode.localTransform.rotation = rotation * rotationOffset
+	}
+
+	/**
+	 * Sets the global rotation of the bone directly
+	 */
+	fun setRotationRaw(rotation: Quaternion) {
+		headNode.localTransform.rotation = rotation
 	}
 
 	/**

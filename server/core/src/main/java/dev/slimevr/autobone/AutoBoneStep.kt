@@ -40,9 +40,11 @@ class AutoBoneStep(
 		// Load server configs into the skeleton
 		skeleton1.loadFromConfig(serverConfig)
 		skeleton2.loadFromConfig(serverConfig)
-		// Disable leg tweaks, this will mess with the resulting positions
+		// Disable leg tweaks and IK solver, these will mess with the resulting positions
 		skeleton1.setLegTweaksEnabled(false)
 		skeleton2.setLegTweaksEnabled(false)
+		skeleton1.setIKSolverEnabled(false)
+		skeleton2.setIKSolverEnabled(false)
 	}
 
 	fun setCursors(cursor1: Int, cursor2: Int, updatePlayerCursors: Boolean) {

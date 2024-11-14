@@ -51,4 +51,9 @@ class TrackerFilteringHandler {
 	 * Get the filtered rotation from the moving average
 	 */
 	fun getFilteredRotation(): Quaternion = movingAverage?.filteredQuaternion ?: Quaternion.IDENTITY
+
+	/**
+	 * Get the impact filtering has on the rotation
+	 */
+	fun getFilteringImpact(): Float = movingAverage?.filteringImpact ?: 0f
 }
