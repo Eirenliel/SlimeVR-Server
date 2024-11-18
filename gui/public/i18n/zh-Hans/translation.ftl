@@ -49,6 +49,36 @@ body_part-LEFT_HAND = 左手
 body_part-LEFT_UPPER_LEG = 左大腿
 body_part-LEFT_LOWER_LEG = 左小腿
 body_part-LEFT_FOOT = 左脚
+body_part-LEFT_THUMB_PROXIMAL = 左拇指近端
+body_part-LEFT_THUMB_INTERMEDIATE = 左拇指中端
+body_part-LEFT_THUMB_DISTAL = 左拇指远端
+body_part-LEFT_INDEX_PROXIMAL = 左食指近端
+body_part-LEFT_INDEX_INTERMEDIATE = 左食指中端
+body_part-LEFT_INDEX_DISTAL = 左食指远端
+body_part-LEFT_MIDDLE_PROXIMAL = 左中指近端
+body_part-LEFT_MIDDLE_INTERMEDIATE = 左中指中端
+body_part-LEFT_MIDDLE_DISTAL = 左中指远端
+body_part-LEFT_RING_PROXIMAL = 左环指近端
+body_part-LEFT_RING_INTERMEDIATE = 左环指中端
+body_part-LEFT_RING_DISTAL = 左环指远端
+body_part-LEFT_LITTLE_PROXIMAL = 左小指近端
+body_part-LEFT_LITTLE_INTERMEDIATE = 左小指中端
+body_part-LEFT_LITTLE_DISTAL = 左小指远端
+body_part-RIGHT_THUMB_PROXIMAL = 右拇指近端
+body_part-RIGHT_THUMB_INTERMEDIATE = 右拇指中端
+body_part-RIGHT_THUMB_DISTAL = 右拇指远端
+body_part-RIGHT_INDEX_PROXIMAL = 右食指近端
+body_part-RIGHT_INDEX_INTERMEDIATE = 右食指中端
+body_part-RIGHT_INDEX_DISTAL = 右食指远端
+body_part-RIGHT_MIDDLE_PROXIMAL = 右中指近端
+body_part-RIGHT_MIDDLE_INTERMEDIATE = 右中指中端
+body_part-RIGHT_MIDDLE_DISTAL = 右中指远端
+body_part-RIGHT_RING_PROXIMAL = 右环指近端
+body_part-RIGHT_RING_INTERMEDIATE = 右环指中端
+body_part-RIGHT_RING_DISTAL = 右环指远端
+body_part-RIGHT_LITTLE_PROXIMAL = 右小指近端
+body_part-RIGHT_LITTLE_INTERMEDIATE = 右小指中端
+body_part-RIGHT_LITTLE_DISTAL = 右小指远端
 
 ## Proportions
 
@@ -207,6 +237,13 @@ tracker-infos-hardware_identifier = 硬件ID
 tracker-infos-imu = IMU型号
 tracker-infos-board_type = 主板型号
 tracker-infos-network_version = 协议版本
+tracker-infos-magnetometer = 磁力计
+tracker-infos-magnetometer-status-v1 =
+    { $status ->
+        [DISABLED] 已禁用
+        [ENABLED] 已启用
+       *[NOT_SUPPORTED] 不支持
+    }
 
 ## Tracker settings
 
@@ -221,11 +258,19 @@ tracker-settings-mounting_section-edit = 编辑佩戴
 tracker-settings-drift_compensation_section = 允许漂移补偿
 tracker-settings-drift_compensation_section-description = 是否在此追踪器上应用漂移补偿？
 tracker-settings-drift_compensation_section-edit = 允许漂移补偿
+tracker-settings-use_mag = 允许使用这个追踪器的磁力计
+# Multiline!
+tracker-settings-use_mag-description =
+    如果「在追踪器上启用磁力计」已启用，是否要在这个追踪器上启用它来减轻飘移？<b>切换本选项时请勿关闭追踪器的电源！</b>
+    
+    请先启用「在追踪器上启用磁力计」功能，<magSetting>点选此处以移动至该设定</magSetting>。
+tracker-settings-use_mag-label = 允许使用这个追踪器的磁力计
 # The .<name> means it's an attribute and it's related to the top key.
 # In this case that is the settings for the assignment section.
 tracker-settings-name_section = 追踪器名称
 tracker-settings-name_section-description = 给它起一个可爱的名字吧=w=~
 tracker-settings-name_section-placeholder = CC 封印着漆黑之力的漆黑左臂
+tracker-settings-name_section-label = 追踪器名称
 tracker-settings-forget = 忘记追踪器
 tracker-settings-forget-description = 从 SlimeVR 服务器中移除该追踪器，并在服务器重启前不再连接这一追踪器。追踪器的配置信息不会被清除。
 tracker-settings-forget-label = 忘记追踪器
@@ -380,6 +425,11 @@ settings-general-tracker_mechanics-save_mounting_reset-description =
     在SlimeVR服务器关闭时保留追踪器自动佩戴重置结果。适用于一体式动捕服等
     追踪器佩戴位置保持不变的场景。<b>不建议普通用户使用！</b>
 settings-general-tracker_mechanics-save_mounting_reset-enabled-label = 保存佩戴重置
+settings-general-tracker_mechanics-use_mag_on_all_trackers = 在支持的 IMU 追踪器上启用磁力计
+settings-general-tracker_mechanics-use_mag_on_all_trackers-description =
+    在所有有固件支持的追踪器上启用磁力计，在磁场稳定的环境中可以减轻飘移。
+    可以在个别追踪器上禁用本功能。<b>切换此选项时请勿关闭任何一个追踪器的电源！</b>
+settings-general-tracker_mechanics-use_mag_on_all_trackers-label = 在追踪器上启用磁力计
 
 ## FK/Tracking settings
 
@@ -1022,9 +1072,10 @@ onboarding-automatic_proportions-verify_results-redo = 重新录制
 onboarding-automatic_proportions-verify_results-confirm = 他们是正确的！
 onboarding-automatic_proportions-done-title = 身体数据已测量并保存。
 onboarding-automatic_proportions-done-description = 你的身体比例校准已完成！
-onboarding-automatic_proportions-error_modal =
-    <b>警告：</b> 推算身体比例时发生错误！
-    请 <docs>阅读文档</docs> 或加入我们的 <discord>Discord</discord> 寻求帮助 ^_^
+onboarding-automatic_proportions-error_modal-v2 =
+    <b>警告：</b> 估算身体比例时发生错误！
+    这可能是因为佩戴校准存在问题，请确保追踪器工作正常后再试一次。
+     <docs>请查看文档</docs> 或加入我们的 <discord>Discord</discord> 频道寻求帮助 ^_^
 onboarding-automatic_proportions-error_modal-confirm = 了解！
 
 ## Home
