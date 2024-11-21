@@ -35,6 +35,7 @@ import { TrackerCard } from './TrackerCard';
 import { Quaternion } from 'three';
 import { useAppContext } from '@/hooks/app';
 import { MagnetometerToggleSetting } from '@/components/settings/pages/MagnetometerToggleSetting';
+import { DeviceLog } from './DeviceLogs';
 
 const rotationsLabels: [Quaternion, string][] = [
   [rotationToQuatMap.BACK, 'tracker-rotation-back'],
@@ -469,6 +470,12 @@ export function TrackerSettingsPage() {
               </Button>
             </div>
           )}
+          <div className="flex flex-col gap-2 w-full mt-3">
+            <Typography variant="section-title">
+              Device Logs
+            </Typography>
+            <DeviceLog messages={tracker?.device?.logMessages || []} />
+          </div>
         </div>
       </div>
     </form>

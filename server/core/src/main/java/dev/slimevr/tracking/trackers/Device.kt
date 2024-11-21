@@ -25,6 +25,8 @@ open class Device(val magSupport: Boolean = false) {
 
 	open val hardwareIdentifier: String = "Unknown"
 
+	open var logMessages: MutableList<String> = mutableListOf()
+
 	val isOpenVrDevice: Boolean
 		get() = manufacturer == "OpenVR"
 

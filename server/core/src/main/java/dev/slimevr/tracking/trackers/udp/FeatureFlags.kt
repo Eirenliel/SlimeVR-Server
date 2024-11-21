@@ -52,6 +52,9 @@ enum class ServerFeatureFlags {
 	 - `PACKET_ROTATION_AND_ACCELERATION` = 23 (0x17). */
 	PROTOCOL_BUNDLE_COMPACT_SUPPORT,
 
+	/** Server can receive log messages: `PACKET_LOG` = 102 (0x66). */
+	PROTOCOL_LOG_SUPPORT,
+
 	// Add new flags here
 
 	BITS_TOTAL, ;
@@ -60,6 +63,7 @@ enum class ServerFeatureFlags {
 		val flagsEnabled: Set<ServerFeatureFlags> = setOf(
 			PROTOCOL_BUNDLE_SUPPORT,
 			PROTOCOL_BUNDLE_COMPACT_SUPPORT,
+			PROTOCOL_LOG_SUPPORT,
 
 			// Add enabled flags here
 		)

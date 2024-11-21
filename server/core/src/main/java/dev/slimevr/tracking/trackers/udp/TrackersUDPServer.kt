@@ -181,6 +181,7 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 			connection
 		}
 		connection.firmwareFeatures = FirmwareFeatures()
+		connection.logMessages.clear()
 		bb.limit(bb.capacity())
 		bb.rewind()
 		parser.writeHandshakeResponse(bb, connection)
@@ -559,6 +560,11 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 					listOf(connection.getTracker(packet.sensorId) ?: return)
 				}
 				LogManager.info("[TrackerServer] Acknowledged config change on ${connection.descriptiveName} (${trackers.map { it.trackerNum }.joinToString()}). Config changed on ${packet.configType}")
+			}
+
+			is UDPPacket26Log -> {
+				if (connection == null) return
+				connection.logMessages.add(packet.message)
 			}
 
 			is UDPPacket200ProtocolChange -> {}

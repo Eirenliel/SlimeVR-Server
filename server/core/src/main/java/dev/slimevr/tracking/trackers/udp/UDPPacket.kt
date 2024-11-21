@@ -378,6 +378,13 @@ data class UDPPacket25SetConfigFlag(
 	}
 }
 
+data class UDPPacket26Log(var message: String = "") : UDPPacket(26) {
+	override fun readData(buf: ByteBuffer) {
+		val length = buf.get().toUByte().toInt()
+		message = readASCIIString(buf, length)
+	}
+}
+
 data class UDPPacket200ProtocolChange(
 	var targetProtocol: Int = 0,
 	var targetProtocolVersion: Int = 0,

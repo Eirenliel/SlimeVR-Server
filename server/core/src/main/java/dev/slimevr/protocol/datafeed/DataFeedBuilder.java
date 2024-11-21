@@ -259,6 +259,21 @@ public class DataFeedBuilder {
 		return fbb.endVector();
 	}
 
+	public static int createLogMessagesData(
+		FlatBufferBuilder fbb,
+		Device device
+	) {
+		List<String> messages = device.getLogMessages();
+
+		int numMessages = messages.size();
+		int[] messageOffsets = new int[numMessages];
+		for (int i = 0; i < numMessages; ++i) {
+			messageOffsets[i] = fbb.createString(messages.get(i));
+		}
+
+		return DeviceData.createLogMessagesVector(fbb, messageOffsets);
+	}
+
 	public static int createDeviceData(
 		FlatBufferBuilder fbb,
 		int id,
@@ -306,12 +321,15 @@ public class DataFeedBuilder {
 			? fbb.createString(device.getName())
 			: 0;
 
+		int logMessagesOffset = DataFeedBuilder.createLogMessagesData(fbb, device);
+
 		DeviceData.startDeviceData(fbb);
 		DeviceData.addCustomName(fbb, nameOffset);
 		DeviceData.addId(fbb, DeviceId.createDeviceId(fbb, id));
 		DeviceData.addHardwareStatus(fbb, hardwareDataOffset);
 		DeviceData.addHardwareInfo(fbb, hardwareInfoOffset);
 		DeviceData.addTrackers(fbb, trackersOffset);
+		DeviceData.addLogMessages(fbb, logMessagesOffset);
 
 		return DeviceData.endDeviceData(fbb);
 	}
