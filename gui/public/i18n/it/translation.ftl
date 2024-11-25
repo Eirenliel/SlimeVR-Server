@@ -49,6 +49,36 @@ body_part-LEFT_HAND = Mano sinistra
 body_part-LEFT_UPPER_LEG = Coscia sinistra
 body_part-LEFT_LOWER_LEG = Caviglia sinistra
 body_part-LEFT_FOOT = Piede sinistro
+body_part-LEFT_THUMB_PROXIMAL = Falange prossimale del pollice sinistro
+body_part-LEFT_THUMB_INTERMEDIATE = Falange imtermedia del pollice sinistro
+body_part-LEFT_THUMB_DISTAL = Falange distale del pollice sinistro
+body_part-LEFT_INDEX_PROXIMAL = Falange prossimale dell'indice sinistro
+body_part-LEFT_INDEX_INTERMEDIATE = Falange intermedia dell'indice sinistro
+body_part-LEFT_INDEX_DISTAL = Falange distale dell'indice sinistro
+body_part-LEFT_MIDDLE_PROXIMAL = Falange prossimale del medio sinistro
+body_part-LEFT_MIDDLE_INTERMEDIATE = Falange intermedia del medio sinistro
+body_part-LEFT_MIDDLE_DISTAL = Falange distale del medio sinistro
+body_part-LEFT_RING_PROXIMAL = Falange prossimale dell'anulare sinistro
+body_part-LEFT_RING_INTERMEDIATE = Falange intermedia dell'anulare sinistro
+body_part-LEFT_RING_DISTAL = Falange distale dell'anulare sinistro
+body_part-LEFT_LITTLE_PROXIMAL = Falange prossimale del mignolo sinistro
+body_part-LEFT_LITTLE_INTERMEDIATE = Falange intermedia del mignolo sinistro
+body_part-LEFT_LITTLE_DISTAL = Falange distale del mignolo sinistro
+body_part-RIGHT_THUMB_PROXIMAL = Falange prossimale del pollice destro
+body_part-RIGHT_THUMB_INTERMEDIATE = Falange imtermedia del pollice destro
+body_part-RIGHT_THUMB_DISTAL = Falange distale del pollice destro
+body_part-RIGHT_INDEX_PROXIMAL = Falange prossimale dell'indice destro
+body_part-RIGHT_INDEX_INTERMEDIATE = Falange intermedia dell'indice destro
+body_part-RIGHT_INDEX_DISTAL = Falange distale dell'indice destro
+body_part-RIGHT_MIDDLE_PROXIMAL = Falange prossimale del medio destro
+body_part-RIGHT_MIDDLE_INTERMEDIATE = Falange intermedia del medio destro
+body_part-RIGHT_MIDDLE_DISTAL = Falange distale del medio destro
+body_part-RIGHT_RING_PROXIMAL = Falange prossimale dell'anulare destro
+body_part-RIGHT_RING_INTERMEDIATE = Falange intermedia dell'anulare destro
+body_part-RIGHT_RING_DISTAL = Falange distale dell'anulare destro
+body_part-RIGHT_LITTLE_PROXIMAL = Falange prossimale del mignolo destro
+body_part-RIGHT_LITTLE_INTERMEDIATE = Falange intermedia del mignolo destro
+body_part-RIGHT_LITTLE_DISTAL = Falange distale del mignolo destro
 
 ## Proportions
 
@@ -644,12 +674,7 @@ settings-osc-vmc-network-address-description = Scegli l'indirizzo di rete a cui 
 settings-osc-vmc-network-address-placeholder = Indirizzo IPV4
 settings-osc-vmc-vrm = Modello VRM
 settings-osc-vmc-vrm-description = Carica un modello VRM per consentite l'ancoraggio della testa e migliorare la compatibilitá con altre applicazioni
-settings-osc-vmc-vrm-model_unloaded = Nessun modello caricato
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Modello caricato: { $name }
-       *[other] Modello senza titolo caricato
-    }
+settings-osc-vmc-vrm-untitled_model = Modello senza titolo
 settings-osc-vmc-vrm-file_select = Trascina qui un modello da usare, o <u>sfoglia</u>
 settings-osc-vmc-anchor_hip = Ancoraggio sul bacino
 settings-osc-vmc-anchor_hip-description = Ancora la posizione del tracciamento del bacino; utile per VTubing da seduti. Se disabilitato, carica un modello VRM.
