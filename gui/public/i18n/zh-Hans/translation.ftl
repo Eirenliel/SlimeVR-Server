@@ -49,8 +49,8 @@ body_part-LEFT_HAND = 左手
 body_part-LEFT_UPPER_LEG = 左大腿
 body_part-LEFT_LOWER_LEG = 左小腿
 body_part-LEFT_FOOT = 左脚
+body_part-LEFT_THUMB_METACARPAL = 左拇指掌骨
 body_part-LEFT_THUMB_PROXIMAL = 左拇指近端
-body_part-LEFT_THUMB_INTERMEDIATE = 左拇指中端
 body_part-LEFT_THUMB_DISTAL = 左拇指远端
 body_part-LEFT_INDEX_PROXIMAL = 左食指近端
 body_part-LEFT_INDEX_INTERMEDIATE = 左食指中端
@@ -64,8 +64,8 @@ body_part-LEFT_RING_DISTAL = 左环指远端
 body_part-LEFT_LITTLE_PROXIMAL = 左小指近端
 body_part-LEFT_LITTLE_INTERMEDIATE = 左小指中端
 body_part-LEFT_LITTLE_DISTAL = 左小指远端
+body_part-RIGHT_THUMB_METACARPAL = 右拇指掌骨
 body_part-RIGHT_THUMB_PROXIMAL = 右拇指近端
-body_part-RIGHT_THUMB_INTERMEDIATE = 右拇指中端
 body_part-RIGHT_THUMB_DISTAL = 右拇指远端
 body_part-RIGHT_INDEX_PROXIMAL = 右食指近端
 body_part-RIGHT_INDEX_INTERMEDIATE = 右食指中端
@@ -234,6 +234,7 @@ tracker-infos-url = 追踪器地址
 tracker-infos-version = 固件版本
 tracker-infos-hardware_rev = 硬件版本
 tracker-infos-hardware_identifier = 硬件ID
+tracker-infos-data_support = 数据类型
 tracker-infos-imu = IMU型号
 tracker-infos-board_type = 主板型号
 tracker-infos-network_version = 协议版本
@@ -668,12 +669,7 @@ settings-osc-vmc-network-address-description = 设置用来发送 VMC 数据的�
 settings-osc-vmc-network-address-placeholder = IPV4 地址
 settings-osc-vmc-vrm = VRM 模型
 settings-osc-vmc-vrm-description = 加载 VRM 模型以允许头部锚定，并增进与其他程序的兼容
-settings-osc-vmc-vrm-model_unloaded = 未加载模型
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] 已加载模型：{ $name }
-       *[other] 已加载未命名的模型
-    }
+settings-osc-vmc-vrm-untitled_model = 无标题模型
 settings-osc-vmc-vrm-file_select = 拖曳文件或 <u>浏览文件</u> 以加载模型
 settings-osc-vmc-anchor_hip = 髋部锚定
 settings-osc-vmc-anchor_hip-description = 将追踪锚定在髋部，有利于坐姿进行虚拟直播。若本选项无法切换，请加载 VRM 模型。
