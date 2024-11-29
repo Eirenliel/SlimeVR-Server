@@ -49,6 +49,12 @@ body_part-LEFT_HAND = Mão esquerda
 body_part-LEFT_UPPER_LEG = Coxa esquerda
 body_part-LEFT_LOWER_LEG = Canela esquerda
 body_part-LEFT_FOOT = Pé esquerdo
+body_part-LEFT_THUMB_METACARPAL = Metacarpo do polegar esquerdo
+body_part-LEFT_THUMB_PROXIMAL = Proximal do polegar esquerdo
+body_part-LEFT_THUMB_DISTAL = Distal do polegar esquerdo
+body_part-LEFT_INDEX_PROXIMAL = Indicador esquerdo proximal
+body_part-LEFT_INDEX_INTERMEDIATE = Indicador esquerdo intermediário
+body_part-LEFT_INDEX_DISTAL = Indicador esquerdo distal
 
 ## Proportions
 
@@ -646,12 +652,7 @@ settings-osc-vmc-network-address-description = Escolha o endereço para envio de
 settings-osc-vmc-network-address-placeholder = Endereço IPV4
 settings-osc-vmc-vrm = Modelo VRM
 settings-osc-vmc-vrm-description = Carregue um modelo de VRM para permitir ancoragem de cabeça e possibilitar uma maior compatibilidade com outras aplicações.
-settings-osc-vmc-vrm-model_unloaded = Nenhum modelo carregado
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Modelo carregado: { $name }
-       *[other] Modelo sem título carregado
-    }
+settings-osc-vmc-vrm-untitled_model = Modelo sem título
 settings-osc-vmc-vrm-file_select = Arraste e solte um modelo para usar, ou <u>navegue</u>
 settings-osc-vmc-anchor_hip = Ancorar no quadril
 settings-osc-vmc-anchor_hip-description = Ancorar o rastreamento no quadril, útil para VTubing sentado. Se desativar, carregue um modelo VRM.
