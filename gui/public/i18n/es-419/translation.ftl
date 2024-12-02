@@ -646,12 +646,7 @@ settings-osc-vmc-network-address-description = Establece la dirección donde se 
 settings-osc-vmc-network-address-placeholder = Dirección IPv4
 settings-osc-vmc-vrm = Modelo VRM
 settings-osc-vmc-vrm-description = Carga un modelo VRM para permitir el anclaje de cabeza y habilitar una mejor compatibilidad con otras aplicaciones
-settings-osc-vmc-vrm-model_unloaded = Ningún modelo cargado
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Modelo cargado: { $name }
-       *[other] Modelo sin nombre cargado
-    }
+settings-osc-vmc-vrm-untitled_model = Modelo sin nombre
 settings-osc-vmc-vrm-file_select = Arrastra y suelta un modelo para usar, o <u>selecciona uno</u>.
 settings-osc-vmc-anchor_hip = Anclaje por cadera
 settings-osc-vmc-anchor_hip-description = Anclar el tracking a la cadera, útil para hacer de VTuber sentado. Si lo desactivas, carga un modelo VRM.
