@@ -81,6 +81,7 @@ skeleton_bone-ELBOW_OFFSET = Compensacion de los codos
 ## Tracker reset buttons
 
 reset-reset_all = Reiniciar todas las proporciones
+reset-reset_all_warning-cancel = Cancelar
 reset-full = Reinicio completo
 reset-mounting = Reiniciar montura
 reset-yaw = Restablecimiento horizontal
@@ -142,8 +143,10 @@ widget-developer_mode-more_info = Más información
 ## Widget: IMU Visualizer
 
 widget-imu_visualizer = Rotación
+widget-imu_visualizer-hide = Ocultar
 widget-imu_visualizer-rotation_raw = Sin filtrar
 widget-imu_visualizer-rotation_preview = Previsualización
+widget-imu_visualizer-position = Posición
 
 ## Widget: Skeleton Visualizer
 
@@ -198,6 +201,7 @@ tracker-infos-hardware_identifier = ID de hardware
 tracker-infos-imu = Sensor IMU
 tracker-infos-board_type = Placa principal
 tracker-infos-network_version = Versión de protocolo
+tracker-infos-magnetometer = Magnetómetro
 
 ## Tracker settings
 
@@ -217,6 +221,7 @@ tracker-settings-drift_compensation_section-edit = Permitir compensación de dri
 tracker-settings-name_section = Nombre del tracker
 tracker-settings-name_section-description = Dale un sobrenombre lindo :)
 tracker-settings-name_section-placeholder = Pata izquierda del Eevee
+tracker-settings-name_section-label = Nombre del tracker
 tracker-settings-forget = Olvidar tracker
 tracker-settings-forget-description = Elimina el tracker del servidor SlimeVR y evita que se conecte a él hasta que se reinicie el servidor. La configuración del tracker no se perderá.
 tracker-settings-forget-label = Olvidar tracker
@@ -295,6 +300,7 @@ settings-sidebar-utils = Utilidades
 settings-sidebar-serial = Consola serial
 settings-sidebar-appearance = Apariencia
 settings-sidebar-notifications = Notificaciones
+settings-sidebar-advanced = Avanzado
 
 ## SteamVR settings
 
@@ -598,12 +604,6 @@ settings-osc-vmc-network-address-description = Elige la dirección a la que se e
 settings-osc-vmc-network-address-placeholder = Dirección IPV4
 settings-osc-vmc-vrm = Modelo VRM
 settings-osc-vmc-vrm-description = Cargar un modelo VRM para permitir el anclaje de la cabeza y posibilitar una mayor compatibilidad con otras aplicaciones.
-settings-osc-vmc-vrm-model_unloaded = No hay modelo cargado
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Modelo cargado: { $name }
-       *[false] Modelo sin título cargado
-    }
 settings-osc-vmc-vrm-file_select = Arrastre y suelte un modelo para utilizarlo, o <u>busquelo</u>
 settings-osc-vmc-anchor_hip = Anclar a la cadera
 settings-osc-vmc-anchor_hip-description = Ancla el tracking a la cadera, útil para VTubing sentado. Si se deshabilita, carga un modelo VRM.
