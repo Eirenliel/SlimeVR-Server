@@ -49,6 +49,36 @@ body_part-LEFT_HAND = 左手
 body_part-LEFT_UPPER_LEG = 左大腿
 body_part-LEFT_LOWER_LEG = 左腳踝
 body_part-LEFT_FOOT = 左腳
+body_part-LEFT_THUMB_METACARPAL = 左拇指掌骨
+body_part-LEFT_THUMB_PROXIMAL = 左拇指近端
+body_part-LEFT_THUMB_DISTAL = 左拇指遠端
+body_part-LEFT_INDEX_PROXIMAL = 左食指近端
+body_part-LEFT_INDEX_INTERMEDIATE = 左食指中端
+body_part-LEFT_INDEX_DISTAL = 左食指遠端
+body_part-LEFT_MIDDLE_PROXIMAL = 左中指近端
+body_part-LEFT_MIDDLE_INTERMEDIATE = 左中指中端
+body_part-LEFT_MIDDLE_DISTAL = 左中指遠端
+body_part-LEFT_RING_PROXIMAL = 左無名指近端
+body_part-LEFT_RING_INTERMEDIATE = 左無名指中端
+body_part-LEFT_RING_DISTAL = 左無名指遠端
+body_part-LEFT_LITTLE_PROXIMAL = 左小指近端
+body_part-LEFT_LITTLE_INTERMEDIATE = 左小指中端
+body_part-LEFT_LITTLE_DISTAL = 左小指遠端
+body_part-RIGHT_THUMB_METACARPAL = 右拇指掌骨
+body_part-RIGHT_THUMB_PROXIMAL = 右拇指近端
+body_part-RIGHT_THUMB_DISTAL = 右拇指遠端
+body_part-RIGHT_INDEX_PROXIMAL = 右食指近端
+body_part-RIGHT_INDEX_INTERMEDIATE = 右食指中端
+body_part-RIGHT_INDEX_DISTAL = 右食指遠端
+body_part-RIGHT_MIDDLE_PROXIMAL = 右中指近端
+body_part-RIGHT_MIDDLE_INTERMEDIATE = 右中指中端
+body_part-RIGHT_MIDDLE_DISTAL = 右中指遠端
+body_part-RIGHT_RING_PROXIMAL = 右無名指近端
+body_part-RIGHT_RING_INTERMEDIATE = 右無名指中端
+body_part-RIGHT_RING_DISTAL = 右無名指遠端
+body_part-RIGHT_LITTLE_PROXIMAL = 右小指近端
+body_part-RIGHT_LITTLE_INTERMEDIATE = 右小指中端
+body_part-RIGHT_LITTLE_DISTAL = 右小指遠端
 
 ## Proportions
 
@@ -204,6 +234,7 @@ tracker-infos-url = 追蹤器 URL
 tracker-infos-version = 韌體版本
 tracker-infos-hardware_rev = 硬體版本
 tracker-infos-hardware_identifier = 硬體 ID
+tracker-infos-data_support = 資料型態
 tracker-infos-imu = 慣性測量單元 (IMU)
 tracker-infos-board_type = 主板
 tracker-infos-network_version = 通訊協定版本
@@ -635,12 +666,7 @@ settings-osc-vmc-network-address-description = 設定用來發送 VMC 資料的�
 settings-osc-vmc-network-address-placeholder = IPV4 地址
 settings-osc-vmc-vrm = VRM 模型
 settings-osc-vmc-vrm-description = 載入 VRM 模型以允許頭部錨定，並與其他應用程式有更高的相容性。
-settings-osc-vmc-vrm-model_unloaded = 未載入模型
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] 已載入模型：{ $name }
-       *[other] 已載入未命名的模型
-    }
+settings-osc-vmc-vrm-untitled_model = 未命名模型
 settings-osc-vmc-vrm-file_select = 拖曳檔案或 <u>瀏覽檔案</u> 以載入模型
 settings-osc-vmc-anchor_hip = 臀部錨定
 settings-osc-vmc-anchor_hip-description = 將追蹤錨定在臀部，有利於坐姿進行虛擬直播。若本選項無法切換，請載入 VRM 模型。
