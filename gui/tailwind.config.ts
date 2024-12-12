@@ -150,7 +150,7 @@ const colors = {
     700: '#b3b3b3',
     900: '#d8d8d8',
   },
-  'asexual': {
+  asexual: {
     100: '#000000',
     200: '#A3A3A3',
     300: '#FFFFFF',
@@ -225,6 +225,14 @@ const config = {
             'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)',
           },
         },
+        'background-scroll': {
+          '0%': {
+            'background-position': 'calc(128px / sin(135deg)) 0%', // size / sin(135deg)
+          },
+        },
+      },
+      animation: {
+        scroll: 'background-scroll 4s linear infinite reverse',
       },
       backgroundImage: {
         slime: `linear-gradient(135deg, ${colors.purple[100]} 50%, ${colors['blue-gray'][700]} 50% 100%)`,
@@ -236,6 +244,8 @@ const config = {
         light: `linear-gradient(135deg, ${colors['light-accent'][100]} 50%, ${colors['light-background'][700]} 50% 100%)`,
         'trans-flag': `linear-gradient(135deg, ${colors['trans-blue'][800]} 40%, ${colors['trans-blue'][700]} 40% 70%, ${colors['trans-blue'][600]} 70% 100%)`,
         'asexual-flag': `linear-gradient(135deg, ${colors['asexual'][100]} 30%, ${colors['asexual'][200]} 30% 50%, ${colors['asexual'][300]} 50% 70%, ${colors['asexual'][400]} 70% 100%)`,
+        random:
+          'repeating-linear-gradient(135deg, #ff0000 0 calc(128px / 6 * 1), #ffa500 calc(128px / 6 * 1) calc(128px / 6 * 2), #ffff00 calc(128px / 6 * 2) calc(128px / 6 * 3), #008000 calc(128px / 6 * 3) calc(128px / 6 * 4), #0000ff calc(128px / 6 * 4) calc(128px / 6 * 5), #800080 calc(128px / 6 * 5) calc(128px / 6 * 6))',
       },
     },
     data: {

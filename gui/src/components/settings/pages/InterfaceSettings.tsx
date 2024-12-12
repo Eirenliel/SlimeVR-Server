@@ -358,6 +358,12 @@ export function InterfaceSettings() {
                   value={'asexual'}
                   colors="!bg-asexual-flag"
                 ></ThemeSelector>
+                <ThemeSelector
+                  control={control}
+                  name="appearance.theme"
+                  value={'random'}
+                  colors="!bg-random !bg-[length:181.019px_200%] !bg-repeat checked:bg-[0%_0%] animate-scroll"
+                ></ThemeSelector>
               </div>
             </div>
 
