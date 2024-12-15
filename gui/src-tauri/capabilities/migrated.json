@@ -29,6 +29,56 @@
     "store:allow-get",
     "store:allow-set",
     "store:allow-save",
-    "fs:allow-write-text-file"
+    "fs:allow-write-text-file",
+    {
+      "identifier": "shell:allow-execute",
+      "allow": [
+        {
+          "name": "netsh-list",
+          "cmd": "netsh",
+          "args": [
+            "wlan",
+            "show",
+            "profile"
+          ],
+          "sidecar": false
+        },
+        {
+          "name": "netsh-scan",
+          "cmd": "netsh",
+          "args": [
+            "wlan",
+            "show",
+            "network",
+            "mode=Bssid"
+          ],
+          "sidecar": false
+        },
+        {
+          "name": "netsh-details",
+          "cmd": "netsh",
+          "args": [
+            "wlan",
+            "show",
+            "profile",
+            {
+              "validator": "name=\\S+"
+            },
+            "key=clear"
+          ],
+          "sidecar": false
+        },
+        {
+          "name": "netsh-connected",
+          "cmd": "netsh",
+          "args": [
+            "wlan",
+            "show",
+            "interfaces"
+          ],
+          "sidecar": false
+        }
+      ]
+    }
   ]
 }
