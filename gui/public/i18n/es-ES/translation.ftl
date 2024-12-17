@@ -428,9 +428,9 @@ settings-general-gesture_control-description = Permite que los reinicios se acti
 # $amount (Number) - Amount of taps (touches to the tracker's case)
 settings-general-gesture_control-taps =
     { $amount ->
-        [one] toque
-        [many] toques
-       *[other] toques
+        [one] 1 toque
+        [many] { $amount } toques
+       *[other] { $amount } toques
     }
 # This is a unit: 3 trackers, 2 trackers, 1 tracker
 # $amount (Number) - Amount of trackers
