@@ -144,7 +144,7 @@ class RPCAutoBoneHandler(
 
 	private fun onAutoBoneApplyRequest(
 		conn: GenericConnection,
-		messageHeader: RpcMessageHeader,
+		@Suppress("UNUSED_PARAMETER")messageHeader: RpcMessageHeader,
 	) {
 		api.server.autoBoneHandler.applyValues()
 
@@ -160,15 +160,15 @@ class RPCAutoBoneHandler(
 	}
 
 	private fun onAutoBoneStopRecordingRequest(
-		conn: GenericConnection,
-		messageHeader: RpcMessageHeader,
+		@Suppress("UNUSED_PARAMETER")conn: GenericConnection,
+		@Suppress("UNUSED_PARAMETER")messageHeader: RpcMessageHeader,
 	) {
 		api.server.autoBoneHandler.stopRecording()
 	}
 
 	private fun onAutoBoneCancelRecordingRequest(
-		conn: GenericConnection,
-		messageHeader: RpcMessageHeader,
+		@Suppress("UNUSED_PARAMETER") conn: GenericConnection,
+		@Suppress("UNUSED_PARAMETER") messageHeader: RpcMessageHeader,
 	) {
 		api.server.autoBoneHandler.cancelRecording()
 	}

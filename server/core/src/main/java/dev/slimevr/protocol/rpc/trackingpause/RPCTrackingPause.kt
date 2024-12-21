@@ -36,7 +36,7 @@ class RPCTrackingPause(private val rpcHandler: RPCHandler, private val api: Prot
 		return fbb.dataBuffer()
 	}
 
-	private fun onTrackingPauseStateRequest(conn: GenericConnection, messageHeader: RpcMessageHeader) {
+	private fun onTrackingPauseStateRequest(conn: GenericConnection, @Suppress("UNUSED_PARAMETER") messageHeader: RpcMessageHeader) {
 		conn.send(getPauseStateResponse(currentPauseState))
 	}
 

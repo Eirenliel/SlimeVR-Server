@@ -37,8 +37,8 @@ class PositionOffsetError : IAutoBoneError {
 			val position2 = trackerFrame2.tryGetPosition() ?: continue
 			val trackerRole2 = trackerFrame2.tryGetTrackerPosition()?.trackerRole ?: continue
 
-			val computedTracker1 = skeleton1.getComputedTracker(trackerRole1) ?: continue
-			val computedTracker2 = skeleton2.getComputedTracker(trackerRole2) ?: continue
+			val computedTracker1 = skeleton1.getComputedTracker(trackerRole1)
+			val computedTracker2 = skeleton2.getComputedTracker(trackerRole2)
 
 			val dist1 = (position1 - computedTracker1.position).len()
 			val dist2 = (position2 - computedTracker2.position).len()

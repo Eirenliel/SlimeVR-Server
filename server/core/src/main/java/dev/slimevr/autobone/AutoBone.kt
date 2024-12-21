@@ -74,20 +74,9 @@ class AutoBone(server: VRServer) {
 		// Remove all previous values
 		offsets.clear()
 
-		// Get current or default skeleton configs
-		val skeleton = server.humanPoseManager
-		// Still compensate for a null skeleton, as it may not be initialized yet
-		val getOffset: Function<SkeletonConfigOffsets, Float> =
-			if (skeleton != null) {
-				Function { key: SkeletonConfigOffsets -> skeleton.getOffset(key) }
-			} else {
-				val defaultConfig = SkeletonConfigManager(false)
-				Function { config: SkeletonConfigOffsets ->
-					defaultConfig.getOffset(config)
-				}
-			}
+		// Get current skeleton configs
 		for (bone in adjustOffsets) {
-			val offset = getOffset.apply(bone)
+			val offset = server.humanPoseManager.getOffset(bone)
 			if (offset > 0f) {
 				offsets[bone] = offset
 			}
@@ -154,18 +143,15 @@ class AutoBone(server: VRServer) {
 		val targetHeight: Float
 		// Get the current skeleton from the server
 		val humanPoseManager = server.humanPoseManager
-		// Still compensate for a null skeleton, as it may not be initialized yet
-		if (config.useSkeletonHeight && humanPoseManager != null) {
-			// If there is a skeleton available, calculate the target height
-			// from its configs
+		if (config.useSkeletonHeight) {
+			// calculate the target height from the skeleton configs
 			targetHeight = humanPoseManager.userHeightFromConfig
 			LogManager
 				.warning(
 					"[AutoBone] Target height loaded from skeleton (Make sure you reset before running!): $targetHeight",
 				)
 		} else {
-			// Otherwise if there is no skeleton available, attempt to get the
-			// max HMD height from the recording
+			// Otherwise, attempt to get the max HMD height from the recording
 			val hmdHeight = frames.maxHmdHeight
 			if (hmdHeight <= MIN_HEIGHT) {
 				LogManager
