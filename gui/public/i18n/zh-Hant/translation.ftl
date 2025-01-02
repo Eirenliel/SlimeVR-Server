@@ -1128,6 +1128,74 @@ firmware_tool-loading = 載入中…
 ## Firmware tool Steps
 
 firmware_tool = DIY 韌體工具
+firmware_tool-description = 本工具可以配置與燒錄您的 DIY 追蹤器
+firmware_tool-not_available = 唉呀，現在韌體工具無法使用。請稍後再來！
+firmware_tool-not_compatible = 韌體工具與這個版本的伺服器不相容。請更新伺服器！
+firmware_tool-board_step = 選擇你的主板
+firmware_tool-board_step-description = 請從以下列出的主板選擇一個。
+firmware_tool-board_pins_step = 檢查腳位
+firmware_tool-board_pins_step-description =
+    請檢查以下選擇的腳位是正確的。
+    若是照著 SlimeVR 的教學來製作追蹤器，預設值應該是正確的
+firmware_tool-board_pins_step-enable_led = 開啟 LED
+firmware_tool-board_pins_step-led_pin =
+    .label = LED 腳位
+    .placeholder = 輸入 LED 腳位位址
+firmware_tool-board_pins_step-battery_type = 選擇電量偵測類型
+firmware_tool-board_pins_step-battery_type-BAT_EXTERNAL = 外部（電池電壓）
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL = 內部（Vcc 電壓）
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL_MCP3021 = 內部，使用 MCP3021 ADC
+firmware_tool-board_pins_step-battery_type-BAT_MCP3021 = 外部，使用 MCP3021 ADC
+firmware_tool-board_pins_step-battery_sensor_pin =
+    .label = 電量偵測腳位
+    .placeholder = 輸入電量偵測腳位位址
+firmware_tool-board_pins_step-battery_resistor =
+    .label = 電量偵測電阻阻值（歐姆）
+    .placeholder = 輸入用於偵測電量的電阻阻值
+firmware_tool-board_pins_step-battery_shield_resistor-0 =
+    .label = 電池擴充板 R1 阻值（歐姆）
+    .placeholder = 輸入電池擴充板的 R1 阻值
+firmware_tool-board_pins_step-battery_shield_resistor-1 =
+    .label = 電池擴充板 R2 阻值（歐姆）
+    .placeholder = 輸入電池擴充板的 R2 阻值
+firmware_tool-add_imus_step = 定義你的 IMU
+firmware_tool-add_imus_step-description =
+    請加入追蹤器所使用的 IMU
+    若是照著 SlimeVR 的教學來製作追蹤器，預設值應該是正確的
+firmware_tool-add_imus_step-imu_type-label = IMU 類型
+firmware_tool-add_imus_step-imu_type-placeholder = 選擇 IMU 的類型
+firmware_tool-add_imus_step-imu_rotation =
+    .label = IMU 安裝角度（度）
+    .placeholder = IMU 旋轉的角度
+firmware_tool-add_imus_step-scl_pin =
+    .label = SCL 腳位
+    .placeholder = SCL 的腳位位址
+firmware_tool-add_imus_step-sda_pin =
+    .label = SDA 腳位
+    .placeholder = SDA 腳位位址
+firmware_tool-add_imus_step-int_pin =
+    .label = INT 腳位
+    .placeholder = INT 腳位位址
+firmware_tool-add_imus_step-optional_tracker =
+    .label = 選配追蹤器
+firmware_tool-flash_method_step = 燒錄方法
+firmware_tool-flash_method_step-description = 選擇要使用的燒錄方法
+firmware_tool-flash_method_step-ota =
+    .label = OTA
+    .description = 透過 OTA（無線更新），追蹤器會透過 Wi-Fi 來更新韌體。僅適用於已燒錄的追蹤器。
+firmware_tool-flash_method_step-serial =
+    .label = 串列埠
+    .description = 透過 USB 傳輸線更新追蹤器。
+firmware_tool-flashbtn_step = 按下 BOOT 按鈕
+firmware_tool-flashbtn_step-description = 在進入下一步前，請先進行以下操作
+firmware_tool-flashbtn_step-board_SLIMEVR =
+    按住 PCB 的 FLASH 按鈕同時插線開機。
+    若追蹤器的電源在操作前已開啟，請在按住 FLASH 按鈕（或是短路 FLASH 接點）同時將電源關閉再打開。
+    不同版本的 SlimeVR 追蹤器作法不同，請參考下列圖片
+firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLASH 方形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
+firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
+firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 將追蹤器上方的 FLASH 按鈕按住，同時開啟追蹤器開關
+firmware_tool-flashing_step = 燒錄中
 
 ## firmware tool build status
 
@@ -1137,6 +1205,7 @@ firmware_tool = DIY 韌體工具
 
 ## Dedicated Firmware Update Page
 
+firmware_update-retry = 重試
 
 ## Tray Menu
 
