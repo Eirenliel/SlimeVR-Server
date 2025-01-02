@@ -1178,6 +1178,13 @@ firmware_tool-add_imus_step-int_pin =
     .placeholder = INT 腳位位址
 firmware_tool-add_imus_step-optional_tracker =
     .label = 選配追蹤器
+firmware_tool-add_imus_step-show_less = 顯示更少
+firmware_tool-add_imus_step-show_more = 顯示更多
+firmware_tool-add_imus_step-add_more = 新增更多 IMU
+firmware_tool-select_firmware_step = 選擇韌體版本
+firmware_tool-select_firmware_step-description = 請選擇要使用的韌體版本
+firmware_tool-select_firmware_step-show-third-party =
+    .label = 顯示第三方韌體
 firmware_tool-flash_method_step = 燒錄方法
 firmware_tool-flash_method_step-description = 選擇要使用的燒錄方法
 firmware_tool-flash_method_step-ota =
@@ -1189,12 +1196,19 @@ firmware_tool-flash_method_step-serial =
 firmware_tool-flashbtn_step = 按下 BOOT 按鈕
 firmware_tool-flashbtn_step-description = 在進入下一步前，請先進行以下操作
 firmware_tool-flashbtn_step-board_SLIMEVR =
-    按住 PCB 的 FLASH 按鈕同時插線開機。
+    按住 PCB 的 FLASH 按鈕同時插線開機，
     若追蹤器的電源在操作前已開啟，請在按住 FLASH 按鈕（或是短路 FLASH 接點）同時將電源關閉再打開。
-    不同版本的 SlimeVR 追蹤器作法不同，請參考下列圖片
+    不同版本的 SlimeVR 追蹤器作法不同，請參考下列圖片。
 firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLASH 方形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 將追蹤器上方的 FLASH 按鈕按住，同時開啟追蹤器開關
+firmware_tool-flashbtn_step-board_OTHER =
+    在燒錄前，你需要將追蹤器開機進入 Bootloader（開機引導）模式。
+    多數狀況下，在燒錄開始前按下 BOOT 按鈕即可開始燒錄。
+    如果燒錄進度開始時就已逾時，表示追蹤器未能進入 Bootloader 模式，
+    請參考開發板燒錄韌體的說明文件，以得知進入 Bootloader 模式的方法。
+firmware_tool-flash_method_ota-devices = 偵測到的 OTA 裝置：
+firmware_tool-flash_method_ota-no_devices = 沒有可以使用 OTA 更新的主板，請確認所選擇的主板類型
 firmware_tool-flashing_step = 燒錄中
 
 ## firmware tool build status
