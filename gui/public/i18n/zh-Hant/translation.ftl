@@ -1143,7 +1143,7 @@ firmware_tool-board_pins_step-led_pin =
     .placeholder = 輸入 LED 腳位位址
 firmware_tool-board_pins_step-battery_type = 選擇電量偵測類型
 firmware_tool-board_pins_step-battery_type-BAT_EXTERNAL = 外部（電池電壓）
-firmware_tool-board_pins_step-battery_type-BAT_INTERNAL = 內部（Vcc 電壓）
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL = 內部（MCU 工作電壓）
 firmware_tool-board_pins_step-battery_type-BAT_INTERNAL_MCP3021 = 內部，使用 MCP3021 ADC
 firmware_tool-board_pins_step-battery_type-BAT_MCP3021 = 外部，使用 MCP3021 ADC
 firmware_tool-board_pins_step-battery_sensor_pin =
@@ -1196,14 +1196,13 @@ firmware_tool-flash_method_step-serial =
 firmware_tool-flashbtn_step = 按下 BOOT 按鈕
 firmware_tool-flashbtn_step-description = 在進入下一步前，請先進行以下操作
 firmware_tool-flashbtn_step-board_SLIMEVR =
-    按住 PCB 的 FLASH 按鈕同時插線開機，
-    若追蹤器的電源在操作前已開啟，請在按住 FLASH 按鈕（或是短路 FLASH 接點）同時將電源關閉再打開。
-    不同修訂版的 SlimeVR 追蹤器作法有別，請參考下列圖片。
+    關閉追蹤器電源，移除外殼（若有的話），並用 USB 線連接到這台電腦上，
+    然後根據你持有的 SlimeVR 追蹤器主板的版本，進行下述操作。
 firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLASH 方形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 按住追蹤器上方的 FLASH 按鈕，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_OTHER =
-    在燒錄前，你需要將追蹤器開機進入 Bootloader（開機引導）模式。
+    在燒錄前，你可能需要將追蹤器進入 Bootloader（開機引導）模式。
     多數狀況下，在燒錄開始前按下 BOOT 按鈕即可開始燒錄。
     如果燒錄進度開始時就已逾時，表示追蹤器未能進入 Bootloader 模式，
     請參考開發板燒錄韌體的說明文件，以得知進入 Bootloader 模式的方法。
