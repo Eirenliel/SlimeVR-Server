@@ -1198,10 +1198,10 @@ firmware_tool-flashbtn_step-description = 在進入下一步前，請先進行�
 firmware_tool-flashbtn_step-board_SLIMEVR =
     按住 PCB 的 FLASH 按鈕同時插線開機，
     若追蹤器的電源在操作前已開啟，請在按住 FLASH 按鈕（或是短路 FLASH 接點）同時將電源關閉再打開。
-    不同版本的 SlimeVR 追蹤器作法不同，請參考下列圖片。
+    不同修訂版的 SlimeVR 追蹤器作法有別，請參考下列圖片。
 firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLASH 方形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
-firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 將追蹤器上方的 FLASH 按鈕按住，同時開啟追蹤器開關
+firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 按住追蹤器上方的 FLASH 按鈕，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_OTHER =
     在燒錄前，你需要將追蹤器開機進入 Bootloader（開機引導）模式。
     多數狀況下，在燒錄開始前按下 BOOT 按鈕即可開始燒錄。
@@ -1245,7 +1245,7 @@ firmware_update-status-DONE = 上傳完畢！
 firmware_update-status-ERROR_DEVICE_NOT_FOUND = 找不到裝置
 firmware_update-status-ERROR_TIMEOUT = 上傳流程已逾時
 firmware_update-status-ERROR_DOWNLOAD_FAILED = 無法下載韌體
-firmware_update-status-ERROR_AUTHENTICATION_FAILED = 無法與 MCU 認證
+firmware_update-status-ERROR_AUTHENTICATION_FAILED = 無法與 MCU 進行認證
 firmware_update-status-ERROR_UPLOAD_FAILED = 無法上傳韌體
 firmware_update-status-ERROR_PROVISIONING_FAILED = 無法設定 Wi-Fi 認證資訊
 firmware_update-status-ERROR_UNSUPPORTED_METHOD = 更新方法不支援
