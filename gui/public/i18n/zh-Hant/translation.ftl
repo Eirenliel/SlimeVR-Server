@@ -807,7 +807,7 @@ onboarding-connect_tracker-description-p1-v1 = 透過 USB 埠，一次連接一�
 onboarding-connect_tracker-issue-serial = 我在連接時碰到問題了！
 onboarding-connect_tracker-usb = USB 追蹤器
 onboarding-connect_tracker-connection_status-none = 正在尋找追蹤器
-onboarding-connect_tracker-connection_status-serial_init = 正在連線到序列裝置
+onboarding-connect_tracker-connection_status-serial_init = 正在連線到串列埠裝置
 onboarding-connect_tracker-connection_status-obtaining_mac_address = 正在取得追蹤器的 MAC 位址
 onboarding-connect_tracker-connection_status-provisioning = 正在傳送 Wi-Fi 認證資訊
 onboarding-connect_tracker-connection_status-connecting = 正在傳送 Wi-Fi 資訊
@@ -1158,14 +1158,14 @@ firmware_tool-board_pins_step-battery_shield_resistor-0 =
 firmware_tool-board_pins_step-battery_shield_resistor-1 =
     .label = 電池擴充板 R2 阻值（歐姆）
     .placeholder = 輸入電池擴充板的 R2 阻值
-firmware_tool-add_imus_step = 定義你的 IMU
+firmware_tool-add_imus_step = 設定慣性測量單元 (IMU)
 firmware_tool-add_imus_step-description =
     請加入追蹤器所使用的 IMU
     若是照著 SlimeVR 的教學來製作追蹤器，預設值應該是正確的
 firmware_tool-add_imus_step-imu_type-label = IMU 類型
 firmware_tool-add_imus_step-imu_type-placeholder = 選擇 IMU 的類型
 firmware_tool-add_imus_step-imu_rotation =
-    .label = IMU 安裝角度（度）
+    .label = IMU 角度（度）
     .placeholder = IMU 旋轉的角度
 firmware_tool-add_imus_step-scl_pin =
     .label = SCL 腳位
@@ -1209,17 +1209,58 @@ firmware_tool-flashbtn_step-board_OTHER =
     請參考開發板燒錄韌體的說明文件，以得知進入 Bootloader 模式的方法。
 firmware_tool-flash_method_ota-devices = 偵測到的 OTA 裝置：
 firmware_tool-flash_method_ota-no_devices = 沒有可以使用 OTA 更新的主板，請確認所選擇的主板類型
+firmware_tool-flash_method_serial-wifi = Wi-Fi 認證資訊：
+firmware_tool-flash_method_serial-devices-label = 偵測到的串列埠裝置：
+firmware_tool-flash_method_serial-devices-placeholder = 選擇一個串列埠裝置
+firmware_tool-flash_method_serial-no_devices = 偵測不到相容的串列埠裝置，請確認追蹤器已連接
+firmware_tool-build_step = 建置中
+firmware_tool-build_step-description = 韌體正在建置中，請稍後
 firmware_tool-flashing_step = 燒錄中
+firmware_tool-flashing_step-description = 追蹤器燒錄中，請遵循畫面上的指示
+firmware_tool-flashing_step-warning = 除非特別指示，燒錄中請勿移除或是重啟追蹤器，否則可能導致主板無法使用。
+firmware_tool-flashing_step-flash_more = 燒錄更多追蹤器
+firmware_tool-flashing_step-exit = 離開
 
 ## firmware tool build status
 
+firmware_tool-build-CREATING_BUILD_FOLDER = 正在建立建置資料夾
+firmware_tool-build-DOWNLOADING_FIRMWARE = 正在下載韌體
+firmware_tool-build-EXTRACTING_FIRMWARE = 正在解壓縮韌體
+firmware_tool-build-SETTING_UP_DEFINES = 正在設定韌體參數
+firmware_tool-build-BUILDING = 正在建置韌體
+firmware_tool-build-SAVING = 正在儲存建置
+firmware_tool-build-DONE = 建置完成
+firmware_tool-build-ERROR = 無法建置韌體
 
 ## Firmware update status
 
+firmware_update-status-DOWNLOADING = 正在下載韌體
+firmware_update-status-NEED_MANUAL_REBOOT = 正在等待使用者重啟追蹤器
+firmware_update-status-AUTHENTICATING = 正在與 MCU 認證
+firmware_update-status-UPLOADING = 正在上傳韌體
+firmware_update-status-SYNCING_WITH_MCU = 正在與 MCU 同步
+firmware_update-status-REBOOTING = 正在重啟追蹤器
+firmware_update-status-PROVISIONING = 正在設定 Wi-Fi 認證資訊
+firmware_update-status-DONE = 上傳完畢！
+firmware_update-status-ERROR_DEVICE_NOT_FOUND = 找不到裝置
+firmware_update-status-ERROR_TIMEOUT = 上傳流程已逾時
+firmware_update-status-ERROR_DOWNLOAD_FAILED = 無法下載韌體
+firmware_update-status-ERROR_AUTHENTICATION_FAILED = 無法與 MCU 認證
+firmware_update-status-ERROR_UPLOAD_FAILED = 無法上傳韌體
+firmware_update-status-ERROR_PROVISIONING_FAILED = 無法設定 Wi-Fi 認證資訊
+firmware_update-status-ERROR_UNSUPPORTED_METHOD = 更新方法不支援
+firmware_update-status-ERROR_UNKNOWN = 發生不明錯誤
 
 ## Dedicated Firmware Update Page
 
+firmware_update-title = 韌體更新
+firmware_update-devices = 可用裝置
+firmware_update-devices-description = 請選擇要更新到最新版本 SlimeVR 韌體的追蹤器
+firmware_update-no_devices = 請確認要更新的追蹤器電源已開啟並連接到 Wi-Fi
+firmware_update-changelog-title = 更新到 { $version }
+firmware_update-looking_for_devices = 正在尋找要更新的裝置…
 firmware_update-retry = 重試
+firmware_update-update = 更新所選的追蹤器
 
 ## Tray Menu
 
