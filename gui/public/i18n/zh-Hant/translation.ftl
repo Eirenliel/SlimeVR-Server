@@ -80,6 +80,20 @@ body_part-RIGHT_LITTLE_PROXIMAL = 右小指近端
 body_part-RIGHT_LITTLE_INTERMEDIATE = 右小指中端
 body_part-RIGHT_LITTLE_DISTAL = 右小指遠端
 
+## BoardType
+
+board_type-UNKNOWN = 不明
+board_type-NODEMCU = NodeMCU
+board_type-CUSTOM = 自訂主板
+board_type-WROOM32 = WROOM32
+board_type-WEMOSD1MINI = Wemos D1 Mini
+board_type-TTGO_TBASE = TTGO T-Base
+board_type-ESP01 = ESP-01
+board_type-SLIMEVR = SlimeVR
+board_type-LOLIN_C3_MINI = Lolin C3 Mini
+board_type-BEETLE32C3 = Beetle ESP32-C3
+board_type-ES32C3DEVKITM1 = Espressif ESP32-C3 DevKitM-1
+
 ## Proportions
 
 skeleton_bone-NONE = 無
@@ -275,6 +289,11 @@ tracker-settings-name_section-label = 追蹤器名稱
 tracker-settings-forget = 忘記追蹤器
 tracker-settings-forget-description = 從 SlimeVR 伺服器程式中移除該追蹤器，且直到重新啟動伺服器前不會再次連接。該追蹤器的設定不會遺失。
 tracker-settings-forget-label = 忘記追蹤器
+tracker-settings-update-unavailable = 無法更新 (DIY)
+tracker-settings-update-up_to_date = 已為最新版本
+tracker-settings-update-available = 版本 { $versionName } 可供更新
+tracker-settings-update = 立即更新
+tracker-settings-update-title = 韌體版本
 
 ## Tracker part card info
 
@@ -350,6 +369,7 @@ settings-sidebar-utils = 工具
 settings-sidebar-serial = 串列埠終端
 settings-sidebar-appearance = 外觀
 settings-sidebar-notifications = 通知
+settings-sidebar-firmware-tool = DIY 韌體工具
 settings-sidebar-advanced = 進階
 
 ## SteamVR settings
@@ -730,6 +750,7 @@ onboarding-wifi_creds-submit = 送出！
 onboarding-wifi_creds-ssid =
     .label = Wi-Fi 名稱
     .placeholder = 請輸入 Wi-Fi 名稱
+onboarding-wifi_creds-ssid-required = 必須填寫 Wi-Fi 名稱
 onboarding-wifi_creds-password =
     .label = 密碼
     .placeholder = 輸入密碼
@@ -787,6 +808,7 @@ onboarding-connect_tracker-issue-serial = 我在連接時碰到問題了！
 onboarding-connect_tracker-usb = USB 追蹤器
 onboarding-connect_tracker-connection_status-none = 正在尋找追蹤器
 onboarding-connect_tracker-connection_status-serial_init = 正在連線到序列裝置
+onboarding-connect_tracker-connection_status-obtaining_mac_address = 正在取得追蹤器的 MAC 位址
 onboarding-connect_tracker-connection_status-provisioning = 正在傳送 Wi-Fi 認證資訊
 onboarding-connect_tracker-connection_status-connecting = 正在傳送 Wi-Fi 資訊
 onboarding-connect_tracker-connection_status-looking_for_server = 正在尋找伺服器
@@ -1094,6 +1116,27 @@ status_system-StatusSteamVRDisconnected =
     }
 status_system-StatusTrackerError = 追蹤器{ $trackerName }發生錯誤
 status_system-StatusUnassignedHMD = VR 頭戴顯示器應被分配為頭部追蹤器。
+
+## Firmware tool globals
+
+firmware_tool-next_step = 下一步
+firmware_tool-previous_step = 上一步
+firmware_tool-ok = 看起來 OK
+firmware_tool-retry = 重試
+firmware_tool-loading = 載入中…
+
+## Firmware tool Steps
+
+firmware_tool = DIY 韌體工具
+
+## firmware tool build status
+
+
+## Firmware update status
+
+
+## Dedicated Firmware Update Page
+
 
 ## Tray Menu
 
