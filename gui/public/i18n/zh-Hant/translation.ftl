@@ -1195,9 +1195,7 @@ firmware_tool-flash_method_step-serial =
     .description = 透過 USB 傳輸線更新追蹤器。
 firmware_tool-flashbtn_step = 按下 BOOT 按鈕
 firmware_tool-flashbtn_step-description = 在進入下一步前，請先進行以下操作
-firmware_tool-flashbtn_step-board_SLIMEVR =
-    關閉追蹤器電源，移除外殼（若有的話），並用 USB 線連接到這台電腦上，
-    然後根據你持有的 SlimeVR 追蹤器主板的版本，進行下述操作。
+firmware_tool-flashbtn_step-board_SLIMEVR = 關閉追蹤器電源，移除外殼（若有的話），並用 USB 線連接到這台電腦上，然後根據你持有的 SlimeVR 追蹤器主板的版本，進行下述操作。
 firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLASH 方形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 按住追蹤器上方的 FLASH 按鈕，同時開啟追蹤器開關
