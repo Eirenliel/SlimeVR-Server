@@ -1131,13 +1131,13 @@ firmware_tool = DIY 韌體工具
 firmware_tool-description = 本工具可以配置與燒錄您的 DIY 追蹤器
 firmware_tool-not_available = 唉呀，現在韌體工具無法使用。請稍後再來！
 firmware_tool-not_compatible = 韌體工具與這個版本的伺服器不相容。請更新伺服器！
-firmware_tool-board_step = 選擇你的主板
+firmware_tool-board_step = 選擇主板
 firmware_tool-board_step-description = 請從以下列出的主板選擇一個。
 firmware_tool-board_pins_step = 檢查腳位
 firmware_tool-board_pins_step-description =
     請檢查以下選擇的腳位是正確的。
     若是照著 SlimeVR 的教學來製作追蹤器，預設值應該是正確的
-firmware_tool-board_pins_step-enable_led = 開啟 LED
+firmware_tool-board_pins_step-enable_led = 設定 LED
 firmware_tool-board_pins_step-led_pin =
     .label = LED 腳位
     .placeholder = 輸入 LED 腳位位址
