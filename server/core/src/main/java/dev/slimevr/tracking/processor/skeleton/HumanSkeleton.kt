@@ -4,6 +4,8 @@ import com.jme3.math.FastMath
 import dev.slimevr.VRServer
 import dev.slimevr.tracking.processor.Bone
 import dev.slimevr.tracking.processor.BoneType
+import dev.slimevr.tracking.processor.Constraint
+import dev.slimevr.tracking.processor.Constraint.Companion.ConstraintType
 import dev.slimevr.tracking.processor.HumanPoseManager
 import dev.slimevr.tracking.processor.config.SkeletonConfigToggles
 import dev.slimevr.tracking.processor.config.SkeletonConfigValues
@@ -35,77 +37,79 @@ class HumanSkeleton(
 	val humanPoseManager: HumanPoseManager,
 ) {
 	// Upper body bones
-	val headBone = Bone(BoneType.HEAD)
-	val neckBone = Bone(BoneType.NECK)
-	val upperChestBone = Bone(BoneType.UPPER_CHEST)
-	val chestBone = Bone(BoneType.CHEST)
-	val waistBone = Bone(BoneType.WAIST)
-	val hipBone = Bone(BoneType.HIP)
+	val headBone = Bone(BoneType.HEAD, Constraint(ConstraintType.COMPLETE))
+	val neckBone = Bone(BoneType.NECK, Constraint(ConstraintType.COMPLETE))
+	val upperChestBone = Bone(BoneType.UPPER_CHEST, Constraint(ConstraintType.TWIST_SWING, 90f, 120f))
+	val chestBone = Bone(BoneType.CHEST, Constraint(ConstraintType.TWIST_SWING, 60f, 120f))
+	val waistBone = Bone(BoneType.WAIST, Constraint(ConstraintType.TWIST_SWING, 60f, 120f))
+	val hipBone = Bone(BoneType.HIP, Constraint(ConstraintType.TWIST_SWING, 60f, 120f))
 
 	// Lower body bones
-	val leftHipBone = Bone(BoneType.LEFT_HIP)
-	val rightHipBone = Bone(BoneType.RIGHT_HIP)
-	val leftUpperLegBone = Bone(BoneType.LEFT_UPPER_LEG)
-	val rightUpperLegBone = Bone(BoneType.RIGHT_UPPER_LEG)
-	val leftLowerLegBone = Bone(BoneType.LEFT_LOWER_LEG)
-	val rightLowerLegBone = Bone(BoneType.RIGHT_LOWER_LEG)
-	val leftFootBone = Bone(BoneType.LEFT_FOOT)
-	val rightFootBone = Bone(BoneType.RIGHT_FOOT)
+	val leftHipBone = Bone(BoneType.LEFT_HIP, Constraint(ConstraintType.TWIST_SWING, 0f, 15f))
+	val rightHipBone = Bone(BoneType.RIGHT_HIP, Constraint(ConstraintType.TWIST_SWING, 0f, 15f))
+	val leftUpperLegBone = Bone(BoneType.LEFT_UPPER_LEG, Constraint(ConstraintType.TWIST_SWING, 120f, 180f))
+	val rightUpperLegBone = Bone(BoneType.RIGHT_UPPER_LEG, Constraint(ConstraintType.TWIST_SWING, 120f, 180f))
+	val leftLowerLegBone = Bone(BoneType.LEFT_LOWER_LEG, Constraint(ConstraintType.LOOSE_HINGE, 180f, 0f, 50f))
+	val rightLowerLegBone = Bone(BoneType.RIGHT_LOWER_LEG, Constraint(ConstraintType.LOOSE_HINGE, 180f, 0f, 50f))
+	val leftFootBone = Bone(BoneType.LEFT_FOOT, Constraint(ConstraintType.TWIST_SWING, 60f, 60f))
+	val rightFootBone = Bone(BoneType.RIGHT_FOOT, Constraint(ConstraintType.TWIST_SWING, 60f, 60f))
 
 	// Arm bones
-	val leftShoulderBone = Bone(BoneType.LEFT_SHOULDER)
-	val rightShoulderBone = Bone(BoneType.RIGHT_SHOULDER)
-	val leftUpperArmBone = Bone(BoneType.LEFT_UPPER_ARM)
-	val rightUpperArmBone = Bone(BoneType.RIGHT_UPPER_ARM)
-	val leftLowerArmBone = Bone(BoneType.LEFT_LOWER_ARM)
-	val rightLowerArmBone = Bone(BoneType.RIGHT_LOWER_ARM)
-	val leftHandBone = Bone(BoneType.LEFT_HAND)
-	val rightHandBone = Bone(BoneType.RIGHT_HAND)
+	val leftUpperShoulderBone = Bone(BoneType.LEFT_UPPER_SHOULDER, Constraint(ConstraintType.COMPLETE))
+	val rightUpperShoulderBone = Bone(BoneType.RIGHT_UPPER_SHOULDER, Constraint(ConstraintType.COMPLETE))
+	val leftShoulderBone = Bone(BoneType.LEFT_SHOULDER, Constraint(ConstraintType.TWIST_SWING, 0f, 10f))
+	val rightShoulderBone = Bone(BoneType.RIGHT_SHOULDER, Constraint(ConstraintType.TWIST_SWING, 0f, 10f))
+	val leftUpperArmBone = Bone(BoneType.LEFT_UPPER_ARM, Constraint(ConstraintType.TWIST_SWING, 120f, 180f))
+	val rightUpperArmBone = Bone(BoneType.RIGHT_UPPER_ARM, Constraint(ConstraintType.TWIST_SWING, 120f, 180f))
+	val leftLowerArmBone = Bone(BoneType.LEFT_LOWER_ARM, Constraint(ConstraintType.LOOSE_HINGE, 0f, -180f, 40f))
+	val rightLowerArmBone = Bone(BoneType.RIGHT_LOWER_ARM, Constraint(ConstraintType.LOOSE_HINGE, 0f, -180f, 40f))
+	val leftHandBone = Bone(BoneType.LEFT_HAND, Constraint(ConstraintType.TWIST_SWING, 120f, 120f))
+	val rightHandBone = Bone(BoneType.RIGHT_HAND, Constraint(ConstraintType.TWIST_SWING, 120f, 120f))
 
 	// Finger bones
-	val leftThumbMetacarpalBone = Bone(BoneType.LEFT_THUMB_METACARPAL)
-	val leftThumbProximalBone = Bone(BoneType.LEFT_THUMB_PROXIMAL)
-	val leftThumbDistalBone = Bone(BoneType.LEFT_THUMB_DISTAL)
-	val leftIndexProximalBone = Bone(BoneType.LEFT_INDEX_PROXIMAL)
-	val leftIndexIntermediateBone = Bone(BoneType.LEFT_INDEX_INTERMEDIATE)
-	val leftIndexDistalBone = Bone(BoneType.LEFT_INDEX_DISTAL)
-	val leftMiddleProximalBone = Bone(BoneType.LEFT_MIDDLE_PROXIMAL)
-	val leftMiddleIntermediateBone = Bone(BoneType.LEFT_MIDDLE_INTERMEDIATE)
-	val leftMiddleDistalBone = Bone(BoneType.LEFT_MIDDLE_DISTAL)
-	val leftRingProximalBone = Bone(BoneType.LEFT_RING_PROXIMAL)
-	val leftRingIntermediateBone = Bone(BoneType.LEFT_RING_INTERMEDIATE)
-	val leftRingDistalBone = Bone(BoneType.LEFT_RING_DISTAL)
-	val leftLittleProximalBone = Bone(BoneType.LEFT_LITTLE_PROXIMAL)
-	val leftLittleIntermediateBone = Bone(BoneType.LEFT_LITTLE_INTERMEDIATE)
-	val leftLittleDistalBone = Bone(BoneType.LEFT_LITTLE_DISTAL)
-	val rightThumbMetacarpalBone = Bone(BoneType.RIGHT_THUMB_METACARPAL)
-	val rightThumbProximalBone = Bone(BoneType.RIGHT_THUMB_PROXIMAL)
-	val rightThumbDistalBone = Bone(BoneType.RIGHT_THUMB_DISTAL)
-	val rightIndexProximalBone = Bone(BoneType.RIGHT_INDEX_PROXIMAL)
-	val rightIndexIntermediateBone = Bone(BoneType.RIGHT_INDEX_INTERMEDIATE)
-	val rightIndexDistalBone = Bone(BoneType.RIGHT_INDEX_DISTAL)
-	val rightMiddleProximalBone = Bone(BoneType.RIGHT_MIDDLE_PROXIMAL)
-	val rightMiddleIntermediateBone = Bone(BoneType.RIGHT_MIDDLE_INTERMEDIATE)
-	val rightMiddleDistalBone = Bone(BoneType.RIGHT_MIDDLE_DISTAL)
-	val rightRingProximalBone = Bone(BoneType.RIGHT_RING_PROXIMAL)
-	val rightRingIntermediateBone = Bone(BoneType.RIGHT_RING_INTERMEDIATE)
-	val rightRingDistalBone = Bone(BoneType.RIGHT_RING_DISTAL)
-	val rightLittleProximalBone = Bone(BoneType.RIGHT_LITTLE_PROXIMAL)
-	val rightLittleIntermediateBone = Bone(BoneType.RIGHT_LITTLE_INTERMEDIATE)
-	val rightLittleDistalBone = Bone(BoneType.RIGHT_LITTLE_DISTAL)
+	val leftThumbMetacarpalBone = Bone(BoneType.LEFT_THUMB_METACARPAL, Constraint(ConstraintType.COMPLETE))
+	val leftThumbProximalBone = Bone(BoneType.LEFT_THUMB_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val leftThumbDistalBone = Bone(BoneType.LEFT_THUMB_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val leftIndexProximalBone = Bone(BoneType.LEFT_INDEX_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val leftIndexIntermediateBone = Bone(BoneType.LEFT_INDEX_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val leftIndexDistalBone = Bone(BoneType.LEFT_INDEX_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val leftMiddleProximalBone = Bone(BoneType.LEFT_MIDDLE_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val leftMiddleIntermediateBone = Bone(BoneType.LEFT_MIDDLE_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val leftMiddleDistalBone = Bone(BoneType.LEFT_MIDDLE_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val leftRingProximalBone = Bone(BoneType.LEFT_RING_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val leftRingIntermediateBone = Bone(BoneType.LEFT_RING_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val leftRingDistalBone = Bone(BoneType.LEFT_RING_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val leftLittleProximalBone = Bone(BoneType.LEFT_LITTLE_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val leftLittleIntermediateBone = Bone(BoneType.LEFT_LITTLE_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val leftLittleDistalBone = Bone(BoneType.LEFT_LITTLE_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val rightThumbMetacarpalBone = Bone(BoneType.RIGHT_THUMB_METACARPAL, Constraint(ConstraintType.COMPLETE))
+	val rightThumbProximalBone = Bone(BoneType.RIGHT_THUMB_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val rightThumbDistalBone = Bone(BoneType.RIGHT_THUMB_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val rightIndexProximalBone = Bone(BoneType.RIGHT_INDEX_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val rightIndexIntermediateBone = Bone(BoneType.RIGHT_INDEX_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val rightIndexDistalBone = Bone(BoneType.RIGHT_INDEX_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val rightMiddleProximalBone = Bone(BoneType.RIGHT_MIDDLE_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val rightMiddleIntermediateBone = Bone(BoneType.RIGHT_MIDDLE_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val rightMiddleDistalBone = Bone(BoneType.RIGHT_MIDDLE_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val rightRingProximalBone = Bone(BoneType.RIGHT_RING_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val rightRingIntermediateBone = Bone(BoneType.RIGHT_RING_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val rightRingDistalBone = Bone(BoneType.RIGHT_RING_DISTAL, Constraint(ConstraintType.COMPLETE))
+	val rightLittleProximalBone = Bone(BoneType.RIGHT_LITTLE_PROXIMAL, Constraint(ConstraintType.COMPLETE))
+	val rightLittleIntermediateBone = Bone(BoneType.RIGHT_LITTLE_INTERMEDIATE, Constraint(ConstraintType.COMPLETE))
+	val rightLittleDistalBone = Bone(BoneType.RIGHT_LITTLE_DISTAL, Constraint(ConstraintType.COMPLETE))
 
 	// Tracker bones
-	val headTrackerBone = Bone(BoneType.HEAD_TRACKER)
-	val chestTrackerBone = Bone(BoneType.CHEST_TRACKER)
-	val hipTrackerBone = Bone(BoneType.HIP_TRACKER)
-	val leftKneeTrackerBone = Bone(BoneType.LEFT_KNEE_TRACKER)
-	val rightKneeTrackerBone = Bone(BoneType.RIGHT_KNEE_TRACKER)
-	val leftFootTrackerBone = Bone(BoneType.LEFT_FOOT_TRACKER)
-	val rightFootTrackerBone = Bone(BoneType.RIGHT_FOOT_TRACKER)
-	val leftElbowTrackerBone = Bone(BoneType.LEFT_ELBOW_TRACKER)
-	val rightElbowTrackerBone = Bone(BoneType.RIGHT_ELBOW_TRACKER)
-	val leftHandTrackerBone = Bone(BoneType.LEFT_HAND_TRACKER)
-	val rightHandTrackerBone = Bone(BoneType.RIGHT_HAND_TRACKER)
+	val headTrackerBone = Bone(BoneType.HEAD_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val chestTrackerBone = Bone(BoneType.CHEST_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val hipTrackerBone = Bone(BoneType.HIP_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val leftKneeTrackerBone = Bone(BoneType.LEFT_KNEE_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val rightKneeTrackerBone = Bone(BoneType.RIGHT_KNEE_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val leftFootTrackerBone = Bone(BoneType.LEFT_FOOT_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val rightFootTrackerBone = Bone(BoneType.RIGHT_FOOT_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val leftElbowTrackerBone = Bone(BoneType.LEFT_ELBOW_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val rightElbowTrackerBone = Bone(BoneType.RIGHT_ELBOW_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val leftHandTrackerBone = Bone(BoneType.LEFT_HAND_TRACKER, Constraint(ConstraintType.COMPLETE))
+	val rightHandTrackerBone = Bone(BoneType.RIGHT_HAND_TRACKER, Constraint(ConstraintType.COMPLETE))
 
 	// Buffers
 	var hasSpineTracker = false
@@ -190,6 +194,8 @@ class HumanSkeleton(
 	private var extendedPelvisModel = false
 	private var extendedKneeModel = false
 	private var forceArmsFromHMD = true
+	private var enforceConstraints = true
+	private var correctConstraints = true
 
 	// Ratios
 	private var waistFromChestHipAveraging = 0f
@@ -292,8 +298,10 @@ class HumanSkeleton(
 		}
 
 		// Shoulders
-		neckBone.attachChild(leftShoulderBone)
-		neckBone.attachChild(rightShoulderBone)
+		neckBone.attachChild(leftUpperShoulderBone)
+		neckBone.attachChild(rightUpperShoulderBone)
+		leftUpperShoulderBone.attachChild(leftShoulderBone)
+		rightUpperShoulderBone.attachChild(rightShoulderBone)
 
 		// Upper arm
 		leftShoulderBone.attachChild(leftUpperArmBone)
@@ -442,6 +450,9 @@ class HumanSkeleton(
 
 		// Update tap detection's trackers
 		tapDetectionManager.updateConfig(trackers)
+
+		// Update bones tracker field
+		refreshBoneTracker()
 	}
 
 	/**
@@ -500,6 +511,7 @@ class HumanSkeleton(
 
 		updateTransforms()
 		updateBones()
+		headBone.updateWithConstraints()
 		updateComputedTrackers()
 
 		// Don't run post-processing if the tracking is paused
@@ -508,6 +520,15 @@ class HumanSkeleton(
 		legTweaks.tweakLegs()
 		localizer.update()
 		viveEmulation.update()
+	}
+
+	/**
+	 * Refresh the attachedTracker field in each bone
+	 */
+	private fun refreshBoneTracker() {
+		for (bone in allHumanBones) {
+			bone.attachedTracker = getTrackerForBone(bone.boneType)
+		}
 	}
 
 	/**
@@ -560,6 +581,7 @@ class HumanSkeleton(
 		// Left arm
 		updateArmTransforms(
 			isTrackingLeftArmFromController,
+			leftUpperShoulderBone,
 			leftShoulderBone,
 			leftUpperArmBone,
 			leftElbowTrackerBone,
@@ -575,6 +597,7 @@ class HumanSkeleton(
 		// Right arm
 		updateArmTransforms(
 			isTrackingRightArmFromController,
+			rightUpperShoulderBone,
 			rightShoulderBone,
 			rightUpperArmBone,
 			rightElbowTrackerBone,
@@ -925,6 +948,7 @@ class HumanSkeleton(
 	 */
 	private fun updateArmTransforms(
 		isTrackingFromController: Boolean,
+		upperShoulderBone: Bone,
 		shoulderBone: Bone,
 		upperArmBone: Bone,
 		elbowTrackerBone: Bone,
@@ -957,6 +981,7 @@ class HumanSkeleton(
 			// Get shoulder rotation
 			var armRot = shoulderTracker?.getRotation() ?: upperChestBone.getLocalRotation()
 			// Set shoulder rotation
+			upperShoulderBone.setRotation(upperChestBone.getLocalRotation())
 			shoulderBone.setRotation(armRot)
 
 			if (upperArmTracker != null || lowerArmTracker != null) {
@@ -1136,6 +1161,12 @@ class HumanSkeleton(
 			SkeletonConfigToggles.FOOT_PLANT -> legTweaks.footPlantEnabled = newValue
 
 			SkeletonConfigToggles.SELF_LOCALIZATION -> localizer.setEnabled(newValue)
+
+			SkeletonConfigToggles.USE_POSITION -> newValue
+
+			SkeletonConfigToggles.ENFORCE_CONSTRAINTS -> enforceConstraints = newValue
+
+			SkeletonConfigToggles.CORRECT_CONSTRAINTS -> correctConstraints = newValue
 		}
 	}
 
@@ -1217,6 +1248,8 @@ class HumanSkeleton(
 		BoneType.RIGHT_FOOT -> rightFootBone
 		BoneType.LEFT_FOOT_TRACKER -> leftFootTrackerBone
 		BoneType.RIGHT_FOOT_TRACKER -> rightFootTrackerBone
+		BoneType.LEFT_UPPER_SHOULDER -> leftUpperShoulderBone
+		BoneType.RIGHT_UPPER_SHOULDER -> rightUpperShoulderBone
 		BoneType.LEFT_SHOULDER -> leftShoulderBone
 		BoneType.RIGHT_SHOULDER -> rightShoulderBone
 		BoneType.LEFT_UPPER_ARM -> leftUpperArmBone
@@ -1261,6 +1294,30 @@ class HumanSkeleton(
 		BoneType.RIGHT_LITTLE_DISTAL -> rightLittleDistalBone
 	}
 
+	private fun getTrackerForBone(bone: BoneType?): Tracker? = when (bone) {
+		BoneType.HEAD -> headTracker
+		BoneType.NECK -> neckTracker
+		BoneType.UPPER_CHEST -> upperChestTracker
+		BoneType.CHEST -> chestTracker
+		BoneType.WAIST -> waistTracker
+		BoneType.HIP -> hipTracker
+		BoneType.LEFT_UPPER_LEG -> leftUpperLegTracker
+		BoneType.RIGHT_UPPER_LEG -> rightUpperLegTracker
+		BoneType.LEFT_LOWER_LEG -> leftLowerLegTracker
+		BoneType.RIGHT_LOWER_LEG -> rightLowerLegTracker
+		BoneType.LEFT_FOOT -> leftFootTracker
+		BoneType.RIGHT_FOOT -> rightFootTracker
+		BoneType.LEFT_SHOULDER -> leftShoulderTracker
+		BoneType.RIGHT_SHOULDER -> rightShoulderTracker
+		BoneType.LEFT_UPPER_ARM -> leftUpperArmTracker
+		BoneType.RIGHT_UPPER_ARM -> rightUpperArmTracker
+		BoneType.LEFT_LOWER_ARM -> leftLowerArmTracker
+		BoneType.RIGHT_LOWER_ARM -> rightLowerArmTracker
+		BoneType.LEFT_HAND -> leftHandTracker
+		BoneType.RIGHT_HAND -> rightHandTracker
+		else -> null
+	}
+
 	/**
 	 * Returns an array of all the non-tracker bones.
 	 */
@@ -1280,6 +1337,8 @@ class HumanSkeleton(
 			rightLowerLegBone,
 			leftFootBone,
 			rightFootBone,
+			leftUpperShoulderBone,
+			rightUpperShoulderBone,
 			leftShoulderBone,
 			rightShoulderBone,
 			leftUpperArmBone,
@@ -1325,6 +1384,8 @@ class HumanSkeleton(
 	 */
 	private val allArmBones: Array<Bone>
 		get() = arrayOf(
+			leftUpperShoulderBone,
+			rightUpperShoulderBone,
 			leftShoulderBone,
 			rightShoulderBone,
 			leftUpperArmBone,

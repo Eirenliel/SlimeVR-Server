@@ -1,19 +1,23 @@
 package dev.slimevr.tracking.processor
 
+import dev.slimevr.tracking.processor.Constraint.Companion.ConstraintType
+import dev.slimevr.tracking.trackers.Tracker
 import io.github.axisangles.ktmath.Quaternion
 import io.github.axisangles.ktmath.Vector3
+import solarxr_protocol.datatypes.BodyPart
 import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Represents a bone composed of 2 joints: headNode and tailNode.
  */
-class Bone(val boneType: BoneType) {
+class Bone(val boneType: BoneType, val rotationConstraint: Constraint) {
 	private val headNode = TransformNode(true)
 	private val tailNode = TransformNode(false)
 	var parent: Bone? = null
 		private set
 	val children: MutableList<Bone> = CopyOnWriteArrayList()
 	var rotationOffset = Quaternion.IDENTITY
+	var attachedTracker: Tracker? = null
 
 	init {
 		headNode.attachChild(tailNode)
@@ -59,6 +63,49 @@ class Bone(val boneType: BoneType) {
 	}
 
 	/**
+	 * Computes the rotations and positions of
+	 * this bone and all of its children while
+	 * enforcing rotation constraints.
+	 */
+	fun updateWithConstraints() {
+		val initialRot = getGlobalRotation()
+		val newRot = rotationConstraint.applyConstraint(initialRot, this)
+		setRotationRaw(newRot)
+		updateThisNode()
+
+		// Correct tracker if applicable. Do not adjust correction for hinge constraints
+		// or the upper chest tracker.
+		if (rotationConstraint.constraintType != ConstraintType.HINGE &&
+			rotationConstraint.constraintType != ConstraintType.LOOSE_HINGE &&
+			boneType.bodyPart != BodyPart.UPPER_CHEST
+		) {
+			val deltaRot = newRot * initialRot.inv()
+			val angle = deltaRot.angleR()
+
+			if (angle > Constraint.ANGLE_THRESHOLD &&
+				(attachedTracker?.filteringHandler?.getFilteringImpact() ?: 1f) < Constraint.FILTER_IMPACT_THRESHOLD &&
+				(parent?.attachedTracker?.filteringHandler?.getFilteringImpact() ?: 0f) < Constraint.FILTER_IMPACT_THRESHOLD
+			) {
+				attachedTracker?.resetsHandler?.updateConstraintFix(deltaRot)
+			}
+		}
+
+		// Recursively apply constraints and update children.
+		for (child in children) {
+			child.updateWithConstraints()
+		}
+	}
+
+	/**
+	 * Computes the rotations and positions of this bone.
+	 * Only to be used while traversing bones from top to bottom.
+	 */
+	private fun updateThisNode() {
+		headNode.updateThisNode()
+		tailNode.updateThisNode()
+	}
+
+	/**
 	 * Returns the world-aligned rotation of the bone
 	 */
 	fun getGlobalRotation(): Quaternion = headNode.worldTransform.rotation
@@ -73,6 +120,13 @@ class Bone(val boneType: BoneType) {
 	 */
 	fun setRotation(rotation: Quaternion) {
 		headNode.localTransform.rotation = rotation * rotationOffset
+	}
+
+	/**
+	 * Sets the global rotation of the bone directly
+	 */
+	fun setRotationRaw(rotation: Quaternion) {
+		headNode.localTransform.rotation = rotation
 	}
 
 	/**

@@ -245,6 +245,20 @@ class SkeletonConfigManager(
 				-getOffset(SkeletonConfigOffsets.FOOT_LENGTH),
 			)
 
+			BoneType.LEFT_UPPER_SHOULDER -> setNodeOffset(
+				nodeOffset,
+				0f,
+				0f,
+				0f,
+			)
+
+			BoneType.RIGHT_UPPER_SHOULDER -> setNodeOffset(
+				nodeOffset,
+				0f,
+				0f,
+				0f,
+			)
+
 			BoneType.LEFT_SHOULDER -> setNodeOffset(
 				nodeOffset,
 				-getOffset(SkeletonConfigOffsets.SHOULDERS_WIDTH) / 2f,

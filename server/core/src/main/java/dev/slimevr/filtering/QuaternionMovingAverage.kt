@@ -21,6 +21,8 @@ class QuaternionMovingAverage(
 	var amount: Float = 0f,
 	initialRotation: Quaternion = IDENTITY,
 ) {
+	var filteredQuaternion = IDENTITY
+	var filteringImpact = 0f
 	private var smoothFactor = 0f
 	private var predictFactor = 0f
 	private lateinit var rotBuffer: CircularArrayList<Quaternion>
@@ -29,7 +31,6 @@ class QuaternionMovingAverage(
 	private val fpsTimer = if (VRServer.instanceInitialized) VRServer.instance.fpsTimer else NanoTimer()
 	private var frameCounter = 0
 	private var lastAmt = 0f
-	var filteredQuaternion = IDENTITY
 
 	init {
 		// amount should range from 0 to 1.
@@ -93,6 +94,8 @@ class QuaternionMovingAverage(
 			// No filtering; just keep track of rotations (for going over 180 degrees)
 			filteredQuaternion = latestQuaternion.twinNearest(smoothingQuaternion)
 		}
+
+		filteringImpact = latestQuaternion.angleToR(filteredQuaternion)
 	}
 
 	@Synchronized
