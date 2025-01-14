@@ -22,7 +22,7 @@ export function SettingSelectorMobile() {
       },
       {
         label: l10n.getString('settings-sidebar-interface'),
-        value: { url: '/settings/interface', scrollTo: 'appearance' },
+        value: { url: '/settings/interface', scrollTo: 'notifications' },
       },
       {
         label: l10n.getString('settings-sidebar-osc_router'),

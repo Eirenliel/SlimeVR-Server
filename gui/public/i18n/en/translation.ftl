@@ -343,6 +343,7 @@ settings-sidebar-utils = Utilities
 settings-sidebar-serial = Serial console
 settings-sidebar-appearance = Appearance
 settings-sidebar-notifications = Notifications
+settings-sidebar-behavior = Behavior
 settings-sidebar-firmware-tool = DIY Firmware Tool
 settings-sidebar-advanced = Advanced
 
@@ -514,9 +515,6 @@ settings-general-gesture_control-numberTrackersOverThreshold-description = Incre
 
 ## Appearance settings
 settings-interface-appearance = Appearance
-settings-general-interface-dev_mode = Developer Mode
-settings-general-interface-dev_mode-description = This mode can be useful if you need in-depth data or to interact with connected trackers on a more advanced level.
-settings-general-interface-dev_mode-label = Developer Mode
 settings-general-interface-theme = Color theme
 settings-general-interface-show-navbar-onboarding = Show "{ navbar-onboarding }" on navigation bar
 settings-general-interface-show-navbar-onboarding-description = This changes if the "{ navbar-onboarding }" button shows on the navigation bar.
@@ -548,6 +546,12 @@ settings-general-interface-feedback_sound-volume = Feedback sound volume
 settings-general-interface-connected_trackers_warning = Connected trackers warning
 settings-general-interface-connected_trackers_warning-description = This option will show a pop-up every time you try exiting SlimeVR while having one or more connected trackers. It reminds you to turn off your trackers when you are done to preserve battery life.
 settings-general-interface-connected_trackers_warning-label = Connected trackers warning on exit
+
+## Behavior settings
+settings-interface-behavior = Behavior
+settings-general-interface-dev_mode = Developer Mode
+settings-general-interface-dev_mode-description = This mode can be useful if you need in-depth data or to interact with connected trackers on a more advanced level.
+settings-general-interface-dev_mode-label = Developer Mode
 settings-general-interface-use_tray = Minimize to system tray
 settings-general-interface-use_tray-description = Lets you close the window without closing the SlimeVR Server so you can continue using it without having the GUI bothering you.
 settings-general-interface-use_tray-label = Minimize to system tray
@@ -559,6 +563,12 @@ settings-general-interface-discord_presence-message = { $amount ->
     [one] Using 1 tracker
     *[other] Using { $amount } trackers
 }
+settings-interface-behavior-error_tracking = Error collection via Sentry.io
+settings-interface-behavior-error_tracking-description =
+    We send errors, load times and operating system information to be able to fix issues found on SlimeVR, we collect these via Sentry.io.
+
+    We don't collect any of your personal information (not even your IP address), but we do care that you want to give your consent for it.
+settings-interface-behavior-error_tracking-label = Send errors to developers
 
 ## Serial settings
 settings-serial = Serial Console
@@ -1242,3 +1252,11 @@ unknown_device-modal-description = There is a new tracker with MAC address <b>{$
     Do you want to connect it to SlimeVR?
 unknown_device-modal-confirm = Sure!
 unknown_device-modal-forget = Ignore it
+
+## Error collection consent modal
+error_collection_modal-title = Can we collect errors?
+error_collection_modal-description = { settings-interface-behavior-error_tracking-description }
+
+    You can later change this on the interface section of settings
+error_collection_modal-confirm = I agree
+error_collection_modal-cancel = I don't want to

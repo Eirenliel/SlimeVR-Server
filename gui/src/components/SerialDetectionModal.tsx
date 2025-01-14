@@ -110,7 +110,7 @@ export function SerialDetectionModal() {
                 {l10n.getString('serial_detection-new_device-p1')}
               </Typography>
             </div>
-            <div className="flex flex-col gap-3 rounded-xl max-w-sm">
+            <div className="flex flex-col gap-3 rounded-xl max-w-sm sentry-mask">
               <Localized
                 id="onboarding-wifi_creds-ssid"
                 attrs={{ placeholder: true, label: true }}

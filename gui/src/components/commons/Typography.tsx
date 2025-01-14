@@ -11,6 +11,7 @@ export function Typography({
   italic = false,
   truncate = false,
   textAlign,
+  sentryMask = false,
 }: {
   variant?:
     | 'main-title'
@@ -37,6 +38,7 @@ export function Typography({
     | 'text-start'
     | 'text-end';
   children?: ReactNode;
+  sentryMask?: boolean;
 }) {
   const tag = useMemo(() => {
     const tags = {
@@ -72,6 +74,7 @@ export function Typography({
         truncate && 'leading-3 text-ellipsis',
         truncate && (config?.textSize ?? 12) > 12 && 'line-clamp-1',
         truncate && (config?.textSize ?? 12) <= 12 && 'line-clamp-2',
+        sentryMask && 'sentry-mask',
       ]),
     },
     children || []

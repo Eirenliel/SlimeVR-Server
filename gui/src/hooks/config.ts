@@ -38,6 +38,7 @@ export interface Config {
   mirrorView: boolean;
   assignMode: AssignMode;
   discordPresence: boolean;
+  errorTracking: boolean | null;
   decorations: boolean;
   showNavbarOnboarding: boolean;
 }
@@ -65,6 +66,7 @@ export const defaultConfig: Omit<Config, 'devSettings'> = {
   mirrorView: true,
   assignMode: AssignMode.Core,
   discordPresence: false,
+  errorTracking: null,
   decorations: false,
   showNavbarOnboarding: true,
 };

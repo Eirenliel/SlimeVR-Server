@@ -74,6 +74,9 @@ export function SettingsSidebar() {
           <SettingsLink to="/settings/interface" scrollTo="notifications">
             {l10n.getString('settings-sidebar-notifications')}
           </SettingsLink>
+          <SettingsLink to="/settings/interface" scrollTo="behavior">
+            {l10n.getString('settings-sidebar-behavior')}
+          </SettingsLink>
           <SettingsLink to="/settings/interface" scrollTo="appearance">
             {l10n.getString('settings-sidebar-appearance')}
           </SettingsLink>

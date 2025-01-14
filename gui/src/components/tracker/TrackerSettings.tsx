@@ -291,7 +291,7 @@ export function TrackerSettingsPage() {
               <Typography color="secondary">
                 {l10n.getString('tracker-infos-custom_name')}
               </Typography>
-              <Typography>
+              <Typography sentry-mask>
                 {tracker?.tracker.info?.customName || '--'}
               </Typography>
             </div>
@@ -489,7 +489,7 @@ export function TrackerSettingsPage() {
                 deviceId={tracker.tracker.trackerId?.deviceId?.id}
               />
             )}
-          <div className="flex flex-col gap-2 w-full mt-3">
+          <div className="flex flex-col gap-2 w-full mt-3 sentry-mask">
             <Typography variant="section-title">
               {l10n.getString('tracker-settings-name_section')}
             </Typography>

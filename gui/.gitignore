@@ -32,3 +32,6 @@ vite.config.ts.timestamp*
 
 # eslint
 .eslintcache
+
+# Sentry Config File
+.env.sentry-build-plugin

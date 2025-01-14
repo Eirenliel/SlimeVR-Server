@@ -5,17 +5,19 @@ import ReactModal from 'react-modal';
 export function BaseModal({
   children,
   important = false,
+  closeable = true,
   ...props
 }: {
   isOpen: boolean;
   children: ReactNode;
   important?: boolean;
+  closeable?: boolean;
 } & ReactModal.Props) {
   return (
     <ReactModal
       {...props}
-      shouldCloseOnOverlayClick
-      shouldCloseOnEsc
+      shouldCloseOnOverlayClick={closeable}
+      shouldCloseOnEsc={closeable}
       overlayClassName={
         props.overlayClassName ||
         classNames(

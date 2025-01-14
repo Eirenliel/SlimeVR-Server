@@ -112,10 +112,13 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
 
-      - name: Build GUI
-        run: |
-          pnpm i
-          cd gui && pnpm run build
+      - name: Install dependencies
+        run: pnpm i
+
+      - name: Build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: cd gui && pnpm run build
 
       - name: Build with Gradle
         run: ./gradlew :server:android:assembleDebug
@@ -191,10 +194,13 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
 
+      - name: Install dependencies
+        run: pnpm i
+
       - name: Build
-        run: |
-          pnpm i
-          pnpm run tauri build --config $( ./gui/scripts/gitversion.mjs )
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm run tauri build --config $( ./gui/scripts/gitversion.mjs )
 
       - name: Make GUI tarball
         run: |
@@ -266,11 +272,15 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
 
-      - name: Build
+      - name: Install dependencies
         run: |
           rustup target add x86_64-apple-darwin
           pnpm i
-          pnpm run tauri build --target universal-apple-darwin --config $( ./gui/scripts/gitversion.mjs )
+
+      - name: Build
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm run tauri build --target universal-apple-darwin --config $( ./gui/scripts/gitversion.mjs )
 
       - name: Modify Application
         run: |
@@ -338,11 +348,15 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm i
+
       - name: Build
         shell: bash
-        run: |
-          pnpm i
-          pnpm run skipbundler --config $( ./gui/scripts/gitversion.mjs )
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm run skipbundler --config $( ./gui/scripts/gitversion.mjs )
 
       - name: Bundle to zips
         shell: bash

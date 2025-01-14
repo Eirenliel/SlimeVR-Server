@@ -87,7 +87,9 @@ export const InputInside = forwardRef<
       <div className="relative w-full">
         <input
           type={forceText ? 'text' : type}
-          className={classNames(classes, { 'pr-10': type === 'password' })}
+          className={classNames(classes, {
+            'pr-10 sentry-mask': type === 'password',
+          })}
           placeholder={placeholder || undefined}
           autoComplete={autocomplete ? 'off' : 'on'}
           onChange={onChange}

@@ -11,6 +11,8 @@
     "@hookform/resolvers": "^3.6.0",
     "@react-three/drei": "^9.114.3",
     "@react-three/fiber": "^8.17.10",
+    "@sentry/react": "^8.44.0",
+    "@sentry/vite-plugin": "^2.22.7",
     "@tailwindcss/typography": "^0.5.15",
     "@tanstack/react-query": "^5.48.0",
     "@tauri-apps/api": "^2.0.2",

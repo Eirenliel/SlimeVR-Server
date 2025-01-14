@@ -79,11 +79,15 @@ jobs:
           node-version-file: '.node-version'
           cache: 'pnpm'
 
+      - name: Install dependencies
+        shell: bash
+        run: pnpm i
+
       - name: Build
         shell: bash
-        run: |
-          pnpm i
-          pnpm run skipbundler --config $( ./gui/scripts/gitversion.mjs )
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: pnpm run skipbundler --config $( ./gui/scripts/gitversion.mjs )
 
       - if: matrix.os == 'windows-latest'
         name: Upload a Build Artifact (Windows)
