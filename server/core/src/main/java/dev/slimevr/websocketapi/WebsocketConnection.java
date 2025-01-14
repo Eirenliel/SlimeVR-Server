@@ -28,7 +28,7 @@ public class WebsocketConnection implements GenericConnection {
 	@Override
 	public void send(ByteBuffer bytes) {
 		if (this.conn.isOpen())
-			this.conn.send(bytes);
+			this.conn.send(bytes.slice());
 	}
 
 	@Override
