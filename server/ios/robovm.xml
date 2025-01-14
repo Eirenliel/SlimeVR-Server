@@ -1,0 +1,36 @@
+<config>
+    <executableName>${app.executable}</executableName>
+    <mainClass>${app.mainclass}</mainClass>
+    <os>ios</os>
+    <target>ios</target>
+    <iosInfoPList>Info.plist.xml</iosInfoPList>
+    <resources>
+        <resource>
+            <directory>resources</directory>
+        </resource>
+    </resources>
+    <!-- Remove comment to automatically skip compilation and linking in IDEA -->
+    <!-- <smartSkipRebuild>true</smartSkipRebuild> -->
+    <forceLinkClasses>
+        <pattern>dev.slimevr.**</pattern>
+        <pattern>io.eiren.**</pattern>
+        <pattern>io.github.axisangles.**</pattern>
+        <pattern>com.jme3.**</pattern>
+        <pattern>java.util.logging.SimpleFormatter</pattern>
+        <pattern>java.util.logging.LoggingProxyImpl</pattern>
+        <pattern>android.icu.impl.TimeZoneNamesFactoryImpl</pattern>
+        <pattern>com.fasterxml.jackson.databind.**</pattern>
+        <pattern>com.google.flatbuffers.**</pattern>
+        <pattern>kotlin.reflect.jvm.internal.ReflectionFactoryImpl</pattern>
+    </forceLinkClasses>
+    <frameworks>
+        <framework>WebKit</framework>
+    </frameworks>
+    <tools>
+        <linker>
+            <flags>
+                <flag>-ld_classic</flag>
+            </flags>
+        </linker>
+    </tools>
+</config>
