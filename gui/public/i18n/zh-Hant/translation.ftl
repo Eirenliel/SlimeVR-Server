@@ -1128,7 +1128,7 @@ firmware_tool-loading = 載入中…
 ## Firmware tool Steps
 
 firmware_tool = DIY 韌體工具
-firmware_tool-description = 本工具可以配置與燒錄您的 DIY 追蹤器
+firmware_tool-description = 本工具可以配置與燒錄 DIY 追蹤器
 firmware_tool-not_available = 唉呀，現在韌體工具無法使用。請稍後再來！
 firmware_tool-not_compatible = 韌體工具與這個版本的伺服器不相容。請更新伺服器！
 firmware_tool-board_step = 選擇主板
@@ -1200,7 +1200,7 @@ firmware_tool-flashbtn_step-board_SLIMEVR-r11 = 將追蹤器上方第二個 FLAS
 firmware_tool-flashbtn_step-board_SLIMEVR-r12 = 將追蹤器上方的 FLASH 圓形接點與微控制器的金屬遮罩短路，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_SLIMEVR-r14 = 按住追蹤器上方的 FLASH 按鈕，同時開啟追蹤器開關
 firmware_tool-flashbtn_step-board_OTHER =
-    在燒錄前，你可能需要將追蹤器切換進 Bootloader（開機啟動程式）。
+    在燒錄前，你可能需要將追蹤器切換進 Bootloader（開機載入程式）。
     多數狀況下，在燒錄開始前按下 BOOT 按鈕即可開始燒錄。
     如果燒錄進度開始時就已逾時，表示追蹤器未能進入 Bootloader 模式，
     請參考開發板燒錄韌體的說明文件，以得知進入 Bootloader 模式的方法。
