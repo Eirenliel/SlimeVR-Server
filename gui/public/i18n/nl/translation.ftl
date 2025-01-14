@@ -645,6 +645,16 @@ settings-utils-advanced-reset-gui = GUI-instellingen resetten
 settings-utils-advanced-reset-gui-description = Herstel de standaardwaarden voor instellingen van de interface.
 settings-utils-advanced-reset-gui-label = GUI resetten
 settings-utils-advanced-reset-server = Tracker instellingen resetten
+settings-utils-advanced-reset-server-description = Herstel de standaardwaarden voor instellingen van de tracking.
+settings-utils-advanced-reset-server-label = Tracking resetten
+settings-utils-advanced-reset-all = Alle instellingen resetten
+settings-utils-advanced-reset-all-description = Herstel de standaardwaarden voor instellingen van beide de interface en de tracking.
+settings-utils-advanced-reset-all-label = Alles resetten
+settings-utils-advanced-reset_warning-reset = Instellingen resetten
+settings-utils-advanced-reset_warning-cancel = Annuleren
+settings-utils-advanced-open_data = Gegevensmap
+settings-utils-advanced-open_data-description = Open de gegevensmap van SlimeVR in de bestandsverkenner, met configuratie- en logbestanden.
+settings-utils-advanced-open_data-label = Map openen
 
 ## Setup/onboarding menu
 
@@ -671,6 +681,7 @@ onboarding-wifi_creds-submit = Verzenden!
 onboarding-wifi_creds-ssid =
     .label = WiFi naam
     .placeholder = Vul WiFi naam in
+onboarding-wifi_creds-ssid-required = Wi-Fi-naam is vereist
 onboarding-wifi_creds-password =
     .label = Paswoord
     .placeholder = Vul paswoord in
@@ -728,6 +739,7 @@ onboarding-connect_tracker-issue-serial = Ik heb problemen met verbinden!
 onboarding-connect_tracker-usb = USB Tracker
 onboarding-connect_tracker-connection_status-none = Op zoek naar trackers
 onboarding-connect_tracker-connection_status-serial_init = Verbinding maken met een serieel apparaat
+onboarding-connect_tracker-connection_status-obtaining_mac_address = Het mac-adres van de tracker verkrijgen
 onboarding-connect_tracker-connection_status-provisioning = Wifi-inloggegevens verzenden
 onboarding-connect_tracker-connection_status-connecting = Wifi-inloggegevens verzenden
 onboarding-connect_tracker-connection_status-looking_for_server = Op zoek naar server
@@ -757,6 +769,7 @@ onboarding-calibration_tutorial-status-waiting = Ik wacht op jou
 onboarding-calibration_tutorial-status-calibrating = Kalibreren
 onboarding-calibration_tutorial-status-success = Aardig!
 onboarding-calibration_tutorial-status-error = De tracker werd verplaatst
+onboarding-calibration_tutorial-skip = Tutorial overslaan
 
 ## Tracker assignment tutorial
 
@@ -1012,6 +1025,10 @@ onboarding-automatic_proportions-verify_results-redo = Opname opnieuw doen
 onboarding-automatic_proportions-verify_results-confirm = Ze zijn correct
 onboarding-automatic_proportions-done-title = Lichaam gemeten en opgeslagen.
 onboarding-automatic_proportions-done-description = Je kalibratie voor lichaamsverhoudingen is voltooid!
+onboarding-automatic_proportions-error_modal-v2 =
+    <b>Waarschuwing:</b> Er is een fout opgetreden bij het schatten van de verhoudingen!
+    Dit is waarschijnlijk een probleem met de montagekalibratie. Zorg ervoor dat je tracking goed werkt voordat je het opnieuw probeert.
+     <docs>Bekijk de documentatie</docs> of word lid van onze <discord>Discord</discord> voor hulp ^_^
 onboarding-automatic_proportions-error_modal-confirm = Begrepen!
 
 ## Home
@@ -1040,18 +1057,69 @@ status_system-StatusUnassignedHMD = De VR-headset moet worden toegewezen als hoo
 
 ## Firmware tool globals
 
+firmware_tool-next_step = Volgende stap
+firmware_tool-previous_step = Vorige stap
+firmware_tool-ok = Ziet er goed uit
+firmware_tool-retry = Opnieuw
+firmware_tool-loading = Laden...
 
 ## Firmware tool Steps
 
+firmware_tool = DIY firmware-tool
+firmware_tool-description = Hiermee kunt u uw DIY-trackers configureren en flashen
+firmware_tool-not_available = Oeps, de firmwaretool is momenteel niet beschikbaar. Kom later terug!
+firmware_tool-not_compatible = De firmwaretool is niet compatibel met deze versie van de server. Gelieve te updaten!
+firmware_tool-board_step = Selecteer je bord
+firmware_tool-board_step-description = Selecteer een van de onderstaande borden.
+firmware_tool-board_pins_step = Controleer de pinnen
+firmware_tool-board_pins_step-description =
+    Controleer of de geselecteerde pinnen correct zijn.
+    Als je de SlimeVR-documentatie hebt gevolgd, zouden de standaardwaarden correct moeten zijn
+firmware_tool-board_pins_step-enable_led = LED inschakelen
+firmware_tool-board_pins_step-led_pin =
+    .label = LED-pin
+    .placeholder = Voer het adres van de LED-pin in
+firmware_tool-build_step = Aan het bouwen
+firmware_tool-build_step-description = De firmware wordt gebouwd, even geduld a.u.b.
+firmware_tool-flashing_step = Firmware aan het uploaden
+firmware_tool-flashing_step-description = Je trackers worden geflashed, volg de instructies op het scherm
+firmware_tool-flashing_step-warning = Trek de tracker niet los en start hem niet opnieuw op tijdens het uploadproces, tenzij dit wordt verteld, hierdoor kan je bord onbruikbaar worden
+firmware_tool-flashing_step-flash_more = Flash meer trackers
+firmware_tool-flashing_step-exit = Sluit
 
 ## firmware tool build status
 
+firmware_tool-build-CREATING_BUILD_FOLDER = De buildmap maken
+firmware_tool-build-DOWNLOADING_FIRMWARE = Firmware wordt gedownload
+firmware_tool-build-EXTRACTING_FIRMWARE = Firmware wordt uitgepakt
+firmware_tool-build-SETTING_UP_DEFINES = Configureren van de definities
+firmware_tool-build-BUILDING = Firmware wordt gebouwd
+firmware_tool-build-ERROR = Kan de firmware niet bouwen
 
 ## Firmware update status
 
+firmware_update-status-DOWNLOADING = Firmware wordt gedownload
+firmware_update-status-UPLOADING = Firmware wordt geüpload
+firmware_update-status-PROVISIONING = Wi-Fi-inloggegevens instellen
+firmware_update-status-DONE = Update voltooid!
+firmware_update-status-ERROR_DEVICE_NOT_FOUND = Kan het apparaat niet vinden
+firmware_update-status-ERROR_TIMEOUT = Er is een time-out opgetreden voor het updateproces
+firmware_update-status-ERROR_DOWNLOAD_FAILED = Kan de firmware niet downloaden
+firmware_update-status-ERROR_UPLOAD_FAILED = Kan de firmware niet uploaden
+firmware_update-status-ERROR_PROVISIONING_FAILED = Kan de Wi-Fi-inloggegevens niet instellen
+firmware_update-status-ERROR_UNSUPPORTED_METHOD = De updatemethode wordt niet ondersteund
+firmware_update-status-ERROR_UNKNOWN = Onbekende fout
 
 ## Dedicated Firmware Update Page
 
+firmware_update-title = Firmware-update
+firmware_update-devices = Beschikbare apparaten
+firmware_update-devices-description = Selecteer de trackers die u wilt updaten naar de nieuwste versie van SlimeVR-firmware
+firmware_update-no_devices = Zorg er alsjeblieft voor dat de trackers die je wilt updaten AAN staan en verbonden zijn met de Wi-Fi!
+firmware_update-changelog-title = Bijwerken naar { $version }
+firmware_update-looking_for_devices = Op zoek naar apparaten om bij te werken...
+firmware_update-retry = Opnieuw
+firmware_update-update = Geselecteerde trackers bijwerken
 
 ## Tray Menu
 
