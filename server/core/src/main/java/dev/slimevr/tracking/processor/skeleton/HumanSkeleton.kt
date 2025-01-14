@@ -208,6 +208,7 @@ class HumanSkeleton(
 	var tapDetectionManager = TapDetectionManager(this)
 	var viveEmulation = ViveEmulation(this)
 	var localizer = Localizer(this)
+	val spineYawCorrection = SpineYawCorrection()
 
 	// Constructors
 	init {
@@ -442,6 +443,9 @@ class HumanSkeleton(
 
 		// Update tap detection's trackers
 		tapDetectionManager.updateConfig(trackers)
+
+		// Update Spine Yaw Correction
+		spineYawCorrection.setTrackers(this)
 	}
 
 	/**
@@ -497,6 +501,9 @@ class HumanSkeleton(
 	@VRServerThread
 	fun updatePose() {
 		tapDetectionManager.update()
+
+		// Need to update tracker rotations before we calculate the new skeleton poses
+		spineYawCorrection.updateTrackers()
 
 		updateTransforms()
 		updateBones()

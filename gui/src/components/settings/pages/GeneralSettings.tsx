@@ -16,6 +16,7 @@ import {
   SettingsResponseT,
   SteamVRTrackersSettingT,
   TapDetectionSettingsT,
+  YawCorrectionSettingsT,
 } from 'solarxr-protocol';
 import { useConfig } from '@/hooks/config';
 import { useWebsocketAPI } from '@/hooks/websocket-api';
@@ -101,6 +102,10 @@ interface SettingsForm {
     saveMountingReset: boolean;
     resetHmdPitch: boolean;
   };
+  yawCorrectionSettings: {
+    enabled: boolean;
+    amountInDegPerSec: number;
+  };
 }
 
 const defaultValues: SettingsForm = {
@@ -165,6 +170,10 @@ const defaultValues: SettingsForm = {
     saveMountingReset: false,
     resetHmdPitch: false,
   },
+  yawCorrectionSettings: {
+    enabled: false,
+    amountInDegPerSec: 0.0,
+  },
 };
 
 export function GeneralSettings() {
@@ -183,6 +192,10 @@ export function GeneralSettings() {
     unit: 'second',
     unitDisplay: 'narrow',
     maximumFractionDigits: 2,
+  });
+  const degreeFormat = new Intl.NumberFormat(currentLocales, {
+    style: 'unit',
+    unit: 'degree',
   });
 
   const { sendRPCPacket, useRPCPacket } = useWebsocketAPI();
@@ -290,6 +303,12 @@ export function GeneralSettings() {
     driftCompensation.amount = values.driftCompensation.amount;
     driftCompensation.maxResets = values.driftCompensation.maxResets;
     settings.driftCompensation = driftCompensation;
+
+    const yawCorrectionSettings = new YawCorrectionSettingsT();
+    yawCorrectionSettings.enabled = values.yawCorrectionSettings.enabled;
+    yawCorrectionSettings.amountInDegPerSec =
+      values.yawCorrectionSettings.amountInDegPerSec;
+    settings.yawCorrectionSettings = yawCorrectionSettings;
 
     if (values.resetsSettings) {
       const resetsSettings = new ResetsSettingsT();
@@ -412,6 +431,10 @@ export function GeneralSettings() {
 
     if (settings.resetsSettings) {
       formData.resetsSettings = settings.resetsSettings;
+    }
+
+    if (settings.yawCorrectionSettings) {
+      formData.yawCorrectionSettings = settings.yawCorrectionSettings;
     }
 
     reset({ ...getValues(), ...formData });
@@ -813,6 +836,55 @@ export function GeneralSettings() {
               settingType="general"
               id="mechanics-magnetometer"
             />
+            <div className="flex flex-col pt-4 pb-4"></div>
+            <Typography bold>
+              {l10n.getString(
+                'settings-general-tracker_mechanics-spine_yaw_correction'
+              )}
+            </Typography>
+            <div className="flex flex-col pt-2 pb-4">
+              {l10n
+                .getString(
+                  'settings-general-tracker_mechanics-spine_yaw_correction-description'
+                )
+                .split('\n')
+                .map((line, i) => (
+                  <Typography color="secondary" key={i}>
+                    {line}
+                  </Typography>
+                ))}
+            </div>
+            <div className="grid sm:grid-cols-1 gap-3 pb-4">
+              <CheckBox
+                variant="toggle"
+                outlined
+                control={control}
+                name="yawCorrectionSettings.enabled"
+                label={l10n.getString(
+                  'settings-general-tracker_mechanics-spine_yaw_correction-enabled-label'
+                )}
+              />
+              <div>
+                <Typography bold>
+                  {l10n.getString(
+                    'settings-general-tracker_mechanics-spine_yaw_correction-amount-label'
+                  )}
+                </Typography>
+                <Typography color="secondary">
+                  {l10n.getString(
+                    'settings-general-tracker_mechanics-spine_yaw_correction-amount-description'
+                  )}
+                </Typography>
+                <NumberSelector
+                  control={control}
+                  name="yawCorrectionSettings.amountInDegPerSec"
+                  valueLabelFormat={(value) => degreeFormat.format(value)}
+                  min={0.0}
+                  max={2.0}
+                  step={0.05}
+                />
+              </div>
+            </div>
           </>
         </SettingsPagePaneLayout>
         <SettingsPagePaneLayout

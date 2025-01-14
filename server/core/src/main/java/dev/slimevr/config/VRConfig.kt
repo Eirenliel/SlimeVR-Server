@@ -40,6 +40,8 @@ class VRConfig {
 
 	val resetsConfig: ResetsConfig = ResetsConfig()
 
+	val yawCorrectionConfig = YawCorrectionConfig()
+
 	@JsonDeserialize(using = TrackerConfigMapDeserializer::class)
 	@JsonSerialize(keyUsing = StdKeySerializers.StringKeySerializer::class)
 	private val trackers: MutableMap<String, TrackerConfig> = HashMap()
