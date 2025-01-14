@@ -3,6 +3,13 @@ import { WarningBox } from '@/components/commons/TipBox';
 import { Localized, useLocalization } from '@fluent/react';
 import { BaseModal } from '@/components/commons/BaseModal';
 import ReactModal from 'react-modal';
+import { useWebsocketAPI } from '@/hooks/websocket-api';
+import { useEffect, useState } from 'react';
+import {
+  RpcMessage,
+  SettingsRequestT,
+  SettingsResponseT,
+} from 'solarxr-protocol';
 
 export function ProportionsResetModal({
   isOpen = true,
@@ -24,6 +31,16 @@ export function ProportionsResetModal({
   accept: () => void;
 } & ReactModal.Props) {
   const { l10n } = useLocalization();
+  const { useRPCPacket, sendRPCPacket } = useWebsocketAPI();
+  const [usingDefaultHeight, setUsingDefaultHeight] = useState(true);
+
+  useEffect(
+    () => sendRPCPacket(RpcMessage.SettingsRequest, new SettingsRequestT()),
+    []
+  );
+  useRPCPacket(RpcMessage.SettingsResponse, (res: SettingsResponseT) =>
+    setUsingDefaultHeight(!res.modelSettings?.skeletonHeight?.hmdHeight)
+  );
 
   return (
     <BaseModal
@@ -35,7 +52,14 @@ export function ProportionsResetModal({
     >
       <div className="flex w-full h-full flex-col ">
         <div className="flex flex-col flex-grow items-center gap-3">
-          <Localized id="reset-reset_all_warning" elems={{ b: <b></b> }}>
+          <Localized
+            id={
+              usingDefaultHeight
+                ? 'reset-reset_all_warning_default'
+                : 'reset-reset_all_warning'
+            }
+            elems={{ b: <b></b> }}
+          >
             <WarningBox>
               <b>Warning:</b> This will reset your proportions to being just
               based on your height.

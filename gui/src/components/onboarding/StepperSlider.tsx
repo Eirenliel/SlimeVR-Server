@@ -94,30 +94,42 @@ export function StepDot({
 export function StepperSlider({
   variant,
   steps,
+  back,
+  forward,
 }: {
   variant: 'alone' | 'onboarding';
   steps: Step[];
+  /**
+   * Ran when step is 0 and `prevStep` is executed
+   */
+  back?: () => void;
+  /**
+   * Ran when step is `steps.length - 1` and nextStep is executed
+   */
+  forward?: () => void;
 }) {
   const ref = useRef<HTMLDivElement | null>(null);
   const { width } = useElemSize(ref);
-  const [stepsContainers, setSteps] = useState(0);
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [step, setStep] = useState(0);
 
   useEffect(() => {
-    if (!ref.current) return;
-    const stepsContainers =
-      ref.current.getElementsByClassName('step-container');
-    setSteps(stepsContainers.length);
-  }, [ref]);
+    setStep((x) => Math.min(x, steps.length - 1));
+  }, [steps.length]);
 
   const nextStep = () => {
-    if (step + 1 === stepsContainers) return;
+    if (step + 1 === steps.length) {
+      forward?.();
+      return;
+    }
     setStep(step + 1);
   };
 
   const prevStep = () => {
-    if (step - 1 < 0) return;
+    if (step - 1 < 0) {
+      back?.();
+      return;
+    }
     setStep(step - 1);
   };
 
@@ -168,7 +180,7 @@ export function StepperSlider({
         </div>
       </div>
       <div className="flex justify-center items-center gap-2">
-        {Array.from({ length: stepsContainers }).map((_, index) => (
+        {Array.from({ length: steps.length }).map((_, index) => (
           <div key={index} className="flex items-center gap-2">
             {index !== 0 && (
               <div className="w-5 h-1 bg-background-50 rounded-full"></div>

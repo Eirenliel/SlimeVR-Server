@@ -56,6 +56,7 @@ import { AppLayout } from './AppLayout';
 import { Preload } from './components/Preload';
 import { UnknownDeviceModal } from './components/UnknownDeviceModal';
 import { useDiscordPresence } from './hooks/discord-presence';
+import { ScaledProportionsPage } from './components/onboarding/pages/body-proportions/ScaledProportions';
 import { EmptyLayout } from './components/EmptyLayout';
 import { AdvancedSettings } from './components/settings/pages/AdvancedSettings';
 import { FirmwareUpdate } from './components/firmware-update/FirmwareUpdate';
@@ -161,6 +162,10 @@ function Layout() {
             <Route
               path="body-proportions/manual"
               element={<ManualProportionsPage />}
+            />
+            <Route
+              path="body-proportions/scaled"
+              element={<ScaledProportionsPage />}
             />
             <Route path="done" element={<DonePage />} />
           </Route>

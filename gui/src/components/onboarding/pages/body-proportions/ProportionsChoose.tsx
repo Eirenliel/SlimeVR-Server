@@ -1,6 +1,6 @@
 import { useOnboarding } from '@/hooks/onboarding';
 import { Localized, useLocalization } from '@fluent/react';
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import { Typography } from '@/components/commons/Typography';
 import { Button } from '@/components/commons/Button';
@@ -9,6 +9,7 @@ import {
   SkeletonConfigRequestT,
   SkeletonBone,
   ChangeSkeletonConfigRequestT,
+  SkeletonResetAllRequestT,
 } from 'solarxr-protocol';
 import { useWebsocketAPI } from '@/hooks/websocket-api';
 import { save } from '@tauri-apps/plugin-dialog';
@@ -18,6 +19,7 @@ import { useAppContext } from '@/hooks/app';
 import { error } from '@/utils/logging';
 import { fileOpen, fileSave } from 'browser-fs-access';
 import { useDebouncedEffect } from '@/hooks/timeout';
+import { ProportionsResetModal } from './ProportionsResetModal';
 
 export const MIN_HEIGHT = 0.4;
 export const MAX_HEIGHT = 4;
@@ -36,7 +38,9 @@ export function ProportionsChoose() {
   const { applyProgress, state } = useOnboarding();
   const { useRPCPacket, sendRPCPacket } = useWebsocketAPI();
   const [animated, setAnimated] = useState(false);
+  const [showProportionWarning, setShowProportionWarning] = useState(false);
   const [importState, setImportState] = useState(ImportStatus.OK);
+  const exporting = useRef(false);
   const { computedTrackers } = useAppContext();
 
   useDebouncedEffect(
@@ -78,6 +82,8 @@ export function ProportionsChoose() {
   useRPCPacket(
     RpcMessage.SkeletonConfigResponse,
     (data: SkeletonConfigExport) => {
+      if (!exporting.current) return;
+      exporting.current = false;
       // Convert the skeleton part enums into a string
       data.skeletonParts.forEach((x) => {
         if (typeof x.bone === 'number')
@@ -151,6 +157,13 @@ export function ProportionsChoose() {
     setImportState(ImportStatus.SUCCESS);
   };
 
+  const resetAll = () => {
+    sendRPCPacket(
+      RpcMessage.SkeletonResetAllRequest,
+      new SkeletonResetAllRequestT()
+    );
+  };
+
   return (
     <>
       <div className="flex flex-col gap-5 h-full items-center w-full xs:justify-center mobile:overflow-y-auto relative px-4 pb-4">
@@ -217,62 +230,122 @@ export function ProportionsChoose() {
                 </Button>
               </div>
             </div>
-            <div
-              className={classNames(
-                'rounded-lg p-4 flex flex-row relative',
-                !state.alonePage && 'bg-background-70',
-                state.alonePage && 'bg-background-60'
-              )}
-            >
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-grow flex-col gap-4 max-w-sm">
-                  <img
-                    onMouseEnter={() => setAnimated(() => true)}
-                    onAnimationEnd={() => setAnimated(() => false)}
-                    src="/images/slimetower.webp"
-                    className={classNames(
-                      'absolute w-[100px] -right-2 -top-24',
-                      animated && 'animate-[bounce_1s_1]'
-                    )}
-                  ></img>
-                  <div>
-                    <Typography variant="main-title" bold>
-                      {l10n.getString(
-                        'onboarding-choose_proportions-auto_proportions'
+            {state.alonePage && (
+              <div
+                className={classNames(
+                  'rounded-lg p-4 flex flex-row relative',
+                  !state.alonePage && 'bg-background-70',
+                  state.alonePage && 'bg-background-60'
+                )}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-grow flex-col gap-4 max-w-sm">
+                    <img
+                      onMouseEnter={() => setAnimated(() => true)}
+                      onAnimationEnd={() => setAnimated(() => false)}
+                      src="/images/slimetower.webp"
+                      className={classNames(
+                        'absolute w-[100px] -right-2 -top-24',
+                        animated && 'animate-[bounce_1s_1]'
                       )}
-                    </Typography>
-                    <Typography variant="vr-accessible" italic>
-                      {l10n.getString(
-                        'onboarding-choose_proportions-auto_proportions-subtitle'
-                      )}
-                    </Typography>
-                  </div>
-                  <div>
-                    <Localized
-                      id="onboarding-choose_proportions-auto_proportions-descriptionv3"
-                      elems={{ b: <b></b> }}
-                    >
-                      <Typography
-                        color="secondary"
-                        whitespace="whitespace-pre-line"
-                      >
-                        Description for autobone
+                    ></img>
+                    <div>
+                      <Typography variant="main-title" bold>
+                        {l10n.getString(
+                          'onboarding-choose_proportions-auto_proportions'
+                        )}
                       </Typography>
-                    </Localized>
+                      <Typography variant="vr-accessible" italic>
+                        {l10n.getString(
+                          'onboarding-choose_proportions-auto_proportions-subtitle'
+                        )}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Localized
+                        id="onboarding-choose_proportions-auto_proportions-descriptionv3"
+                        elems={{ b: <b></b> }}
+                      >
+                        <Typography
+                          color="secondary"
+                          whitespace="whitespace-pre-line"
+                        >
+                          Description for autobone
+                        </Typography>
+                      </Localized>
+                    </div>
                   </div>
+                  <Button
+                    variant="primary"
+                    // Check if we are in dev mode and just let it be used
+                    disabled={beneathFloor && import.meta.env.PROD}
+                    to="/onboarding/body-proportions/auto"
+                    className="self-start mt-auto"
+                    state={{ alonePage: state.alonePage }}
+                  >
+                    {l10n.getString('onboarding-manual_proportions-auto')}
+                  </Button>
                 </div>
-                <Button
-                  variant="primary"
-                  // Check if we are in dev mode and just let it be used
-                  disabled={beneathFloor && import.meta.env.PROD}
-                  to="/onboarding/body-proportions/auto"
-                  className="self-start mt-auto"
-                  state={{ alonePage: state.alonePage }}
-                >
-                  {l10n.getString('onboarding-manual_proportions-auto')}
-                </Button>
               </div>
-            </div>
+            )}
+            {!state.alonePage && (
+              <div
+                className={classNames(
+                  'rounded-lg p-4 flex flex-row relative',
+                  !state.alonePage && 'bg-background-70',
+                  state.alonePage && 'bg-background-60'
+                )}
+              >
+                <div className="flex flex-col gap-4">
+                  <div className="flex flex-grow flex-col gap-4 max-w-sm">
+                    <img
+                      onMouseEnter={() => setAnimated(() => true)}
+                      onAnimationEnd={() => setAnimated(() => false)}
+                      src="/images/slimetower.webp"
+                      className={classNames(
+                        'absolute w-[100px] -right-2 -top-24',
+                        animated && 'animate-[bounce_1s_1]'
+                      )}
+                    ></img>
+                    <div>
+                      <Typography variant="main-title" bold>
+                        {l10n.getString(
+                          'onboarding-choose_proportions-scaled_proportions'
+                        )}
+                      </Typography>
+                      <Typography variant="vr-accessible" italic>
+                        {l10n.getString(
+                          'onboarding-choose_proportions-scaled_proportions-subtitle'
+                        )}
+                      </Typography>
+                    </div>
+                    <div>
+                      <Localized
+                        id="onboarding-choose_proportions-scaled_proportions-description"
+                        elems={{ b: <b></b> }}
+                      >
+                        <Typography
+                          color="secondary"
+                          whitespace="whitespace-pre-line"
+                        >
+                          Description for scaled proportions
+                        </Typography>
+                      </Localized>
+                    </div>
+                  </div>
+                  <Button
+                    variant="primary"
+                    to="/onboarding/body-proportions/scaled"
+                    className="self-start mt-auto"
+                    state={{ alonePage: state.alonePage }}
+                  >
+                    {l10n.getString(
+                      'onboarding-choose_proportions-scaled_proportions-button'
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-row gap-3">
             {!state.alonePage && (
@@ -280,15 +353,33 @@ export function ProportionsChoose() {
                 {l10n.getString('onboarding-previous_step')}
               </Button>
             )}
+            {state.alonePage && (
+              <Button
+                variant="secondary"
+                onClick={() => setShowProportionWarning(true)}
+              >
+                {l10n.getString('reset-reset_all')}
+              </Button>
+            )}
+            <ProportionsResetModal
+              accept={() => {
+                resetAll();
+                setShowProportionWarning(false);
+              }}
+              onClose={() => setShowProportionWarning(false)}
+              isOpen={showProportionWarning}
+            ></ProportionsResetModal>
             <Button
               variant={!state.alonePage ? 'secondary' : 'tertiary'}
               className="ml-auto"
-              onClick={() =>
+              onClick={() => {
+                exporting.current = true;
+
                 sendRPCPacket(
                   RpcMessage.SkeletonConfigRequest,
                   new SkeletonConfigRequestT()
-                )
-              }
+                );
+              }}
             >
               {l10n.getString('onboarding-choose_proportions-export')}
             </Button>

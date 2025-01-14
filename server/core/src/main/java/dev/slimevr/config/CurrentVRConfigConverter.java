@@ -309,6 +309,15 @@ public class CurrentVRConfigConverter implements VersionedModelConverter {
 				// Update AutoBone defaults
 				ObjectNode autoBoneNode = (ObjectNode) modelData.get("autoBone");
 				if (autoBoneNode != null) {
+					// Move HMD height to skeleton
+					ObjectNode skeletonNode = (ObjectNode) modelData.get("skeleton");
+					if (skeletonNode != null) {
+						JsonNode targetHmdHeight = autoBoneNode.get("targetHmdHeight");
+						if (targetHmdHeight != null) {
+							skeletonNode.set("hmdHeight", targetHmdHeight);
+						}
+					}
+
 					JsonNode offsetSlideNode = autoBoneNode.get("offsetSlideErrorFactor");
 					JsonNode slideNode = autoBoneNode.get("slideErrorFactor");
 					if (

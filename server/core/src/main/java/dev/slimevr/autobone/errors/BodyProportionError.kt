@@ -4,6 +4,7 @@ import dev.slimevr.autobone.AutoBoneStep
 import dev.slimevr.autobone.errors.proportions.ProportionLimiter
 import dev.slimevr.autobone.errors.proportions.RangeProportionLimiter
 import dev.slimevr.tracking.processor.HumanPoseManager
+import dev.slimevr.tracking.processor.config.SkeletonConfigManager
 import dev.slimevr.tracking.processor.config.SkeletonConfigOffsets
 import kotlin.math.*
 
@@ -32,84 +33,58 @@ class BodyProportionError : IAutoBoneError {
 		@JvmField
 		var eyeHeightToHeightRatio = 0.936f
 
-		// Default config
-		// Height: 1.58
-		// Full Height: 1.58 / 0.936 = 1.688034
-		// Neck: 0.1 / 1.688034 = 0.059241
-		// Torso: 0.56 / 1.688034 = 0.331747
-		// Upper Chest: 0.16 / 1.688034 = 0.094784
-		// Chest: 0.16 / 1.688034 = 0.094784
-		// Waist: (0.56 - 0.32 - 0.04) / 1.688034 = 0.118481
-		// Hip: 0.04 / 1.688034 = 0.023696
-		// Hip Width: 0.26 / 1.688034 = 0.154025
-		// Upper Leg: (0.92 - 0.50) / 1.688034 = 0.24881
-		// Lower Leg: 0.50 / 1.688034 = 0.296203
+		private val defaultHeight = SkeletonConfigManager.HEIGHT_OFFSETS.sumOf { it.defaultValue.toDouble() }.toFloat()
+		private fun makeLimiter(offset: SkeletonConfigOffsets, range: Float): RangeProportionLimiter = RangeProportionLimiter(
+			offset.defaultValue / defaultHeight,
+			offset,
+			range,
+		)
+
 		// "Expected" are values from Drillis and Contini (1966)
-		// "Experimental" are values from experimentation by the SlimeVR community
+		// Default are values from experimentation by the SlimeVR community
+		/**
+		 * Proportions are based off the headset height (or eye height), not the total height of the user.
+		 * To use the total height of the user, multiply it by [eyeHeightToHeightRatio] and use that in the limiters.
+		 */
 		val proportionLimits = arrayOf<ProportionLimiter>(
-			// Head
-			// Experimental: 0.059
-			RangeProportionLimiter(
-				0.059f,
+			makeLimiter(
 				SkeletonConfigOffsets.HEAD,
 				0.01f,
 			),
-			// Neck
 			// Expected: 0.052
-			// Experimental: 0.059
-			RangeProportionLimiter(
-				0.054f,
+			makeLimiter(
 				SkeletonConfigOffsets.NECK,
-				0.0015f,
+				0.002f,
 			),
-			// Upper Chest
-			// Experimental: 0.0945
-			RangeProportionLimiter(
-				0.0945f,
+			makeLimiter(
 				SkeletonConfigOffsets.UPPER_CHEST,
 				0.01f,
 			),
-			// Chest
-			// Experimental: 0.0945
-			RangeProportionLimiter(
-				0.0945f,
+			makeLimiter(
 				SkeletonConfigOffsets.CHEST,
 				0.01f,
 			),
-			// Waist
-			// Experimental: 0.118
-			RangeProportionLimiter(
-				0.118f,
+			makeLimiter(
 				SkeletonConfigOffsets.WAIST,
 				0.05f,
 			),
-			// Hip
-			// Experimental: 0.0237
-			RangeProportionLimiter(
-				0.0237f,
+			makeLimiter(
 				SkeletonConfigOffsets.HIP,
 				0.01f,
 			),
-			// Hip Width
 			// Expected: 0.191
-			// Experimental: 0.154
-			RangeProportionLimiter(
-				0.184f,
+			makeLimiter(
 				SkeletonConfigOffsets.HIPS_WIDTH,
 				0.04f,
 			),
-			// Upper Leg
 			// Expected: 0.245
-			RangeProportionLimiter(
-				0.245f,
+			makeLimiter(
 				SkeletonConfigOffsets.UPPER_LEG,
-				0.015f,
+				0.02f,
 			),
-			// Lower Leg
 			// Expected: 0.246 (0.285 including below ankle, could use a separate
 			// offset?)
-			RangeProportionLimiter(
-				0.285f,
+			makeLimiter(
 				SkeletonConfigOffsets.LOWER_LEG,
 				0.02f,
 			),

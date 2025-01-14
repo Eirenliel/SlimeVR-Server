@@ -16,8 +16,6 @@ class AutoBoneConfig {
 	var positionErrorFactor = 0.0f
 	var positionOffsetErrorFactor = 0.0f
 	var calcInitError = false
-	var targetHmdHeight = -1f
-	var targetFullHeight = -1f
 	var randomizeFrameOrder = true
 	var scaleEachStep = true
 	var sampleCount = 1500

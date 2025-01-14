@@ -41,7 +41,7 @@ export function PreparationStep({
           <div className="flex flex-col pt-1 items-center fill-background-50 justify-center px-12">
             <img
               src="/images/reset-pose.webp"
-              width={100}
+              width={50}
               alt="Reset position"
             />
           </div>

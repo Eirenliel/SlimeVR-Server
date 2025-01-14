@@ -10,7 +10,6 @@ import java.util.function.Consumer
 class AutoBoneStep(
 	val config: AutoBoneConfig,
 	val targetHmdHeight: Float,
-	val targetFullHeight: Float,
 	val frames: PoseFrames,
 	val epochCallback: Consumer<AutoBone.Epoch>?,
 	serverConfig: ConfigManager,
@@ -20,9 +19,6 @@ class AutoBoneStep(
 	var cursor2: Int = 0,
 	var currentHmdHeight: Float = 0f,
 ) {
-
-	val eyeHeightToHeightRatio: Float = targetHmdHeight / targetFullHeight
-
 	var maxFrameCount = frames.maxFrameCount
 
 	val framePlayer1 = TrackerFramesPlayer(frames)

@@ -1,7 +1,6 @@
 package dev.slimevr.protocol.rpc
 
 import com.google.flatbuffers.FlatBufferBuilder
-import dev.slimevr.autobone.errors.BodyProportionError
 import dev.slimevr.config.config
 import dev.slimevr.protocol.GenericConnection
 import dev.slimevr.protocol.ProtocolAPI
@@ -20,6 +19,7 @@ import dev.slimevr.protocol.rpc.status.RPCStatusHandler
 import dev.slimevr.protocol.rpc.trackingpause.RPCTrackingPause
 import dev.slimevr.tracking.processor.config.SkeletonConfigOffsets
 import dev.slimevr.tracking.trackers.TrackerPosition.Companion.getByBodyPart
+import dev.slimevr.tracking.trackers.TrackerStatus
 import dev.slimevr.tracking.trackers.TrackerUtils.getTrackerForSkeleton
 import io.eiren.util.logging.LogManager
 import io.github.axisangles.ktmath.Quaternion
@@ -464,13 +464,22 @@ class RPCHandler(private val api: ProtocolAPI) : ProtocolHandler<RpcMessageHeade
 	fun onHeightRequest(conn: GenericConnection, messageHeader: RpcMessageHeader?) {
 		val fbb = FlatBufferBuilder(32)
 
-		val hmdHeight = api.server.humanPoseManager.hmdHeight
-		val response = HeightResponse
-			.createHeightResponse(
-				fbb,
-				hmdHeight,
-				hmdHeight / BodyProportionError.eyeHeightToHeightRatio,
-			)
+		val posTrackers = api.server.allTrackers.filter { !it.isInternal && it.status == TrackerStatus.OK && it.hasPosition && it.trackerPosition != null }
+		val response = if (posTrackers.isNotEmpty()) {
+			HeightResponse
+				.createHeightResponse(
+					fbb,
+					posTrackers.minOf { it.position.y },
+					posTrackers.maxOf { it.position.y },
+				)
+		} else {
+			HeightResponse
+				.createHeightResponse(
+					fbb,
+					0f,
+					0f,
+				)
+		}
 		fbb.finish(createRPCMessage(fbb, RpcMessage.HeightResponse, response))
 		conn.send(fbb.dataBuffer())
 	}
