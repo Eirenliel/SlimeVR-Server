@@ -50,6 +50,18 @@ body_part-LEFT_UPPER_LEG = Linkerdij
 body_part-LEFT_LOWER_LEG = Linkerenkel
 body_part-LEFT_FOOT = Linkervoet
 
+## BoardType
+
+board_type-NODEMCU = NodeMCU
+board_type-WROOM32 = WROOM32
+board_type-WEMOSD1MINI = Wemos D1 Mini
+board_type-TTGO_TBASE = TTGO T-Base
+board_type-ESP01 = ESP-01
+board_type-SLIMEVR = SlimeVR
+board_type-LOLIN_C3_MINI = Lolin C3 Mini
+board_type-BEETLE32C3 = Beetle ESP32-C3
+board_type-ES32C3DEVKITM1 = Espressif ESP32-C3 DevKitM-1
+
 ## Proportions
 
 skeleton_bone-NONE = Geen
@@ -81,6 +93,8 @@ skeleton_bone-ELBOW_OFFSET = Elleboogoffset
 ## Tracker reset buttons
 
 reset-reset_all = Alle afmetingen resetten
+reset-reset_all_warning-reset = Verhoudingen resetten
+reset-reset_all_warning-cancel = Annuleren
 reset-full = Volledige reset
 reset-mounting = Reset montage
 reset-yaw = Yaw Reset
@@ -142,9 +156,12 @@ widget-developer_mode-more_info = Meer informatie
 ## Widget: IMU Visualizer
 
 widget-imu_visualizer = Rotatie
+widget-imu_visualizer-preview = Voorbeeld
+widget-imu_visualizer-hide = Verbergen
 widget-imu_visualizer-rotation_raw = Rauw
 widget-imu_visualizer-rotation_preview = Preview
-widget-imu_visualizer-rotation_hide = Verbergen
+widget-imu_visualizer-acceleration = Versnelling
+widget-imu_visualizer-position = Positie
 
 ## Widget: Skeleton Visualizer
 
@@ -196,9 +213,17 @@ tracker-infos-url = Tracker URL
 tracker-infos-version = Firmware versie
 tracker-infos-hardware_rev = Hardware revisie
 tracker-infos-hardware_identifier = Hardware-id
+tracker-infos-data_support = Gegevensondersteuning
 tracker-infos-imu = IMU-sensor
 tracker-infos-board_type = Mainbord
 tracker-infos-network_version = Protocol Versie
+tracker-infos-magnetometer = Magnetometer
+tracker-infos-magnetometer-status-v1 =
+    { $status ->
+        [DISABLED] Uitgeschakeld
+        [ENABLED] Ingeschakeld
+       *[NOT_SUPPORTED] Niet ondersteund
+    }
 
 ## Tracker settings
 
@@ -213,6 +238,7 @@ tracker-settings-mounting_section-edit = Montage bewerken
 tracker-settings-drift_compensation_section = Laat drift compensatie toe
 tracker-settings-drift_compensation_section-description = Moet deze tracker compenseren voor drift wanneer drift compensatie is ingeschakeld?
 tracker-settings-drift_compensation_section-edit = Laat drift compensatie toe
+tracker-settings-use_mag-label = Laat magnetometer toe
 # The .<name> means it's an attribute and it's related to the top key.
 # In this case that is the settings for the assignment section.
 tracker-settings-name_section = Trackernaam
@@ -296,6 +322,7 @@ settings-sidebar-utils = Hulpmiddelen
 settings-sidebar-serial = Serieel console
 settings-sidebar-appearance = Uiterlijk
 settings-sidebar-notifications = Notificaties
+settings-sidebar-advanced = Geavanceerd
 
 ## SteamVR settings
 
@@ -348,11 +375,19 @@ settings-general-tracker_mechanics-drift_compensation-description =
     Compenseert voor IMU yaw drift door de toevoeging van een omgekeerde rotatie.
     Veranderd de sterkte van de compensatie en hoeveel resets worden gebruikt.
 settings-general-tracker_mechanics-drift_compensation-enabled-label = Drift compensate
+settings-general-tracker_mechanics-drift_compensation-prediction = Voorspelling van driftcompensatie
+settings-general-tracker_mechanics-drift_compensation-prediction-label = Voorspelling van driftcompensatie
+settings-general-tracker_mechanics-drift_compensation_warning-cancel = Annuleren
 settings-general-tracker_mechanics-drift_compensation-amount-label = Compensatiesterkte
 settings-general-tracker_mechanics-drift_compensation-max_resets-label = Gebruik de laatste x resets
 settings-general-tracker_mechanics-save_mounting_reset = Sla de automatische montage reset kalibratie op
 settings-general-tracker_mechanics-save_mounting_reset-description = Slaat de automatische montage reset kalibraties van de trackers op tussen herstarts. Nuttig als je een pak draagt waarbij trackers niet bewegen tussen sessies. <b>Niet aanbevolen voor normale gebruikers!</b>
 settings-general-tracker_mechanics-save_mounting_reset-enabled-label = Montage configuratie opslaan
+settings-general-tracker_mechanics-use_mag_on_all_trackers = Gebruik de magnetometer op alle IMU-trackers die dit ondersteunen
+settings-general-tracker_mechanics-use_mag_on_all_trackers-description =
+    Gebruikt magnetometer op alle trackers die er een compatibele firmware voor hebben, waardoor drift in stabiele magnetische omgevingen wordt verminderd.
+    Je kan dit per individuele tracker uit zetten in de instellingen van de tracker. <b>Sluit geen van de trackers af terwijl u dit in- en uitschakelt!</b>
+settings-general-tracker_mechanics-use_mag_on_all_trackers-label = Gebruik magnetometer op de trackers
 
 ## FK/Tracking settings
 
@@ -452,6 +487,9 @@ settings-general-interface-dev_mode = Ontwikkelaarsmodus
 settings-general-interface-dev_mode-description = Deze modus kan nuttig zijn als je diepgaande gegevens nodig hebt of op een geavanceerd niveau wilt communiceren met aangesloten trackers.
 settings-general-interface-dev_mode-label = Ontwikkelaarsmodus
 settings-general-interface-theme = Themakleur
+settings-general-interface-show-navbar-onboarding = Toon "{ navbar-onboarding }" op de navigatiebalk
+settings-general-interface-show-navbar-onboarding-description = Dit verandert of de knop "{ navbar-onboarding }" wordt weergegeven op de navigatiebalk.
+settings-general-interface-show-navbar-onboarding-label = Toon "{ navbar-onboarding }"
 settings-general-interface-lang = Selecteer taal
 settings-general-interface-lang-description = Verander de standaardtaal die je wilt gebruiken.
 settings-general-interface-lang-placeholder = Selecteer de te gebruiken taal
@@ -463,6 +501,9 @@ settings-interface-appearance-font-os_font = Besturingssysteem lettertype
 settings-interface-appearance-font-slime_font = Standaard lettertype
 settings-interface-appearance-font_size = Standaard lettertype grote
 settings-interface-appearance-font_size-description = Dit past het lettertype grote aan voor het gehele interfeace, behalve voor deze instellingen pagina.
+settings-interface-appearance-decorations = Gebruik het systeem native decoraties
+settings-interface-appearance-decorations-description = Dit zal de bovenste balk van de interface niet weergeven en zal in plaats daarvan die van het besturingssysteem gebruiken.
+settings-interface-appearance-decorations-label = Gebruik de native decoraties
 
 ## Notification settings
 
@@ -589,12 +630,6 @@ settings-osc-vmc-network-address-description = Stel het adres in waarnaar gegeve
 settings-osc-vmc-network-address-placeholder = IPV4-adres
 settings-osc-vmc-vrm = VRM Model
 settings-osc-vmc-vrm-description = Laad een VRM-model om hoofdverankering mogelijk te maken en zorg voor een hogere compatibiliteit met andere applicaties.
-settings-osc-vmc-vrm-model_unloaded = Geen model geladen
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Model geladen: { $name }
-       *[other] Ongetitelde model geladen
-    }
 settings-osc-vmc-vrm-file_select = Sleep een modelbestand naar hier om ze te gebruiken of <u>blader</u>.
 settings-osc-vmc-anchor_hip = Heupverankering
 settings-osc-vmc-anchor_hip-description = Veranker de tracking aan de heupen, handig voor zittende VTubing. Als u deze uitschakelt, laadt u een VRM-model.
@@ -602,6 +637,14 @@ settings-osc-vmc-anchor_hip-label = Heupverankering
 settings-osc-vmc-mirror_tracking = Gespiegelde tracking
 settings-osc-vmc-mirror_tracking-description = De tracking horizontaal spiegelen.
 settings-osc-vmc-mirror_tracking-label = Gespiegelde tracking
+
+## Advanced settings
+
+settings-utils-advanced = Geavanceerd
+settings-utils-advanced-reset-gui = GUI-instellingen resetten
+settings-utils-advanced-reset-gui-description = Herstel de standaardwaarden voor instellingen van de interface.
+settings-utils-advanced-reset-gui-label = GUI resetten
+settings-utils-advanced-reset-server = Tracker instellingen resetten
 
 ## Setup/onboarding menu
 
@@ -837,11 +880,11 @@ onboarding-choose_mounting = Welke montagekalibratiemethode moet worden gebruikt
 # Multiline text
 onboarding-choose_mounting-description = De oriëntatie van de montage corrigeert de plaatsing van trackers op uw lichaam.
 onboarding-choose_mounting-auto_mounting = Automatische bevestiging
-# Italized text
+# Italicized text
 onboarding-choose_mounting-auto_mounting-label-v2 = Aanbevolen
 onboarding-choose_mounting-auto_mounting-description = Dit detecteert automatisch de montagerichtingen voor al uw trackers door middel van 2 poses
 onboarding-choose_mounting-manual_mounting = Handmatige bevestiging
-# Italized text
+# Italicized text
 onboarding-choose_mounting-manual_mounting-label-v2 = Misschien niet precies genoeg
 onboarding-choose_mounting-manual_mounting-description = Hiermee kunt u de montagerichting handmatig kiezen voor elke tracker
 # Multiline text
@@ -888,13 +931,13 @@ onboarding-choose_proportions-description-v1 =
     Als de verhoudingen van je lichaam niet overeenkomen met de opgeslagen waarden, zal de tracking-precisie slechter zijn. Je kunt dan last krijgen van ongemakkelijke effecten zoals schuiven of glijden, of kan je lichaam niet goed overeenkomen met je avatar in VR.
     <b>Je hoeft je lichaam maar één keer te meten!</b> Tenzij de metingen onjuist zijn of je lichaam is veranderd, hoef je dit niet opnieuw te doen.
 onboarding-choose_proportions-auto_proportions = Automatische verhoudingen
-# Italized text
+# Italicized text
 onboarding-choose_proportions-auto_proportions-subtitle = Aanbevolen
 onboarding-choose_proportions-auto_proportions-descriptionv3 =
     Deze functie zal je lichaamsverhoudingen schatten door een sample van je bewegingen op te nemen en deze door een algoritme te laten analyseren. 
     <b>Hiervoor moet je headset (HMD) verbonden zijn met SlimeVR en op je hoofd zitten!</b>
 onboarding-choose_proportions-manual_proportions = Handmatige lichaamsverhoudingen
-# Italized text
+# Italicized text
 onboarding-choose_proportions-manual_proportions-subtitle = Voor kleine details
 onboarding-choose_proportions-manual_proportions-description = Hier kan je jouw verhoudingen handmatig aanpassen
 onboarding-choose_proportions-export = Export proporties
@@ -969,9 +1012,6 @@ onboarding-automatic_proportions-verify_results-redo = Opname opnieuw doen
 onboarding-automatic_proportions-verify_results-confirm = Ze zijn correct
 onboarding-automatic_proportions-done-title = Lichaam gemeten en opgeslagen.
 onboarding-automatic_proportions-done-description = Je kalibratie voor lichaamsverhoudingen is voltooid!
-onboarding-automatic_proportions-error_modal =
-    <b>Waarschuwing:</b> Er is een error ontstaan bij het schatten van de proporties!
-    Check alsjeblieft <docs>de docs</docs> of join onze <discord>Discord</Discord> voor hulp ^_^
 onboarding-automatic_proportions-error_modal-confirm = Begrepen!
 
 ## Home
@@ -997,6 +1037,21 @@ status_system-StatusSteamVRDisconnected =
     }
 status_system-StatusTrackerError = De { $trackerName } tracker heeft een error.
 status_system-StatusUnassignedHMD = De VR-headset moet worden toegewezen als hoofdtracker.
+
+## Firmware tool globals
+
+
+## Firmware tool Steps
+
+
+## firmware tool build status
+
+
+## Firmware update status
+
+
+## Dedicated Firmware Update Page
+
 
 ## Tray Menu
 
