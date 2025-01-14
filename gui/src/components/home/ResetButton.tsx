@@ -82,35 +82,30 @@ export function ResetButton({
     playSoundOnResetStarted(type, config?.feedbackSoundVolume);
   };
 
-  const variantsMap = {
-    small: (
-      <Button
-        icon={getIcon()}
-        onClick={() => {
-          startCountdown();
-          maybePlaySoundOnResetStarted(type);
-        }}
-        variant="primary"
-        disabled={isCounting || needsFullReset}
-      >
-        <div className="relative">
-          <div className="opacity-0 h-0">{text}</div>
-          {!isCounting || type === ResetType.Yaw ? text : String(timer)}
-        </div>
-      </Button>
-    ),
-    big: (
-      <BigButton
-        text={!isCounting || type === ResetType.Yaw ? text : String(timer)}
-        icon={getIcon()}
-        onClick={() => {
-          startCountdown();
-          maybePlaySoundOnResetStarted(type);
-        }}
-        disabled={isCounting || needsFullReset}
-      ></BigButton>
-    ),
-  };
-
-  return variantsMap[variant];
+  return variant === 'small' ? (
+    <Button
+      icon={getIcon()}
+      onClick={() => {
+        startCountdown();
+        maybePlaySoundOnResetStarted(type);
+      }}
+      variant="primary"
+      disabled={isCounting || needsFullReset}
+    >
+      <div className="relative">
+        <div className="opacity-0 h-0">{text}</div>
+        {!isCounting || type === ResetType.Yaw ? text : String(timer)}
+      </div>
+    </Button>
+  ) : (
+    <BigButton
+      text={!isCounting || type === ResetType.Yaw ? text : String(timer)}
+      icon={getIcon()}
+      onClick={() => {
+        startCountdown();
+        maybePlaySoundOnResetStarted(type);
+      }}
+      disabled={isCounting || needsFullReset}
+    ></BigButton>
+  );
 }
