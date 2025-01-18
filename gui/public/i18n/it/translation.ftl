@@ -817,6 +817,7 @@ onboarding-connect_tracker-issue-serial = Sto avendo problemi nel connettermi!
 onboarding-connect_tracker-usb = Tracker USB
 onboarding-connect_tracker-connection_status-none = Ricerca dei tracker in corso
 onboarding-connect_tracker-connection_status-serial_init = Connessione al dispositivo seriale in corso
+onboarding-connect_tracker-connection_status-obtaining_mac_address = Aquisizione in corso dell'indirizzo MAC del tracker
 onboarding-connect_tracker-connection_status-provisioning = Invio credenziali Wi-Fi in corso
 onboarding-connect_tracker-connection_status-connecting = Tentativo di connessione al Wi-Fi in corso
 onboarding-connect_tracker-connection_status-looking_for_server = Ricerca del server in corso
@@ -991,7 +992,7 @@ onboarding-manual_mounting-back = Torna indietro per entrare in VR
 onboarding-manual_mounting = Posizionamento manuale
 onboarding-manual_mounting-description = Fare clic su ogni tracker e selezionare in che direzione sono montati
 onboarding-manual_mounting-auto_mounting = Posizionamento automatico
-onboarding-manual_mounting-next = Passo successivo
+onboarding-manual_mounting-next = Passaggio successivo
 
 ## Tracker automatic mounting setup
 
@@ -999,7 +1000,7 @@ onboarding-automatic_mounting-back = Torna indietro per entrare in VR
 onboarding-automatic_mounting-title = Calibrazione posizionamento
 onboarding-automatic_mounting-description = Affinché i tracker di SlimeVR funzionino, dobbiamo configurare una rotazione di posizione di montaggio ai tuoi tracker per allinearli con la posizione di montaggio del tuo tracker fisico.
 onboarding-automatic_mounting-manual_mounting = Posizionamento manuale
-onboarding-automatic_mounting-next = Passo successivo
+onboarding-automatic_mounting-next = Passaggio successivo
 onboarding-automatic_mounting-prev_step = Passaggio precedente
 onboarding-automatic_mounting-done-title = Rotazione delle posizioni di montaggio calibrate.
 onboarding-automatic_mounting-done-description = La calibrazione della posizione é completa!
@@ -1143,18 +1144,145 @@ status_system-StatusUnassignedHMD = Il visore deve essere assegnato come tracker
 
 ## Firmware tool globals
 
+firmware_tool-next_step = Passaggio successivo
+firmware_tool-previous_step = Passaggio precedente
+firmware_tool-ok = Tutto apposto
+firmware_tool-retry = Riprova
+firmware_tool-loading = Caricamento...
 
 ## Firmware tool Steps
 
+firmware_tool = Strumento firmware fai-da-te
+firmware_tool-description = Ti consente di configurare e flashare i tuoi tracker fai-da-te
+firmware_tool-not_available = Oops, lo strumento firmware non è disponibile al momento. Torna più tardi!
+firmware_tool-not_compatible = Lo strumento firmware non è compatibile con questa versione del server. Aggiorna il tuo server!
+firmware_tool-board_step = Seleziona la tua scheda
+firmware_tool-board_step-description = Seleziona una delle schede elencate di seguito.
+firmware_tool-board_pins_step = Controlla i pin
+firmware_tool-board_pins_step-description =
+    Per piacer verifica che i pin selezionati siano corretti.
+    Se hai seguito la documentazione di SlimeVR, i valori predefiniti dovrebbero essere corretti
+firmware_tool-board_pins_step-enable_led = Abilita LED
+firmware_tool-board_pins_step-led_pin =
+    .label = Pin LED
+    .placeholder = Inserisci l'indirizzo del Pin LED
+firmware_tool-board_pins_step-battery_type = Seleziona il tipo di batteria
+firmware_tool-board_pins_step-battery_type-BAT_EXTERNAL = Batteria esterna
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL = Batteria interna
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL_MCP3021 = MCP3021 interno
+firmware_tool-board_pins_step-battery_type-BAT_MCP3021 = MCP3021
+firmware_tool-board_pins_step-battery_sensor_pin =
+    .label = Pin del sensore della batteria
+    .placeholder = Inserisci l'indirizzo del sensore della batteria
+firmware_tool-board_pins_step-battery_resistor =
+    .label = Resistenza della batteria (Ohm)
+    .placeholder = Inserisci il valore della resistenza della batteria
+firmware_tool-board_pins_step-battery_shield_resistor-0 =
+    .label = Shield R1 della batteria (Ohm)
+    .placeholder = Inserisci il valore dello Shield R1 della batteria
+firmware_tool-board_pins_step-battery_shield_resistor-1 =
+    .label = Shield R2 della batteria (Ohm)
+    .placeholder = Inserisci il valore dello Shield R2 della batteria
+firmware_tool-add_imus_step = Specifica i tuoi IMU
+firmware_tool-add_imus_step-description =
+    Per piacere aggiungi le IMU del tuo tracker
+    Se hai seguito la documentazione di SlimeVR, i valori predefiniti dovrebbero essere corretti
+firmware_tool-add_imus_step-imu_type-label = Tipo dell'IMU
+firmware_tool-add_imus_step-imu_type-placeholder = Seleziona il tipo dell'IMU
+firmware_tool-add_imus_step-imu_rotation =
+    .label = Rotazione dell'IMU (gradi)
+    .placeholder = Angolo di rotazione dell'IMU
+firmware_tool-add_imus_step-scl_pin =
+    .label = Pin SLC
+    .placeholder = Indirizzo del Pin SLC
+firmware_tool-add_imus_step-sda_pin =
+    .label = Pin SDA
+    .placeholder = Indirezzo del Pin SDA
+firmware_tool-add_imus_step-int_pin =
+    .label = Pin INT
+    .placeholder = Indirizzo del Pin INT
+firmware_tool-add_imus_step-optional_tracker =
+    .label = Tracker opzionale
+firmware_tool-add_imus_step-show_less = Mostra meno
+firmware_tool-add_imus_step-show_more = Mostra di più
+firmware_tool-add_imus_step-add_more = Aggiungere altre IMU
+firmware_tool-select_firmware_step = Seleziona la versione del firmware
+firmware_tool-select_firmware_step-description = Per piacere scegli la versione del firmware che desideri utilizzare
+firmware_tool-select_firmware_step-show-third-party =
+    .label = Mostra firmware di terze parti
+firmware_tool-flash_method_step = Metodo di flashing
+firmware_tool-flash_method_step-description = Seleziona il metodo di flashing che desideri utilizzare
+firmware_tool-flash_method_step-ota =
+    .label = OTA
+    .description = Usa il metodo via rete. Il tuo tracker utilizzerà il Wi-Fi per aggiornare il suo firmware. Funziona solo su tracker già configurati.
+firmware_tool-flash_method_step-serial =
+    .label = Seriale
+    .description = Usa un cavo USB per aggiornare il tracker.
+firmware_tool-flashbtn_step = Premi il pulsante di avvio
+firmware_tool-flashbtn_step-description = Prima di passare al passaggio successivo, ci sono alcune cose che devi fare
+firmware_tool-flashbtn_step-board_SLIMEVR = Spegni il tracker, rimuovi la custodia (se presente), collega un cavo USB a questo computer, quindi esegui uno dei seguenti passaggi in base alla revisione della tua scheda SlimeVR:
+firmware_tool-flashbtn_step-board_SLIMEVR-r11 = Accendi il tracker mentre cortocircuiti il pad rettangolare FLASH, il secondo pad contando dal bordo superiore della scheda, e lo shield metallico del microcontroller
+firmware_tool-flashbtn_step-board_SLIMEVR-r12 = Accendi il tracker mentre cortocircuiti il pad circolare FLASH, il pad vicino al bordo superiore della scheda, e lo shield metallico del microcontroller
+firmware_tool-flashbtn_step-board_SLIMEVR-r14 = Accendi il tracker mentre premi il pulsante FLASH sul lato superiore della scheda
+firmware_tool-flashbtn_step-board_OTHER =
+    Prima di eseguire il flashing, sarà probabilmente necessario mettere il tracker in modalità bootloader.
+    La maggior parte delle volte significa premere il pulsante di avvio sulla scheda prima che inizi il processo di flashing.
+    Se il processo di flashing fa timeout all'inizio del flashing, probabilmente significa che il tracker non era in modalità bootloader
+    Si prega di fare riferimento alle istruzioni di flashing della scheda per sapere come attivare la modalità boatloader
+firmware_tool-flash_method_ota-devices = Dispositivi OTA rilevati:
+firmware_tool-flash_method_ota-no_devices = Non ci sono schede che possono essere aggiornate utilizzando OTA, assicurati di aver selezionato il tipo di scheda corretto
+firmware_tool-flash_method_serial-wifi = Credenziali Wi-Fi:
+firmware_tool-flash_method_serial-devices-label = Dispositivi seriali rilevati:
+firmware_tool-flash_method_serial-devices-placeholder = Seleziona un dispositivo seriale
+firmware_tool-flash_method_serial-no_devices = Non sono stati rilevati dispositivi seriali compatibili, assicurarsi che il tracker sia collegato
+firmware_tool-build_step = Compilazione
+firmware_tool-build_step-description = Il firmware è in fase di compilazione, attendere
+firmware_tool-flashing_step = Flashing
+firmware_tool-flashing_step-description = Stiamo flashando I tuoi tracker, per piacere segui le istruzioni sullo schermo
+firmware_tool-flashing_step-warning = Non scollegare o riavviare il tracker durante il processo di caricamento a meno che non venga richiesto, potrebbe rendere la scheda inutilizzabile
+firmware_tool-flashing_step-flash_more = Esegui il flashing di altri tracker
+firmware_tool-flashing_step-exit = Esci
 
 ## firmware tool build status
 
+firmware_tool-build-CREATING_BUILD_FOLDER = Creazione della cartella di compilazione
+firmware_tool-build-DOWNLOADING_FIRMWARE = Scaricamento del firmware
+firmware_tool-build-EXTRACTING_FIRMWARE = Estrazione del firmware
+firmware_tool-build-SETTING_UP_DEFINES = Configurazione dei limiti
+firmware_tool-build-BUILDING = Compilazione del firmware
+firmware_tool-build-SAVING = Salvataggio del codice compilato
+firmware_tool-build-DONE = Compilazione completata
+firmware_tool-build-ERROR = Impossibile compilare il firmware
 
 ## Firmware update status
 
+firmware_update-status-DOWNLOADING = Scaricamento del firmware
+firmware_update-status-NEED_MANUAL_REBOOT = In attesa che l'utente riavvii il tracker
+firmware_update-status-AUTHENTICATING = Autenticazione con l'MCU
+firmware_update-status-UPLOADING = Caricamento del firmware
+firmware_update-status-SYNCING_WITH_MCU = Sincronizzazione con l'MCU
+firmware_update-status-REBOOTING = Riavvio del tracker
+firmware_update-status-PROVISIONING = Impostazione delle credenziali Wi-Fi
+firmware_update-status-DONE = Aggiornamento completato!
+firmware_update-status-ERROR_DEVICE_NOT_FOUND = Impossibile trovare il dispositivo
+firmware_update-status-ERROR_TIMEOUT = Timeout del processo di aggiornamento
+firmware_update-status-ERROR_DOWNLOAD_FAILED = Impossibile scaricare il firmware
+firmware_update-status-ERROR_AUTHENTICATION_FAILED = Impossibile eseguire l'autenticazione con l'MCU
+firmware_update-status-ERROR_UPLOAD_FAILED = Impossibile caricare il firmware
+firmware_update-status-ERROR_PROVISIONING_FAILED = Impossibile impostare le credenziali Wi-Fi
+firmware_update-status-ERROR_UNSUPPORTED_METHOD = Il metodo di aggiornamento non è supportato
+firmware_update-status-ERROR_UNKNOWN = Errore sconosciuto
 
 ## Dedicated Firmware Update Page
 
+firmware_update-title = Aggiornamento del firmware
+firmware_update-devices = Dispositivi disponibili
+firmware_update-devices-description = Seleziona i tracker che desideri aggiornare all'ultima versione del firmware di SlimeVR
+firmware_update-no_devices = Assicurati che i tracker che desideri aggiornare siano accesi e connessi al Wi-Fi!
+firmware_update-changelog-title = Aggiornamento a { $version }
+firmware_update-looking_for_devices = Ricerca in corso di dispositivi da aggiornare...
+firmware_update-retry = Riprova
+firmware_update-update = Aggiorna i tracker selezionati
 
 ## Tray Menu
 
