@@ -80,6 +80,20 @@ body_part-RIGHT_LITTLE_PROXIMAL = Falange prossimale del mignolo destro
 body_part-RIGHT_LITTLE_INTERMEDIATE = Falange intermedia del mignolo destro
 body_part-RIGHT_LITTLE_DISTAL = Falange distale del mignolo destro
 
+## BoardType
+
+board_type-UNKNOWN = Sconosciuto
+board_type-NODEMCU = NodeMCU
+board_type-CUSTOM = Scheda Personalizzata
+board_type-WROOM32 = WROOM32
+board_type-WEMOSD1MINI = Wemos D1 Mini
+board_type-TTGO_TBASE = TTGO T-Base
+board_type-ESP01 = ESP-01
+board_type-SLIMEVR = SlimeVR
+board_type-LOLIN_C3_MINI = Lolin C3 Mini
+board_type-BEETLE32C3 = Beetle ESP32-C3
+board_type-ES32C3DEVKITM1 = Espressif ESP32-C3 DevKitM-1
+
 ## Proportions
 
 skeleton_bone-NONE = Nessuna selezione
@@ -275,6 +289,11 @@ tracker-settings-name_section-label = Nome del tracker
 tracker-settings-forget = Dimentica il tracker
 tracker-settings-forget-description = Rimuove il tracker dal SlimeVR server e impedisce che si riconnetta ad fino al riavvio del server. Le impostazioni del tracker non andranno perse.
 tracker-settings-forget-label = Dimentica il tracker
+tracker-settings-update-unavailable = Non può essere aggiornata (fai da te)
+tracker-settings-update-up_to_date = Aggiornata
+tracker-settings-update-available = { $versionName } è ora disponibile
+tracker-settings-update = Aggiorna
+tracker-settings-update-title = Versione firmware
 
 ## Tracker part card info
 
@@ -350,6 +369,7 @@ settings-sidebar-utils = Strumenti
 settings-sidebar-serial = Console seriale
 settings-sidebar-appearance = Aspetto
 settings-sidebar-notifications = Notifiche
+settings-sidebar-firmware-tool = Strumento firmware fai-da-te
 settings-sidebar-advanced = Avanzate
 
 ## SteamVR settings
@@ -739,6 +759,7 @@ onboarding-wifi_creds-submit = Conferma!
 onboarding-wifi_creds-ssid =
     .label = SSID
     .placeholder = Enter SSID
+onboarding-wifi_creds-ssid-required = È richiesto il nome Wi-Fi
 onboarding-wifi_creds-password =
     .label = Password
     .placeholder = Inserisci password
@@ -1119,6 +1140,21 @@ status_system-StatusSteamVRDisconnected =
     }
 status_system-StatusTrackerError = Il tracker { $trackerName } ha un errore.
 status_system-StatusUnassignedHMD = Il visore deve essere assegnato come tracker della testa.
+
+## Firmware tool globals
+
+
+## Firmware tool Steps
+
+
+## firmware tool build status
+
+
+## Firmware update status
+
+
+## Dedicated Firmware Update Page
+
 
 ## Tray Menu
 
