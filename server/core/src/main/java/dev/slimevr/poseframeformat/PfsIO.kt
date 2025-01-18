@@ -164,8 +164,9 @@ object PfsIO {
 		while (true) {
 			try {
 				readFrame(stream, poseFrames, trackers)
-			} catch (_: EOFException) {
+			} catch (e: EOFException) {
 				// Reached end of stream, stop reading and return the recording
+				LogManager.debug("[PfsIO] Reached end of PFS stream.", e)
 				break
 			}
 		}
