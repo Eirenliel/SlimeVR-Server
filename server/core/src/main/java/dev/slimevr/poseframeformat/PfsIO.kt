@@ -99,66 +99,71 @@ object PfsIO {
 		false
 	}
 
+	fun readFrame(stream: DataInputStream, poseFrames: PoseFrames, trackers: MutableMap<Int, TrackerFrames>) {
+		val packetId = stream.readUnsignedByte()
+		val packetType = PfsPackets.byId[packetId]
+
+		when (packetType) {
+			null -> {
+				throw IOException("Encountered unknown packet ID ($packetId) while deserializing PFS stream.")
+			}
+
+			PfsPackets.RECORDING_DEFINITION -> {
+				// Unused, useful for debugging
+				val frameInterval = stream.readFloat()
+				poseFrames.frameInterval = frameInterval
+				LogManager.info("[PfsIO] Frame interval: $frameInterval s")
+			}
+
+			PfsPackets.TRACKER_DEFINITION -> {
+				val trackerId = stream.readUnsignedByte()
+				val name = stream.readUTF()
+
+				// Get or make tracker and set its name
+				trackers.getOrPut(trackerId) {
+					TrackerFrames(name)
+				}.name = name
+			}
+
+			PfsPackets.TRACKER_FRAME -> {
+				val trackerId = stream.readUnsignedByte()
+				val tracker = trackers.getOrPut(trackerId) {
+					// If tracker doesn't exist yet, make one
+					TrackerFrames()
+				}
+				val frameNum = stream.readInt()
+				val frame = PoseFrameIO.readFrame(stream)
+
+				tracker.frames.add(frameNum, frame)
+			}
+
+			PfsPackets.PROPORTIONS_CONFIG -> {
+				// Unused, useful for debugging
+				// Currently just prints JSON format config to console
+				val configCount = stream.readUnsignedShort()
+				val sb = StringBuilder("[PfsIO] Body proportion configs ($configCount): {")
+				for (i in 0 until configCount) {
+					if (i > 0) {
+						sb.append(", ")
+					}
+					sb.append(stream.readUTF())
+					sb.append(": ")
+					sb.append(stream.readFloat())
+				}
+				sb.append('}')
+
+				LogManager.info(sb.toString())
+			}
+		}
+	}
+
 	fun readFrames(stream: DataInputStream): PoseFrames {
 		val poseFrames = PoseFrames()
 		val trackers = mutableMapOf<Int, TrackerFrames>()
 
 		while (true) {
 			try {
-				val packetId = stream.readUnsignedByte()
-				val packetType = PfsPackets.byId[packetId]
-				when (packetType) {
-					null -> {
-						throw IOException("Encountered unknown packet ID ($packetId) while deserializing PFS stream.")
-					}
-
-					PfsPackets.RECORDING_DEFINITION -> {
-						// Unused, useful for debugging
-						val frameInterval = stream.readFloat()
-						poseFrames.frameInterval = frameInterval
-						LogManager.info("[PfsIO] Frame interval: $frameInterval s")
-					}
-
-					PfsPackets.TRACKER_DEFINITION -> {
-						val trackerId = stream.readUnsignedByte()
-						val name = stream.readUTF()
-
-						// Get or make tracker and set its name
-						trackers.getOrPut(trackerId) {
-							TrackerFrames(name)
-						}.name = name
-					}
-
-					PfsPackets.TRACKER_FRAME -> {
-						val trackerId = stream.readUnsignedByte()
-						val tracker = trackers.getOrPut(trackerId) {
-							// If tracker doesn't exist yet, make one
-							TrackerFrames()
-						}
-						val frameNum = stream.readInt()
-						val frame = PoseFrameIO.readFrame(stream)
-
-						tracker.frames.add(frameNum, frame)
-					}
-
-					PfsPackets.PROPORTIONS_CONFIG -> {
-						// Unused, useful for debugging
-						// Currently just prints JSON format config to console
-						val configCount = stream.readUnsignedShort()
-						val sb = StringBuilder("[PfsIO] Body proportion configs ($configCount): {")
-						for (i in 0 until configCount) {
-							if (i > 0) {
-								sb.append(", ")
-							}
-							sb.append(stream.readUTF())
-							sb.append(": ")
-							sb.append(stream.readFloat())
-						}
-						sb.append('}')
-
-						LogManager.info(sb.toString())
-					}
-				}
+				readFrame(stream, poseFrames, trackers)
 			} catch (_: EOFException) {
 				// Reached end of stream, stop reading and return the recording
 				break
