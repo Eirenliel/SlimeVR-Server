@@ -753,18 +753,20 @@ class AutoBone(server: VRServer) {
 			if (!file.isFile) return@forEach
 
 			val frames = if (file.name.endsWith(".pfs", ignoreCase = true)) {
+				LogManager.info("[AutoBone] Loading PFS recording from \"${file.path}\"...")
 				PfsIO.tryReadFromFile(file)
 			} else if (file.name.endsWith(".pfr", ignoreCase = true)) {
+				LogManager.info("[AutoBone] Loading PFR recording from \"${file.path}\"...")
 				PfrIO.tryReadFromFile(file)
 			} else {
 				return@forEach
 			}
 
 			if (frames == null) {
-				LogManager.severe("Failed to load recording from \"${file.path}\".")
+				LogManager.severe("[AutoBone] Failed to load recording from \"${file.path}\".")
 			} else {
-				LogManager.info("[AutoBone] Loaded recording from \"${file.path}\".")
 				recordings.add(Pair.of(file.name, frames))
+				LogManager.info("[AutoBone] Loaded recording from \"${file.path}\".")
 			}
 		}
 
