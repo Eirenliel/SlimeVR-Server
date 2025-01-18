@@ -4,7 +4,7 @@ import dev.slimevr.SLIMEVR_IDENTIFIER
 import dev.slimevr.VRServer
 import dev.slimevr.autobone.errors.*
 import dev.slimevr.config.AutoBoneConfig
-import dev.slimevr.poseframeformat.PoseFrameIO
+import dev.slimevr.poseframeformat.PfrIO
 import dev.slimevr.poseframeformat.PoseFrames
 import dev.slimevr.tracking.processor.BoneType
 import dev.slimevr.tracking.processor.HumanPoseManager
@@ -713,7 +713,7 @@ class AutoBone(server: VRServer) {
 		if (saveDir.isDirectory || saveDir.mkdirs()) {
 			LogManager
 				.info("[AutoBone] Exporting frames to \"${recordingFile.path}\"...")
-			if (PoseFrameIO.tryWriteToFile(recordingFile, frames)) {
+			if (PfrIO.tryWriteToFile(recordingFile, frames)) {
 				LogManager
 					.info(
 						"[AutoBone] Done exporting! Recording can be found at \"${recordingFile.path}\".",
@@ -756,7 +756,7 @@ class AutoBone(server: VRServer) {
 				.info(
 					"[AutoBone] Detected recording at \"${file.path}\", loading frames...",
 				)
-			val frames = PoseFrameIO.tryReadFromFile(file)
+			val frames = PfrIO.tryReadFromFile(file)
 			if (frames == null) {
 				LogManager.severe("Reading frames from \"${file.path}\" failed...")
 			} else {

@@ -18,7 +18,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
-object PoseFrameIO {
+object PfrIO {
 	@Throws(IOException::class)
 	private fun writeVector3f(outputStream: DataOutputStream, vector: Vector3) {
 		outputStream.writeFloat(vector.x)

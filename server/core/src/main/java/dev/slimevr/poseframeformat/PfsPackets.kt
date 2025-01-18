@@ -19,7 +19,7 @@ enum class PfsPackets(val id: Int) {
 	/**
 	 * Tracker ID ([UByte]),
 	 * Frame number ([UInt]),
-	 * PFR frame data (see [PoseFrameIO.writeFrame] & [PoseFrameIO.readFrame])
+	 * PFR frame data (see [PfrIO.writeFrame] & [PfrIO.readFrame])
 	 */
 	TRACKER_FRAME(2),
 

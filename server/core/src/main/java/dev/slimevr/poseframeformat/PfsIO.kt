@@ -36,7 +36,7 @@ object PfsIO {
 		stream.writeByte(id)
 		stream.writeInt(frameIndex)
 		// Write frame data (same format as PFR)
-		PoseFrameIO.writeFrame(stream, frame)
+		PfrIO.writeFrame(stream, frame)
 	}
 
 	private fun writeBodyProportions(stream: DataOutputStream, abConfig: AutoBoneConfig, skeletonConfig: SkeletonConfig) {
@@ -132,7 +132,7 @@ object PfsIO {
 					TrackerFrames()
 				}
 				val frameNum = stream.readInt()
-				val frame = PoseFrameIO.readFrame(stream)
+				val frame = PfrIO.readFrame(stream)
 
 				tracker.frames.add(frameNum, frame)
 			}
