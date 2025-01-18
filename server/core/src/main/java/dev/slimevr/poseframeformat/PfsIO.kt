@@ -1,5 +1,7 @@
 package dev.slimevr.poseframeformat
 
+import dev.slimevr.config.AutoBoneConfig
+import dev.slimevr.config.SkeletonConfig
 import dev.slimevr.poseframeformat.trackerdata.TrackerFrame
 import dev.slimevr.poseframeformat.trackerdata.TrackerFrames
 import io.eiren.util.logging.LogManager
@@ -35,6 +37,20 @@ object PfsIO {
 		stream.writeInt(frameIndex)
 		// Write frame data (same format as PFR)
 		PoseFrameIO.writeFrame(stream, frame)
+	}
+
+	private fun writeBodyProportions(stream: DataOutputStream, abConfig: AutoBoneConfig, skeletonConfig: SkeletonConfig) {
+		stream.writeByte(PfsPackets.PROPORTIONS_CONFIG.id)
+		// HMD height will be moved to SkeletonConfig in the future
+		stream.writeFloat(abConfig.targetHmdHeight)
+		// Floor height not yet implemented
+		stream.writeFloat(0f)
+		// Write config map
+		stream.writeShort(skeletonConfig.offsets.size)
+		for ((key, value) in skeletonConfig.offsets) {
+			stream.writeUTF(key)
+			stream.writeFloat(value)
+		}
 	}
 
 	fun writeFrames(stream: DataOutputStream, frames: PoseFrames) {
