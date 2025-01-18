@@ -112,7 +112,7 @@ object PfsIO {
 				// Unused, useful for debugging
 				val frameInterval = stream.readFloat()
 				poseFrames.frameInterval = frameInterval
-				LogManager.info("[PfsIO] Frame interval: $frameInterval s")
+				LogManager.debug("[PfsIO] Frame interval: $frameInterval s")
 			}
 
 			PfsPackets.TRACKER_DEFINITION -> {
@@ -152,7 +152,7 @@ object PfsIO {
 				}
 				sb.append('}')
 
-				LogManager.info(sb.toString())
+				LogManager.debug(sb.toString())
 			}
 		}
 	}
@@ -164,9 +164,9 @@ object PfsIO {
 		while (true) {
 			try {
 				readFrame(stream, poseFrames, trackers)
-			} catch (e: EOFException) {
+			} catch (_: EOFException) {
 				// Reached end of stream, stop reading and return the recording
-				LogManager.debug("[PfsIO] Reached end of PFS stream.", e)
+				// LogManager.debug("[PfsIO] Reached end of PFS stream.", e)
 				break
 			}
 		}
