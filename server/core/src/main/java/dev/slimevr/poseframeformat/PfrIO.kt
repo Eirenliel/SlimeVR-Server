@@ -18,7 +18,7 @@ import java.io.FileInputStream
 import java.io.FileOutputStream
 import java.io.IOException
 
-object PoseFrameIO {
+object PfrIO {
 	@Throws(IOException::class)
 	private fun writeVector3f(outputStream: DataOutputStream, vector: Vector3) {
 		outputStream.writeFloat(vector.x)
@@ -34,41 +34,46 @@ object PoseFrameIO {
 		outputStream.writeFloat(quaternion.w)
 	}
 
+	fun writeFrame(outputStream: DataOutputStream, trackerFrame: TrackerFrame?) {
+		if (trackerFrame == null) {
+			outputStream.writeInt(0)
+			return
+		}
+
+		var dataFlags = trackerFrame.dataFlags
+
+		// Don't write destination strings anymore, replace with
+		// the enum
+		if (trackerFrame.hasData(TrackerFrameData.DESIGNATION_STRING)) {
+			dataFlags = TrackerFrameData.TRACKER_POSITION_ENUM
+				.add(TrackerFrameData.DESIGNATION_STRING.remove(dataFlags))
+		}
+		outputStream.writeInt(dataFlags)
+		if (trackerFrame.hasData(TrackerFrameData.ROTATION)) {
+			writeQuaternion(outputStream, trackerFrame.rotation!!)
+		}
+		if (trackerFrame.hasData(TrackerFrameData.POSITION)) {
+			writeVector3f(outputStream, trackerFrame.position!!)
+		}
+		if (TrackerFrameData.TRACKER_POSITION_ENUM.check(dataFlags)) {
+			// ID is offset by 1 for historical reasons
+			outputStream.writeInt(trackerFrame.trackerPosition!!.id - 1)
+		}
+		if (trackerFrame.hasData(TrackerFrameData.ACCELERATION)) {
+			writeVector3f(outputStream, trackerFrame.acceleration!!)
+		}
+		if (trackerFrame.hasData(TrackerFrameData.RAW_ROTATION)) {
+			writeQuaternion(outputStream, trackerFrame.rawRotation!!)
+		}
+	}
+
 	fun writeFrames(outputStream: DataOutputStream, frames: PoseFrames) {
 		outputStream.writeInt(frames.frameHolders.size)
 		for (tracker in frames.frameHolders) {
 			outputStream.writeUTF(tracker.name)
 			outputStream.writeInt(tracker.frames.size)
 			for (i in 0 until tracker.frames.size) {
-				val trackerFrame = tracker.tryGetFrame(i)
-				if (trackerFrame == null) {
-					outputStream.writeInt(0)
-					continue
-				}
-				var dataFlags = trackerFrame.dataFlags
-
-				// Don't write destination strings anymore, replace with
-				// the enum
-				if (trackerFrame.hasData(TrackerFrameData.DESIGNATION_STRING)) {
-					dataFlags = TrackerFrameData.TRACKER_POSITION_ENUM
-						.add(TrackerFrameData.DESIGNATION_STRING.remove(dataFlags))
-				}
-				outputStream.writeInt(dataFlags)
-				if (trackerFrame.hasData(TrackerFrameData.ROTATION)) {
-					writeQuaternion(outputStream, trackerFrame.rotation!!)
-				}
-				if (trackerFrame.hasData(TrackerFrameData.POSITION)) {
-					writeVector3f(outputStream, trackerFrame.position!!)
-				}
-				if (TrackerFrameData.TRACKER_POSITION_ENUM.check(dataFlags)) {
-					outputStream.writeInt(trackerFrame.trackerPosition!!.ordinal)
-				}
-				if (trackerFrame.hasData(TrackerFrameData.ACCELERATION)) {
-					writeVector3f(outputStream, trackerFrame.acceleration!!)
-				}
-				if (trackerFrame.hasData(TrackerFrameData.RAW_ROTATION)) {
-					writeQuaternion(outputStream, trackerFrame.rawRotation!!)
-				}
+				writeFrame(outputStream, tracker.tryGetFrame(i))
 			}
 		}
 	}
@@ -112,6 +117,43 @@ object PoseFrameIO {
 		return Quaternion(w, x, y, z)
 	}
 
+	fun readFrame(inputStream: DataInputStream): TrackerFrame {
+		val dataFlags = inputStream.readInt()
+
+		var designation: TrackerPosition? = null
+		if (TrackerFrameData.DESIGNATION_STRING.check(dataFlags)) {
+			designation = getByDesignation(inputStream.readUTF())
+		}
+		var rotation: Quaternion? = null
+		if (TrackerFrameData.ROTATION.check(dataFlags)) {
+			rotation = readQuaternion(inputStream)
+		}
+		var position: Vector3? = null
+		if (TrackerFrameData.POSITION.check(dataFlags)) {
+			position = readVector3f(inputStream)
+		}
+		if (TrackerFrameData.TRACKER_POSITION_ENUM.check(dataFlags)) {
+			// ID is offset by 1 for historical reasons
+			designation = TrackerPosition.getById(inputStream.readInt() + 1)
+		}
+		var acceleration: Vector3? = null
+		if (TrackerFrameData.ACCELERATION.check(dataFlags)) {
+			acceleration = readVector3f(inputStream)
+		}
+		var rawRotation: Quaternion? = null
+		if (TrackerFrameData.RAW_ROTATION.check(dataFlags)) {
+			rawRotation = readQuaternion(inputStream)
+		}
+
+		return TrackerFrame(
+			designation,
+			rotation,
+			position,
+			acceleration,
+			rawRotation,
+		)
+	}
+
 	fun readFrames(inputStream: DataInputStream): PoseFrames {
 		val trackerCount = inputStream.readInt()
 		val trackers = FastList<TrackerFrames>(trackerCount)
@@ -122,40 +164,7 @@ object PoseFrameIO {
 				trackerFrameCount,
 			)
 			for (j in 0 until trackerFrameCount) {
-				val dataFlags = inputStream.readInt()
-				var designation: TrackerPosition? = null
-				if (TrackerFrameData.DESIGNATION_STRING.check(dataFlags)) {
-					designation = getByDesignation(inputStream.readUTF())
-				}
-				var rotation: Quaternion? = null
-				if (TrackerFrameData.ROTATION.check(dataFlags)) {
-					rotation = readQuaternion(inputStream)
-				}
-				var position: Vector3? = null
-				if (TrackerFrameData.POSITION.check(dataFlags)) {
-					position = readVector3f(inputStream)
-				}
-				if (TrackerFrameData.TRACKER_POSITION_ENUM.check(dataFlags)) {
-					designation = TrackerPosition.values()[inputStream.readInt()]
-				}
-				var acceleration: Vector3? = null
-				if (TrackerFrameData.ACCELERATION.check(dataFlags)) {
-					acceleration = readVector3f(inputStream)
-				}
-				var rawRotation: Quaternion? = null
-				if (TrackerFrameData.RAW_ROTATION.check(dataFlags)) {
-					rawRotation = readQuaternion(inputStream)
-				}
-				trackerFrames
-					.add(
-						TrackerFrame(
-							designation,
-							rotation,
-							position,
-							acceleration,
-							rawRotation,
-						),
-					)
+				trackerFrames.add(readFrame(inputStream))
 			}
 			trackers.add(TrackerFrames(name, trackerFrames))
 		}

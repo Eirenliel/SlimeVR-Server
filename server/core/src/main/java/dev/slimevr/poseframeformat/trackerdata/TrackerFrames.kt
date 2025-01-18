@@ -6,7 +6,7 @@ import dev.slimevr.tracking.trackers.Tracker
 import dev.slimevr.tracking.trackers.TrackerStatus
 import io.eiren.util.collections.FastList
 
-data class TrackerFrames(val name: String = "", val frames: FastList<TrackerFrame?>) {
+data class TrackerFrames(var name: String = "", val frames: FastList<TrackerFrame?>) {
 
 	constructor(name: String = "", initialCapacity: Int = 5) : this(name, FastList<TrackerFrame?>(initialCapacity))
 	constructor(baseTracker: Tracker, frames: FastList<TrackerFrame?>) : this(baseTracker.name, frames)
