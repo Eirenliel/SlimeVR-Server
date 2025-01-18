@@ -5,6 +5,7 @@ import dev.slimevr.VRServer
 import dev.slimevr.autobone.errors.*
 import dev.slimevr.config.AutoBoneConfig
 import dev.slimevr.poseframeformat.PfrIO
+import dev.slimevr.poseframeformat.PfsIO
 import dev.slimevr.poseframeformat.PoseFrames
 import dev.slimevr.tracking.processor.BoneType
 import dev.slimevr.tracking.processor.HumanPoseManager
@@ -713,7 +714,7 @@ class AutoBone(server: VRServer) {
 		if (saveDir.isDirectory || saveDir.mkdirs()) {
 			LogManager
 				.info("[AutoBone] Exporting frames to \"${recordingFile.path}\"...")
-			if (PfrIO.tryWriteToFile(recordingFile, frames)) {
+			if (PfsIO.tryWriteToFile(recordingFile, frames)) {
 				LogManager
 					.info(
 						"[AutoBone] Done exporting! Recording can be found at \"${recordingFile.path}\".",
@@ -740,29 +741,33 @@ class AutoBone(server: VRServer) {
 		var recordingFile: File
 		var recordingIndex = 1
 		do {
-			recordingFile = File(saveDir, "ABRecording${recordingIndex++}.pfr")
+			recordingFile = File(saveDir, "ABRecording${recordingIndex++}.pfs")
 		} while (recordingFile.exists())
 		saveRecording(frames, recordingFile)
 	}
 
 	fun loadRecordings(): FastList<Pair<String, PoseFrames>> {
 		val recordings = FastList<Pair<String, PoseFrames>>()
-		if (!loadDir.isDirectory) return recordings
-		val files = loadDir.listFiles() ?: return recordings
-		for (file in files) {
-			if (!file.isFile || !file.name.endsWith(".pfr", ignoreCase = true)) continue
 
-			LogManager
-				.info(
-					"[AutoBone] Detected recording at \"${file.path}\", loading frames...",
-				)
-			val frames = PfrIO.tryReadFromFile(file)
-			if (frames == null) {
-				LogManager.severe("Reading frames from \"${file.path}\" failed...")
+		loadDir.listFiles()?.forEach { file ->
+			if (!file.isFile) return@forEach
+
+			val frames = if (file.name.endsWith(".pfs", ignoreCase = true)) {
+				PfsIO.tryReadFromFile(file)
+			} else if (file.name.endsWith(".pfr", ignoreCase = true)) {
+				PfrIO.tryReadFromFile(file)
 			} else {
+				return@forEach
+			}
+
+			if (frames == null) {
+				LogManager.severe("Failed to load recording from \"${file.path}\".")
+			} else {
+				LogManager.info("[AutoBone] Loaded recording from \"${file.path}\".")
 				recordings.add(Pair.of(file.name, frames))
 			}
 		}
+
 		return recordings
 	}
 
