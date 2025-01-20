@@ -50,6 +50,18 @@ body_part-LEFT_UPPER_LEG = Linkerdij
 body_part-LEFT_LOWER_LEG = Linkerenkel
 body_part-LEFT_FOOT = Linkervoet
 
+## BoardType
+
+board_type-NODEMCU = NodeMCU
+board_type-WROOM32 = WROOM32
+board_type-WEMOSD1MINI = Wemos D1 Mini
+board_type-TTGO_TBASE = TTGO T-Base
+board_type-ESP01 = ESP-01
+board_type-SLIMEVR = SlimeVR
+board_type-LOLIN_C3_MINI = Lolin C3 Mini
+board_type-BEETLE32C3 = Beetle ESP32-C3
+board_type-ES32C3DEVKITM1 = Espressif ESP32-C3 DevKitM-1
+
 ## Proportions
 
 skeleton_bone-NONE = Geen
@@ -81,6 +93,8 @@ skeleton_bone-ELBOW_OFFSET = Elleboogoffset
 ## Tracker reset buttons
 
 reset-reset_all = Alle afmetingen resetten
+reset-reset_all_warning-reset = Verhoudingen resetten
+reset-reset_all_warning-cancel = Annuleren
 reset-full = Volledige reset
 reset-mounting = Reset montage
 reset-yaw = Yaw Reset
@@ -142,9 +156,12 @@ widget-developer_mode-more_info = Meer informatie
 ## Widget: IMU Visualizer
 
 widget-imu_visualizer = Rotatie
+widget-imu_visualizer-preview = Voorbeeld
+widget-imu_visualizer-hide = Verbergen
 widget-imu_visualizer-rotation_raw = Rauw
 widget-imu_visualizer-rotation_preview = Preview
-widget-imu_visualizer-rotation_hide = Verbergen
+widget-imu_visualizer-acceleration = Versnelling
+widget-imu_visualizer-position = Positie
 
 ## Widget: Skeleton Visualizer
 
@@ -196,9 +213,17 @@ tracker-infos-url = Tracker URL
 tracker-infos-version = Firmware versie
 tracker-infos-hardware_rev = Hardware revisie
 tracker-infos-hardware_identifier = Hardware-id
+tracker-infos-data_support = Gegevensondersteuning
 tracker-infos-imu = IMU-sensor
 tracker-infos-board_type = Mainbord
 tracker-infos-network_version = Protocol Versie
+tracker-infos-magnetometer = Magnetometer
+tracker-infos-magnetometer-status-v1 =
+    { $status ->
+        [DISABLED] Uitgeschakeld
+        [ENABLED] Ingeschakeld
+       *[NOT_SUPPORTED] Niet ondersteund
+    }
 
 ## Tracker settings
 
@@ -213,6 +238,7 @@ tracker-settings-mounting_section-edit = Montage bewerken
 tracker-settings-drift_compensation_section = Laat drift compensatie toe
 tracker-settings-drift_compensation_section-description = Moet deze tracker compenseren voor drift wanneer drift compensatie is ingeschakeld?
 tracker-settings-drift_compensation_section-edit = Laat drift compensatie toe
+tracker-settings-use_mag-label = Laat magnetometer toe
 # The .<name> means it's an attribute and it's related to the top key.
 # In this case that is the settings for the assignment section.
 tracker-settings-name_section = Trackernaam
@@ -296,6 +322,7 @@ settings-sidebar-utils = Hulpmiddelen
 settings-sidebar-serial = Serieel console
 settings-sidebar-appearance = Uiterlijk
 settings-sidebar-notifications = Notificaties
+settings-sidebar-advanced = Geavanceerd
 
 ## SteamVR settings
 
@@ -348,11 +375,19 @@ settings-general-tracker_mechanics-drift_compensation-description =
     Compenseert voor IMU yaw drift door de toevoeging van een omgekeerde rotatie.
     Veranderd de sterkte van de compensatie en hoeveel resets worden gebruikt.
 settings-general-tracker_mechanics-drift_compensation-enabled-label = Drift compensate
+settings-general-tracker_mechanics-drift_compensation-prediction = Voorspelling van driftcompensatie
+settings-general-tracker_mechanics-drift_compensation-prediction-label = Voorspelling van driftcompensatie
+settings-general-tracker_mechanics-drift_compensation_warning-cancel = Annuleren
 settings-general-tracker_mechanics-drift_compensation-amount-label = Compensatiesterkte
 settings-general-tracker_mechanics-drift_compensation-max_resets-label = Gebruik de laatste x resets
 settings-general-tracker_mechanics-save_mounting_reset = Sla de automatische montage reset kalibratie op
 settings-general-tracker_mechanics-save_mounting_reset-description = Slaat de automatische montage reset kalibraties van de trackers op tussen herstarts. Nuttig als je een pak draagt waarbij trackers niet bewegen tussen sessies. <b>Niet aanbevolen voor normale gebruikers!</b>
 settings-general-tracker_mechanics-save_mounting_reset-enabled-label = Montage configuratie opslaan
+settings-general-tracker_mechanics-use_mag_on_all_trackers = Gebruik de magnetometer op alle IMU-trackers die dit ondersteunen
+settings-general-tracker_mechanics-use_mag_on_all_trackers-description =
+    Gebruikt magnetometer op alle trackers die er een compatibele firmware voor hebben, waardoor drift in stabiele magnetische omgevingen wordt verminderd.
+    Je kan dit per individuele tracker uit zetten in de instellingen van de tracker. <b>Sluit geen van de trackers af terwijl u dit in- en uitschakelt!</b>
+settings-general-tracker_mechanics-use_mag_on_all_trackers-label = Gebruik magnetometer op de trackers
 
 ## FK/Tracking settings
 
@@ -452,6 +487,9 @@ settings-general-interface-dev_mode = Ontwikkelaarsmodus
 settings-general-interface-dev_mode-description = Deze modus kan nuttig zijn als je diepgaande gegevens nodig hebt of op een geavanceerd niveau wilt communiceren met aangesloten trackers.
 settings-general-interface-dev_mode-label = Ontwikkelaarsmodus
 settings-general-interface-theme = Themakleur
+settings-general-interface-show-navbar-onboarding = Toon "{ navbar-onboarding }" op de navigatiebalk
+settings-general-interface-show-navbar-onboarding-description = Dit verandert of de knop "{ navbar-onboarding }" wordt weergegeven op de navigatiebalk.
+settings-general-interface-show-navbar-onboarding-label = Toon "{ navbar-onboarding }"
 settings-general-interface-lang = Selecteer taal
 settings-general-interface-lang-description = Verander de standaardtaal die je wilt gebruiken.
 settings-general-interface-lang-placeholder = Selecteer de te gebruiken taal
@@ -463,6 +501,9 @@ settings-interface-appearance-font-os_font = Besturingssysteem lettertype
 settings-interface-appearance-font-slime_font = Standaard lettertype
 settings-interface-appearance-font_size = Standaard lettertype grote
 settings-interface-appearance-font_size-description = Dit past het lettertype grote aan voor het gehele interfeace, behalve voor deze instellingen pagina.
+settings-interface-appearance-decorations = Gebruik het systeem native decoraties
+settings-interface-appearance-decorations-description = Dit zal de bovenste balk van de interface niet weergeven en zal in plaats daarvan die van het besturingssysteem gebruiken.
+settings-interface-appearance-decorations-label = Gebruik de native decoraties
 
 ## Notification settings
 
@@ -589,12 +630,6 @@ settings-osc-vmc-network-address-description = Stel het adres in waarnaar gegeve
 settings-osc-vmc-network-address-placeholder = IPV4-adres
 settings-osc-vmc-vrm = VRM Model
 settings-osc-vmc-vrm-description = Laad een VRM-model om hoofdverankering mogelijk te maken en zorg voor een hogere compatibiliteit met andere applicaties.
-settings-osc-vmc-vrm-model_unloaded = Geen model geladen
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Model geladen: { $name }
-       *[other] Ongetitelde model geladen
-    }
 settings-osc-vmc-vrm-file_select = Sleep een modelbestand naar hier om ze te gebruiken of <u>blader</u>.
 settings-osc-vmc-anchor_hip = Heupverankering
 settings-osc-vmc-anchor_hip-description = Veranker de tracking aan de heupen, handig voor zittende VTubing. Als u deze uitschakelt, laadt u een VRM-model.
@@ -602,6 +637,24 @@ settings-osc-vmc-anchor_hip-label = Heupverankering
 settings-osc-vmc-mirror_tracking = Gespiegelde tracking
 settings-osc-vmc-mirror_tracking-description = De tracking horizontaal spiegelen.
 settings-osc-vmc-mirror_tracking-label = Gespiegelde tracking
+
+## Advanced settings
+
+settings-utils-advanced = Geavanceerd
+settings-utils-advanced-reset-gui = GUI-instellingen resetten
+settings-utils-advanced-reset-gui-description = Herstel de standaardwaarden voor instellingen van de interface.
+settings-utils-advanced-reset-gui-label = GUI resetten
+settings-utils-advanced-reset-server = Tracker instellingen resetten
+settings-utils-advanced-reset-server-description = Herstel de standaardwaarden voor instellingen van de tracking.
+settings-utils-advanced-reset-server-label = Tracking resetten
+settings-utils-advanced-reset-all = Alle instellingen resetten
+settings-utils-advanced-reset-all-description = Herstel de standaardwaarden voor instellingen van beide de interface en de tracking.
+settings-utils-advanced-reset-all-label = Alles resetten
+settings-utils-advanced-reset_warning-reset = Instellingen resetten
+settings-utils-advanced-reset_warning-cancel = Annuleren
+settings-utils-advanced-open_data = Gegevensmap
+settings-utils-advanced-open_data-description = Open de gegevensmap van SlimeVR in de bestandsverkenner, met configuratie- en logbestanden.
+settings-utils-advanced-open_data-label = Map openen
 
 ## Setup/onboarding menu
 
@@ -628,6 +681,7 @@ onboarding-wifi_creds-submit = Verzenden!
 onboarding-wifi_creds-ssid =
     .label = WiFi naam
     .placeholder = Vul WiFi naam in
+onboarding-wifi_creds-ssid-required = Wi-Fi-naam is vereist
 onboarding-wifi_creds-password =
     .label = Paswoord
     .placeholder = Vul paswoord in
@@ -685,6 +739,7 @@ onboarding-connect_tracker-issue-serial = Ik heb problemen met verbinden!
 onboarding-connect_tracker-usb = USB Tracker
 onboarding-connect_tracker-connection_status-none = Op zoek naar trackers
 onboarding-connect_tracker-connection_status-serial_init = Verbinding maken met een serieel apparaat
+onboarding-connect_tracker-connection_status-obtaining_mac_address = Het mac-adres van de tracker verkrijgen
 onboarding-connect_tracker-connection_status-provisioning = Wifi-inloggegevens verzenden
 onboarding-connect_tracker-connection_status-connecting = Wifi-inloggegevens verzenden
 onboarding-connect_tracker-connection_status-looking_for_server = Op zoek naar server
@@ -714,6 +769,7 @@ onboarding-calibration_tutorial-status-waiting = Ik wacht op jou
 onboarding-calibration_tutorial-status-calibrating = Kalibreren
 onboarding-calibration_tutorial-status-success = Aardig!
 onboarding-calibration_tutorial-status-error = De tracker werd verplaatst
+onboarding-calibration_tutorial-skip = Tutorial overslaan
 
 ## Tracker assignment tutorial
 
@@ -837,11 +893,11 @@ onboarding-choose_mounting = Welke montagekalibratiemethode moet worden gebruikt
 # Multiline text
 onboarding-choose_mounting-description = De oriëntatie van de montage corrigeert de plaatsing van trackers op uw lichaam.
 onboarding-choose_mounting-auto_mounting = Automatische bevestiging
-# Italized text
+# Italicized text
 onboarding-choose_mounting-auto_mounting-label-v2 = Aanbevolen
 onboarding-choose_mounting-auto_mounting-description = Dit detecteert automatisch de montagerichtingen voor al uw trackers door middel van 2 poses
 onboarding-choose_mounting-manual_mounting = Handmatige bevestiging
-# Italized text
+# Italicized text
 onboarding-choose_mounting-manual_mounting-label-v2 = Misschien niet precies genoeg
 onboarding-choose_mounting-manual_mounting-description = Hiermee kunt u de montagerichting handmatig kiezen voor elke tracker
 # Multiline text
@@ -888,13 +944,13 @@ onboarding-choose_proportions-description-v1 =
     Als de verhoudingen van je lichaam niet overeenkomen met de opgeslagen waarden, zal de tracking-precisie slechter zijn. Je kunt dan last krijgen van ongemakkelijke effecten zoals schuiven of glijden, of kan je lichaam niet goed overeenkomen met je avatar in VR.
     <b>Je hoeft je lichaam maar één keer te meten!</b> Tenzij de metingen onjuist zijn of je lichaam is veranderd, hoef je dit niet opnieuw te doen.
 onboarding-choose_proportions-auto_proportions = Automatische verhoudingen
-# Italized text
+# Italicized text
 onboarding-choose_proportions-auto_proportions-subtitle = Aanbevolen
 onboarding-choose_proportions-auto_proportions-descriptionv3 =
     Deze functie zal je lichaamsverhoudingen schatten door een sample van je bewegingen op te nemen en deze door een algoritme te laten analyseren. 
     <b>Hiervoor moet je headset (HMD) verbonden zijn met SlimeVR en op je hoofd zitten!</b>
 onboarding-choose_proportions-manual_proportions = Handmatige lichaamsverhoudingen
-# Italized text
+# Italicized text
 onboarding-choose_proportions-manual_proportions-subtitle = Voor kleine details
 onboarding-choose_proportions-manual_proportions-description = Hier kan je jouw verhoudingen handmatig aanpassen
 onboarding-choose_proportions-export = Export proporties
@@ -969,9 +1025,10 @@ onboarding-automatic_proportions-verify_results-redo = Opname opnieuw doen
 onboarding-automatic_proportions-verify_results-confirm = Ze zijn correct
 onboarding-automatic_proportions-done-title = Lichaam gemeten en opgeslagen.
 onboarding-automatic_proportions-done-description = Je kalibratie voor lichaamsverhoudingen is voltooid!
-onboarding-automatic_proportions-error_modal =
-    <b>Waarschuwing:</b> Er is een error ontstaan bij het schatten van de proporties!
-    Check alsjeblieft <docs>de docs</docs> of join onze <discord>Discord</Discord> voor hulp ^_^
+onboarding-automatic_proportions-error_modal-v2 =
+    <b>Waarschuwing:</b> Er is een fout opgetreden bij het schatten van de verhoudingen!
+    Dit is waarschijnlijk een probleem met de montagekalibratie. Zorg ervoor dat je tracking goed werkt voordat je het opnieuw probeert.
+     <docs>Bekijk de documentatie</docs> of word lid van onze <discord>Discord</discord> voor hulp ^_^
 onboarding-automatic_proportions-error_modal-confirm = Begrepen!
 
 ## Home
@@ -997,6 +1054,72 @@ status_system-StatusSteamVRDisconnected =
     }
 status_system-StatusTrackerError = De { $trackerName } tracker heeft een error.
 status_system-StatusUnassignedHMD = De VR-headset moet worden toegewezen als hoofdtracker.
+
+## Firmware tool globals
+
+firmware_tool-next_step = Volgende stap
+firmware_tool-previous_step = Vorige stap
+firmware_tool-ok = Ziet er goed uit
+firmware_tool-retry = Opnieuw
+firmware_tool-loading = Laden...
+
+## Firmware tool Steps
+
+firmware_tool = DIY firmware-tool
+firmware_tool-description = Hiermee kunt u uw DIY-trackers configureren en flashen
+firmware_tool-not_available = Oeps, de firmwaretool is momenteel niet beschikbaar. Kom later terug!
+firmware_tool-not_compatible = De firmwaretool is niet compatibel met deze versie van de server. Gelieve te updaten!
+firmware_tool-board_step = Selecteer je bord
+firmware_tool-board_step-description = Selecteer een van de onderstaande borden.
+firmware_tool-board_pins_step = Controleer de pinnen
+firmware_tool-board_pins_step-description =
+    Controleer of de geselecteerde pinnen correct zijn.
+    Als je de SlimeVR-documentatie hebt gevolgd, zouden de standaardwaarden correct moeten zijn
+firmware_tool-board_pins_step-enable_led = LED inschakelen
+firmware_tool-board_pins_step-led_pin =
+    .label = LED-pin
+    .placeholder = Voer het adres van de LED-pin in
+firmware_tool-build_step = Aan het bouwen
+firmware_tool-build_step-description = De firmware wordt gebouwd, even geduld a.u.b.
+firmware_tool-flashing_step = Firmware aan het uploaden
+firmware_tool-flashing_step-description = Je trackers worden geflashed, volg de instructies op het scherm
+firmware_tool-flashing_step-warning = Trek de tracker niet los en start hem niet opnieuw op tijdens het uploadproces, tenzij dit wordt verteld, hierdoor kan je bord onbruikbaar worden
+firmware_tool-flashing_step-flash_more = Flash meer trackers
+firmware_tool-flashing_step-exit = Sluit
+
+## firmware tool build status
+
+firmware_tool-build-CREATING_BUILD_FOLDER = De buildmap maken
+firmware_tool-build-DOWNLOADING_FIRMWARE = Firmware wordt gedownload
+firmware_tool-build-EXTRACTING_FIRMWARE = Firmware wordt uitgepakt
+firmware_tool-build-SETTING_UP_DEFINES = Configureren van de definities
+firmware_tool-build-BUILDING = Firmware wordt gebouwd
+firmware_tool-build-ERROR = Kan de firmware niet bouwen
+
+## Firmware update status
+
+firmware_update-status-DOWNLOADING = Firmware wordt gedownload
+firmware_update-status-UPLOADING = Firmware wordt geüpload
+firmware_update-status-PROVISIONING = Wi-Fi-inloggegevens instellen
+firmware_update-status-DONE = Update voltooid!
+firmware_update-status-ERROR_DEVICE_NOT_FOUND = Kan het apparaat niet vinden
+firmware_update-status-ERROR_TIMEOUT = Er is een time-out opgetreden voor het updateproces
+firmware_update-status-ERROR_DOWNLOAD_FAILED = Kan de firmware niet downloaden
+firmware_update-status-ERROR_UPLOAD_FAILED = Kan de firmware niet uploaden
+firmware_update-status-ERROR_PROVISIONING_FAILED = Kan de Wi-Fi-inloggegevens niet instellen
+firmware_update-status-ERROR_UNSUPPORTED_METHOD = De updatemethode wordt niet ondersteund
+firmware_update-status-ERROR_UNKNOWN = Onbekende fout
+
+## Dedicated Firmware Update Page
+
+firmware_update-title = Firmware-update
+firmware_update-devices = Beschikbare apparaten
+firmware_update-devices-description = Selecteer de trackers die u wilt updaten naar de nieuwste versie van SlimeVR-firmware
+firmware_update-no_devices = Zorg er alsjeblieft voor dat de trackers die je wilt updaten AAN staan en verbonden zijn met de Wi-Fi!
+firmware_update-changelog-title = Bijwerken naar { $version }
+firmware_update-looking_for_devices = Op zoek naar apparaten om bij te werken...
+firmware_update-retry = Opnieuw
+firmware_update-update = Geselecteerde trackers bijwerken
 
 ## Tray Menu
 
