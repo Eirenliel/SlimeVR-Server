@@ -4,6 +4,8 @@ import com.jme3.math.FastMath
 import dev.slimevr.VRServer
 import dev.slimevr.VRServer.Companion.getNextLocalTrackerId
 import dev.slimevr.config.ConfigManager
+import dev.slimevr.config.StayAlignedConfig
+import dev.slimevr.math.Angle
 import dev.slimevr.tracking.processor.config.SkeletonConfigManager
 import dev.slimevr.tracking.processor.config.SkeletonConfigOffsets
 import dev.slimevr.tracking.processor.config.SkeletonConfigToggles
@@ -26,7 +28,6 @@ import solarxr_protocol.datatypes.DeviceIdT
 import solarxr_protocol.datatypes.TrackerIdT
 import solarxr_protocol.rpc.StatusData
 import solarxr_protocol.rpc.StatusDataUnion
-import solarxr_protocol.rpc.StatusUnassignedHMD
 import solarxr_protocol.rpc.StatusUnassignedHMDT
 import java.util.function.Consumer
 import kotlin.math.*
@@ -286,6 +287,7 @@ class HumanPoseManager(val server: VRServer?) {
 
 	fun loadFromConfig(configManager: ConfigManager) {
 		skeletonConfigManager.loadFromConfig(configManager)
+		setStayAlignedConfig(configManager.vrConfig.stayAlignedConfig)
 	}
 
 	@VRServerThread
@@ -611,6 +613,13 @@ class HumanPoseManager(val server: VRServer?) {
 					.append(" deg (")
 					.append(Precision.round(driftPerMin, 4))
 					.append(" deg/min)")
+
+				if (tracker.stayAligned.yawCorrection.yawAtLastReset != Angle.ZERO) {
+					trackersDriftText
+						.append(" (yaw correction ")
+						.append(tracker.stayAligned.yawCorrection.yawAtLastReset.toDeg())
+						.append(" deg)")
+				}
 			}
 		}
 
@@ -661,6 +670,11 @@ class HumanPoseManager(val server: VRServer?) {
 				.getToggles()[SkeletonConfigToggles.SKATING_CORRECTION.configKey] = value
 			server.configManager.saveConfig()
 		}
+	}
+
+	@VRServerThread
+	fun setStayAlignedConfig(config: StayAlignedConfig) {
+		skeleton.stayAlignedConfig = config
 	}
 
 	fun setLegTweaksStateTemp(

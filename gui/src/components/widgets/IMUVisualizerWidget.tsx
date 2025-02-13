@@ -12,6 +12,7 @@ import { useLocalization } from '@fluent/react';
 import { Vector3Object } from '@/maths/vector3';
 import { Gltf } from '@react-three/drei';
 import { ErrorBoundary } from 'react-error-boundary';
+import { StayAlignedInfo } from '@/components/tracker/StayAlignedInfo';
 
 const groundColor = '#4444aa';
 
@@ -154,6 +155,15 @@ export function IMUVisualizerWidget({ tracker }: { tracker: TrackerDataT }) {
           <Typography>
             {formatVector3(tracker.linearAcceleration, 1)}
           </Typography>
+        </div>
+      )}
+
+      {!!tracker.stayAlignedYawCorrectionInDeg && (
+        <div className="flex justify-between">
+          <Typography color="secondary">
+            {l10n.getString('widget-imu_visualizer-stay_aligned')}
+          </Typography>
+          <StayAlignedInfo color="primary" tracker={tracker} />
         </div>
       )}
 

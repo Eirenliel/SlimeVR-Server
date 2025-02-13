@@ -99,6 +99,9 @@ value class Vector3(val x: Float, val y: Float, val z: Float) {
 	 * @return the angle
 	 **/
 	fun angleTo(that: Vector3): Float = atan2(this.cross(that).len(), this.dot(that))
+
+	fun isNear(other: Vector3, maxError: Float = 1e-6f) =
+		abs(x - other.x) <= maxError && abs(y - other.y) <= maxError && abs(z - other.z) <= maxError
 }
 
 operator fun Float.times(that: Vector3): Vector3 = that * this

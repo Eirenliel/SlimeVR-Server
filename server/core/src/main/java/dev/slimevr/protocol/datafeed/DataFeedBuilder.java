@@ -2,6 +2,7 @@ package dev.slimevr.protocol.datafeed;
 
 import com.google.flatbuffers.FlatBufferBuilder;
 import dev.slimevr.tracking.trackers.Device;
+import dev.slimevr.tracking.processor.stayaligned.state.StayAlignedTrackerState;
 import dev.slimevr.tracking.trackers.Tracker;
 import dev.slimevr.tracking.trackers.udp.UDPDevice;
 import io.github.axisangles.ktmath.Quaternion;
@@ -232,6 +233,34 @@ public class DataFeedBuilder {
 		}
 		if (mask.getTps()) {
 			TrackerData.addTps(fbb, (int) tracker.getTps());
+		}
+		if (mask.getStayAligned()) {
+			StayAlignedTrackerState state = tracker.getStayAligned();
+			TrackerData
+				.addStayAlignedYawCorrectionInDeg(
+					fbb,
+					state.getYawCorrection().getYaw().toDeg()
+				);
+			TrackerData
+				.addStayAlignedLockedErrorInDeg(
+					fbb,
+					state.getYawErrors().getLockedError().toDeg()
+				);
+			TrackerData
+				.addStayAlignedCenterErrorInDeg(
+					fbb,
+					state.getYawErrors().getCenterError().toDeg()
+				);
+			TrackerData
+				.addStayAlignedNeighborErrorInDeg(
+					fbb,
+					state.getYawErrors().getNeighborError().toDeg()
+				);
+			TrackerData
+				.addStayAlignedLocked(
+					fbb,
+					state.getLockedRotation() != null
+				);
 		}
 
 		return TrackerData.endTrackerData(fbb);

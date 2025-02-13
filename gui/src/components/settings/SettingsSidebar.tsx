@@ -58,6 +58,9 @@ export function SettingsSidebar() {
           <SettingsLink to="/settings/trackers" scrollTo="mechanics">
             {l10n.getString('settings-sidebar-tracker_mechanics')}
           </SettingsLink>
+          <SettingsLink to="/settings/trackers" scrollTo="stayaligned">
+            {l10n.getString('settings-general-stay_aligned')}
+          </SettingsLink>
           <SettingsLink to="/settings/trackers" scrollTo="fksettings">
             {l10n.getString('settings-sidebar-fk_settings')}
           </SettingsLink>

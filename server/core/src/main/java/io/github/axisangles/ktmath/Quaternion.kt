@@ -55,6 +55,33 @@ value class Quaternion(val w: Float, val x: Float, val y: Float, val z: Float) {
 		}
 
 		/**
+		 * Rotation around X-axis
+		 *
+		 * Derived from the axis-angle representation in
+		 * https://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation#Unit_quaternions
+		 */
+		fun rotationAroundXAxis(angle: Float): Quaternion =
+			Quaternion(cos(angle / 2.0f), sin(angle / 2.0f), 0.0f, 0.0f)
+
+		/**
+		 * Rotation around Y-axis
+		 *
+		 * Derived from the axis-angle representation in
+		 * https://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation#Unit_quaternions
+		 */
+		fun rotationAroundYAxis(angle: Float): Quaternion =
+			Quaternion(cos(angle / 2.0f), 0.0f, sin(angle / 2.0f), 0.0f)
+
+		/**
+		 * Rotation around Z-axis
+		 *
+		 * Derived from the axis-angle representation in
+		 * https://en.wikipedia.org/wiki/Axis%E2%80%93angle_representation#Unit_quaternions
+		 */
+		fun rotationAroundZAxis(angle: Float): Quaternion =
+			Quaternion(cos(angle / 2.0f), 0.0f, 0.0f, sin(angle / 2.0f))
+
+		/**
 		 * SlimeVR-specific constants and utils
 		 */
 		object SlimeVR {
@@ -365,7 +392,7 @@ value class Quaternion(val w: Float, val x: Float, val y: Float, val z: Float) {
 
 		val angleA = atan2(2f * (abQ * bQ + aQ * rot.w), rot.w * rot.w - aQ * aQ + bQ * bQ - abQ * abQ)
 		val angleB = atan2(2f * (abQ * aQ + bQ * rot.w), rot.w * rot.w + aQ * aQ - bQ * bQ - abQ * abQ)
-		
+
 		return floatArrayOf(angleA, angleB)
 	}
 
@@ -375,6 +402,45 @@ value class Quaternion(val w: Float, val x: Float, val y: Float, val z: Float) {
 	 * @return that vector transformed by this quaternion
 	 **/
 	fun sandwich(that: Vector3): Vector3 = (this * Quaternion(0f, that) / this).xyz
+
+	/**
+	 * Sandwiches the unit X vector
+	 *
+	 * First column of rotation matrix in
+	 * https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Conversion_to_and_from_the_matrix_representation
+	 */
+	fun sandwichUnitX(): Vector3 =
+		Vector3(
+			w * w + x * x - y * y - z * z,
+			2.0f * (x * y + w * z),
+			2.0f * (x * z - w * y),
+		)
+
+	/**
+	 * Sandwiches the unit Y vector
+	 *
+	 * Second column of rotation matrix in
+	 * https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Conversion_to_and_from_the_matrix_representation
+	 */
+	fun sandwichUnitY(): Vector3 =
+		Vector3(
+			2.0f * (x * y - w * z),
+			w * w - x * x + y * y - z * z,
+			2.0f * (y * z + w * x),
+		)
+
+	/**
+	 * Sandwiches the unit Z vector
+	 *
+	 * Third column of rotation matrix in
+	 * https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation#Conversion_to_and_from_the_matrix_representation
+	 */
+	fun sandwichUnitZ(): Vector3 =
+		Vector3(
+			2.0f * (x * z + w * y),
+			2.0f * (y * z - w * x),
+			w * w - x * x - y * y + z * z,
+		)
 
 	/**
 	 * computes this quaternion's unit length rotation axis

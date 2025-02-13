@@ -181,6 +181,24 @@ class QuaternionTest {
 	}
 
 	@Test
+	fun sandwichUnitX() {
+		val q = Quaternion(0.34f, 0.223f, -0.8f, -0.7f).unit()
+		assertTrue(q.sandwichUnitX().isNear(q.sandwich(Vector3.POS_X)))
+	}
+
+	@Test
+	fun sandwichUnitY() {
+		val q = Quaternion(0.34f, 0.223f, -0.8f, -0.7f).unit()
+		assertTrue(q.sandwichUnitY().isNear(q.sandwich(Vector3.POS_Y)))
+	}
+
+	@Test
+	fun sandwichUnitZ() {
+		val q = Quaternion(0.34f, 0.223f, -0.8f, -0.7f).unit()
+		assertTrue(q.sandwichUnitZ().isNear(q.sandwich(Vector3.POS_Z)))
+	}
+
+	@Test
 	fun axis() {
 		val v1 = Quaternion(0f, Quaternion(1f, 2f, 3f, 4f).axis())
 		val v2 = Quaternion(0f, Vector3(0.37139067f, 0.557086f, 0.74278134f))

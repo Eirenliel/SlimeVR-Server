@@ -17,6 +17,7 @@ import { TrackerBattery } from './TrackerBattery';
 import { TrackerStatus } from './TrackerStatus';
 import { TrackerWifi } from './TrackerWifi';
 import { trackerStatusRelated, useStatusContext } from '@/hooks/status-system';
+import { StayAlignedInfo } from './StayAlignedInfo';
 
 enum DisplayColumn {
   NAME,
@@ -28,6 +29,7 @@ enum DisplayColumn {
   TEMPERATURE,
   LINEAR_ACCELERATION,
   POSITION,
+  STAY_ALIGNED,
   URL,
 }
 
@@ -41,6 +43,7 @@ const displayColumns: { [k: string]: boolean } = {
   [DisplayColumn.TEMPERATURE]: true,
   [DisplayColumn.LINEAR_ACCELERATION]: true,
   [DisplayColumn.POSITION]: true,
+  [DisplayColumn.STAY_ALIGNED]: true,
   [DisplayColumn.URL]: true,
 };
 
@@ -196,6 +199,7 @@ export function TrackersTable({
   displayColumns[DisplayColumn.TEMPERATURE] = hasTemperature || false;
   displayColumns[DisplayColumn.POSITION] = moreInfo || false;
   displayColumns[DisplayColumn.LINEAR_ACCELERATION] = moreInfo || false;
+  displayColumns[DisplayColumn.STAY_ALIGNED] = moreInfo || false;
   displayColumns[DisplayColumn.URL] = moreInfo || false;
   const displayColumnsKeys = Object.keys(displayColumns).filter(
     (k) => displayColumns[k]
@@ -360,6 +364,15 @@ export function TrackersTable({
               {formatVector3(tracker.position, 2)}
             </Typography>
           ),
+      })}
+
+      {column({
+        id: DisplayColumn.STAY_ALIGNED,
+        label: l10n.getString('tracker-table-column-stay_aligned'),
+        labelClassName: 'w-36',
+        row: ({ tracker }) => (
+          <StayAlignedInfo color={fontColor} tracker={tracker} />
+        ),
       })}
 
       {column({

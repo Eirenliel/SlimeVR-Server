@@ -17,6 +17,7 @@ export function useDataFeedConfig() {
   trackerData.rotationReferenceAdjusted = true;
   trackerData.rotationIdentityAdjusted = true;
   trackerData.tps = true;
+  trackerData.stayAligned = true;
 
   const dataMask = new DeviceDataMaskT();
   dataMask.deviceData = true;
