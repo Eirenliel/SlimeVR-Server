@@ -14,6 +14,7 @@ import io.github.axisangles.ktmath.Vector3
 import kotlinx.coroutines.*
 import org.apache.commons.lang3.ArrayUtils
 import solarxr_protocol.rpc.ResetType
+import java.io.IOException
 import java.net.DatagramPacket
 import java.net.DatagramSocket
 import java.net.InetSocketAddress
@@ -327,7 +328,12 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 							bb.limit(bb.capacity())
 							bb.rewind()
 							parser.write(bb, conn, UDPPacket1Heartbeat)
-							socket.send(DatagramPacket(rcvBuffer, bb.position(), conn.address))
+
+							try {
+								socket.send(DatagramPacket(rcvBuffer, bb.position(), conn.address))
+							} catch (e: IOException) {
+								LogManager.warning("[TrackerServer] Failed to send package to $conn", e)
+							}
 							if (conn.lastPacket + 1000 < System.currentTimeMillis()) {
 								if (!conn.timedOut) {
 									conn.timedOut = true
@@ -365,7 +371,11 @@ class TrackersUDPServer(private val port: Int, name: String, private val tracker
 								bb.putInt(10)
 								bb.putLong(0)
 								bb.putInt(conn.lastPingPacketId)
-								socket.send(DatagramPacket(rcvBuffer, bb.position(), conn.address))
+								try {
+									socket.send(DatagramPacket(rcvBuffer, bb.position(), conn.address))
+								} catch (e: IOException) {
+									LogManager.warning("[TrackerServer] Failed to send package to $conn", e)
+								}
 							}
 						}
 					}

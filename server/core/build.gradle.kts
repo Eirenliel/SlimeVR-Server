@@ -64,8 +64,8 @@ dependencies {
 	// and not exposed to consumers on their own compile classpath.
 	implementation("com.google.flatbuffers:flatbuffers-java:22.10.26")
 	implementation("commons-cli:commons-cli:1.8.0")
-	implementation("com.fasterxml.jackson.core:jackson-databind:2.15.1")
-	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.1")
+	implementation("com.fasterxml.jackson.core:jackson-databind:2.13.5")
+	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.5")
 
 	implementation("com.github.jonpeterson:jackson-module-model-versioning:1.2.2")
 	implementation("org.apache.commons:commons-math3:3.6.1")

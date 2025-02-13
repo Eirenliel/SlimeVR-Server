@@ -10,11 +10,24 @@
 rootProject.name = "SlimeVR Server"
 
 pluginManagement {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
+	repositories {
+		gradlePluginPortal()
+		google()
+		mavenCentral()
+//		mavenLocal()
+		maven {
+			url = uri("https://oss.sonatype.org/content/repositories/snapshots")
+		}
+	}
+
+	val robovmVersion: String by settings
+	resolutionStrategy {
+		eachPlugin {
+			if (requested.id.name == "robovm") {
+				useModule("com.robovmx:robovm-gradle-plugin:${requested.version ?: robovmVersion}")
+			}
+		}
+	}
 
 	val kotlinVersion: String by settings
 	val spotlessVersion: String by settings
@@ -29,6 +42,7 @@ pluginManagement {
 		id("com.gradleup.shadow") version shadowJarVersion
 		id("com.github.gmazzo.buildconfig") version buildconfigVersion
 		id("org.ajoberstar.grgit") version grgitVersion
+		id("robovm") version robovmVersion apply false
 	}
 }
 
@@ -40,3 +54,4 @@ project(":server").projectDir = File("server")
 include(":server:core")
 include(":server:desktop")
 include(":server:android")
+include(":server:ios")

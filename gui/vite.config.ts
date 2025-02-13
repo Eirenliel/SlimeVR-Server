@@ -34,6 +34,7 @@ export function i18nHotReload(): PluginOption {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./",
   define: {
     __COMMIT_HASH__: JSON.stringify(commitHash),
     __VERSION_TAG__: JSON.stringify(versionTag),

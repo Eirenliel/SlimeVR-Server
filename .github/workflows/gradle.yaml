@@ -142,6 +142,47 @@ jobs:
           files: |
             ./SlimeVR-android.apk
 
+  bundle-ios:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Get tags
+        run: git fetch --tags origin --recurse-submodules=no --force
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "adopt"
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - uses: pnpm/action-setup@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.node-version'
+          cache: 'pnpm'
+
+      - name: Build GUI
+        run: |
+          pnpm i
+          cd gui && pnpm run build
+
+      - name: Build with Gradle
+        run: ./gradlew :server:ios:createIPA
+
+      - name: Upload the iOS Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          # Artifact name
+          name: "SlimeVR-iOS" # optional, default is artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: server/ios/build/robovmx-build/tmp/Main.ipa
 
   bundle-linux:
     runs-on: ubuntu-24.04
