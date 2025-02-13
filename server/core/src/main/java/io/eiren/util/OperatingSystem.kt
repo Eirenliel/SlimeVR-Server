@@ -39,6 +39,12 @@ enum class OperatingSystem(
 				if (dir != null) return dir
 				if (currentPlatform == LINUX) {
 					dir = System.getenv("XDG_RUNTIME_DIR")
+
+					// add /app/$FLATPAK_ID if running in flatpak
+					// see https://docs.flatpak.org/en/latest/sandbox-permissions.html
+					val flatpak_id = System.getenv("FLATPAK_ID")
+					if (flatpak_id != null) dir += "/app/" + flatpak_id
+
 					if (dir != null) return dir
 				}
 				return System.getProperty("java.io.tmpdir")
