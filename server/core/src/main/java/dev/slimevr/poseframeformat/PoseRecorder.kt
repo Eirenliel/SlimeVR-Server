@@ -88,6 +88,7 @@ class PoseRecorder(private val server: VRServer) {
 		require(trackers.isNotEmpty()) { "trackers must have at least one entry." }
 		cancelFrameRecording()
 		val poseFrame = PoseFrames(trackers.size)
+		poseFrame.frameInterval = intervalMs / 1000f
 
 		// Update tracker list
 		this.trackers.ensureCapacity(trackers.size)

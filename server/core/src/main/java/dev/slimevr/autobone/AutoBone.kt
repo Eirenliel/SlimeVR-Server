@@ -5,7 +5,8 @@ import dev.slimevr.VRServer
 import dev.slimevr.autobone.errors.*
 import dev.slimevr.config.AutoBoneConfig
 import dev.slimevr.config.SkeletonConfig
-import dev.slimevr.poseframeformat.PoseFrameIO
+import dev.slimevr.poseframeformat.PfrIO
+import dev.slimevr.poseframeformat.PfsIO
 import dev.slimevr.poseframeformat.PoseFrames
 import dev.slimevr.tracking.processor.BoneType
 import dev.slimevr.tracking.processor.HumanPoseManager
@@ -707,7 +708,7 @@ class AutoBone(private val server: VRServer) {
 		if (saveDir.isDirectory || saveDir.mkdirs()) {
 			LogManager
 				.info("[AutoBone] Exporting frames to \"${recordingFile.path}\"...")
-			if (PoseFrameIO.tryWriteToFile(recordingFile, frames)) {
+			if (PfsIO.tryWriteToFile(recordingFile, frames)) {
 				LogManager
 					.info(
 						"[AutoBone] Done exporting! Recording can be found at \"${recordingFile.path}\".",
@@ -734,29 +735,35 @@ class AutoBone(private val server: VRServer) {
 		var recordingFile: File
 		var recordingIndex = 1
 		do {
-			recordingFile = File(saveDir, "ABRecording${recordingIndex++}.pfr")
+			recordingFile = File(saveDir, "ABRecording${recordingIndex++}.pfs")
 		} while (recordingFile.exists())
 		saveRecording(frames, recordingFile)
 	}
 
 	fun loadRecordings(): FastList<Pair<String, PoseFrames>> {
 		val recordings = FastList<Pair<String, PoseFrames>>()
-		if (!loadDir.isDirectory) return recordings
-		val files = loadDir.listFiles() ?: return recordings
-		for (file in files) {
-			if (!file.isFile || !file.name.endsWith(".pfr", ignoreCase = true)) continue
 
-			LogManager
-				.info(
-					"[AutoBone] Detected recording at \"${file.path}\", loading frames...",
-				)
-			val frames = PoseFrameIO.tryReadFromFile(file)
+		loadDir.listFiles()?.forEach { file ->
+			if (!file.isFile) return@forEach
+
+			val frames = if (file.name.endsWith(".pfs", ignoreCase = true)) {
+				LogManager.info("[AutoBone] Loading PFS recording from \"${file.path}\"...")
+				PfsIO.tryReadFromFile(file)
+			} else if (file.name.endsWith(".pfr", ignoreCase = true)) {
+				LogManager.info("[AutoBone] Loading PFR recording from \"${file.path}\"...")
+				PfrIO.tryReadFromFile(file)
+			} else {
+				return@forEach
+			}
+
 			if (frames == null) {
-				LogManager.severe("Reading frames from \"${file.path}\" failed...")
+				LogManager.severe("[AutoBone] Failed to load recording from \"${file.path}\".")
 			} else {
 				recordings.add(Pair.of(file.name, frames))
+				LogManager.info("[AutoBone] Loaded recording from \"${file.path}\".")
 			}
 		}
+
 		return recordings
 	}
 

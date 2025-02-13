@@ -9,6 +9,11 @@ class PoseFrames : Iterable<Array<TrackerFrame?>> {
 	val frameHolders: FastList<TrackerFrames>
 
 	/**
+	 * Frame interval in seconds
+	 */
+	var frameInterval: Float = 0.02f
+
+	/**
 	 * Creates a [PoseFrames] object with the provided list of
 	 * [TrackerFrames]s as the internal [TrackerFrames] list.
 	 *

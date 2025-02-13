@@ -1,6 +1,6 @@
 package dev.slimevr.posestreamer
 
-import dev.slimevr.poseframeformat.PoseFrameIO.readFromFile
+import dev.slimevr.poseframeformat.PfrIO.readFromFile
 import dev.slimevr.poseframeformat.PoseFrames
 import dev.slimevr.poseframeformat.player.TrackerFramesPlayer
 import dev.slimevr.tracking.processor.HumanPoseManager

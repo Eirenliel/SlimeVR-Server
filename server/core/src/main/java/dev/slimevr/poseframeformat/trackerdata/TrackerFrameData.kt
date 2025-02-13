@@ -1,6 +1,6 @@
 package dev.slimevr.poseframeformat.trackerdata
 
-enum class TrackerFrameData(id: Int) {
+enum class TrackerFrameData(val id: Int) {
 	DESIGNATION_STRING(0),
 	ROTATION(1),
 	POSITION(2),
@@ -9,11 +9,7 @@ enum class TrackerFrameData(id: Int) {
 	RAW_ROTATION(5),
 	;
 
-	val flag: Int
-
-	init {
-		flag = 1 shl id
-	}
+	val flag: Int = 1 shl id
 
 	/*
 	 * Inline is fine for these, there's no negative to inlining them as they'll never
