@@ -1,6 +1,7 @@
 package dev.slimevr.autobone.errors
 
 import dev.slimevr.autobone.AutoBoneStep
+import dev.slimevr.autobone.PoseFrameStep
 import dev.slimevr.tracking.processor.skeleton.HumanSkeleton
 import dev.slimevr.tracking.trackers.Tracker
 import dev.slimevr.tracking.trackers.TrackerRole
@@ -8,9 +9,9 @@ import dev.slimevr.tracking.trackers.TrackerRole
 // The change in position of the ankle over time
 class SlideError : IAutoBoneError {
 	@Throws(AutoBoneException::class)
-	override fun getStepError(trainingStep: AutoBoneStep): Float = getSlideError(
-		trainingStep.skeleton1.skeleton,
-		trainingStep.skeleton2.skeleton,
+	override fun getStepError(step: PoseFrameStep<AutoBoneStep>): Float = getSlideError(
+		step.skeleton1.skeleton,
+		step.skeleton2.skeleton,
 	)
 
 	companion object {

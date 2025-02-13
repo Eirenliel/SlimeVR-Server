@@ -1,6 +1,7 @@
 package dev.slimevr.autobone.errors
 
 import dev.slimevr.autobone.AutoBoneStep
+import dev.slimevr.autobone.PoseFrameStep
 import dev.slimevr.poseframeformat.trackerdata.TrackerFrames
 import dev.slimevr.tracking.processor.skeleton.HumanSkeleton
 import kotlin.math.*
@@ -8,14 +9,14 @@ import kotlin.math.*
 // The difference between offset of absolute position and the corresponding point over time
 class PositionOffsetError : IAutoBoneError {
 	@Throws(AutoBoneException::class)
-	override fun getStepError(trainingStep: AutoBoneStep): Float {
-		val trackers = trainingStep.frames.frameHolders
+	override fun getStepError(step: PoseFrameStep<AutoBoneStep>): Float {
+		val trackers = step.frames.frameHolders
 		return getPositionOffsetError(
 			trackers,
-			trainingStep.cursor1,
-			trainingStep.cursor2,
-			trainingStep.skeleton1.skeleton,
-			trainingStep.skeleton2.skeleton,
+			step.cursor1,
+			step.cursor2,
+			step.skeleton1.skeleton,
+			step.skeleton2.skeleton,
 		)
 	}
 
