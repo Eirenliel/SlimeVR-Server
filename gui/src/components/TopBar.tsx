@@ -24,7 +24,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { useTrackers } from '@/hooks/tracker';
 import { TrackersStillOnModal } from './TrackersStillOnModal';
 import { useConfig } from '@/hooks/config';
-import { listen, TauriEvent } from '@tauri-apps/api/event';
+import { listen, TauriEvent, UnlistenFn } from '@tauri-apps/api/event';
 import { TrayOrExitModal } from './TrayOrExitModal';
 import { error } from '@/utils/logging';
 import { useDoubleTap } from 'use-double-tap';
@@ -114,18 +114,23 @@ export function TopBar({
       await tryCloseApp(true);
     });
 
-    const unlistenCloseRequested = getCurrentWindow().listen(
-      TauriEvent.WINDOW_CLOSE_REQUESTED,
-      async (data) => {
-        const ev = new CloseRequestedEvent(data);
-        ev.preventDefault();
-        await tryCloseApp();
-      }
-    );
+    let unlistenCloseRequested: Promise<UnlistenFn> | undefined = undefined;
+    try {
+      unlistenCloseRequested = getCurrentWindow().listen(
+        TauriEvent.WINDOW_CLOSE_REQUESTED,
+        async (data) => {
+          const ev = new CloseRequestedEvent(data);
+          ev.preventDefault();
+          await tryCloseApp();
+        }
+      );
+    } catch {
+      // Ignore
+    }
 
     return () => {
       unlistenTrayClose.then((fn) => fn());
-      unlistenCloseRequested.then((fn) => fn());
+      unlistenCloseRequested?.then((fn) => fn());
     };
   }, [
     config?.useTray,
