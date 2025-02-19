@@ -1,9 +1,9 @@
 package dev.slimevr.autobone.errors
 
 import dev.slimevr.autobone.AutoBoneStep
+import dev.slimevr.tracking.processor.BoneType
 import dev.slimevr.tracking.processor.skeleton.HumanSkeleton
-import dev.slimevr.tracking.trackers.Tracker
-import dev.slimevr.tracking.trackers.TrackerRole
+import io.github.axisangles.ktmath.Vector3
 import kotlin.math.*
 
 // The change in distance between both of the ankles over time
@@ -15,24 +15,19 @@ class OffsetSlideError : IAutoBoneError {
 	)
 
 	companion object {
-		fun getSlideError(skeleton1: HumanSkeleton, skeleton2: HumanSkeleton): Float {
-			val leftTracker1: Tracker = skeleton1.getComputedTracker(TrackerRole.LEFT_FOOT)
-			val rightTracker1: Tracker = skeleton1.getComputedTracker(TrackerRole.RIGHT_FOOT)
-			val leftTracker2: Tracker = skeleton2.getComputedTracker(TrackerRole.LEFT_FOOT)
-			val rightTracker2: Tracker = skeleton2.getComputedTracker(TrackerRole.RIGHT_FOOT)
-			return getSlideError(leftTracker1, rightTracker1, leftTracker2, rightTracker2)
-		}
+		fun getSlideError(skeleton1: HumanSkeleton, skeleton2: HumanSkeleton): Float = getSlideError(
+			skeleton1.getBone(BoneType.LEFT_LOWER_LEG).getTailPosition(),
+			skeleton1.getBone(BoneType.RIGHT_LOWER_LEG).getTailPosition(),
+			skeleton2.getBone(BoneType.LEFT_LOWER_LEG).getTailPosition(),
+			skeleton2.getBone(BoneType.RIGHT_LOWER_LEG).getTailPosition(),
+		)
 
 		fun getSlideError(
-			leftTracker1: Tracker,
-			rightTracker1: Tracker,
-			leftTracker2: Tracker,
-			rightTracker2: Tracker,
+			leftFoot1: Vector3,
+			rightFoot1: Vector3,
+			leftFoot2: Vector3,
+			rightFoot2: Vector3,
 		): Float {
-			val leftFoot1 = leftTracker1.position
-			val rightFoot1 = rightTracker1.position
-			val leftFoot2 = leftTracker2.position
-			val rightFoot2 = rightTracker2.position
 			val slideDist1 = (rightFoot1 - leftFoot1).len()
 			val slideDist2 = (rightFoot2 - leftFoot2).len()
 			val slideDist3 = (rightFoot2 - leftFoot1).len()
