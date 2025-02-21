@@ -13,7 +13,7 @@ import io.github.axisangles.ktmath.Quaternion
 class TrackerFilteringHandler {
 	// Instantiated by default in case config doesn't get read (if tracker doesn't support filtering)
 	private var movingAverage = QuaternionMovingAverage(TrackerFilters.NONE)
-	var filteringEnabled = false
+	private var filteringEnabled = false
 
 	/**
 	 * Reads/loads filtering settings from given config
@@ -28,7 +28,7 @@ class TrackerFilteringHandler {
 			)
 			filteringEnabled = true
 		} else {
-			movingAverage = QuaternionMovingAverage(TrackerFilters.NONE)
+			movingAverage = QuaternionMovingAverage(TrackerFilters.NONE, initialRotation = currentRawRotation)
 			filteringEnabled = false
 		}
 	}
@@ -51,7 +51,7 @@ class TrackerFilteringHandler {
 	 * Call when doing a full reset to reset the tracking of rotations >180 degrees
 	 */
 	fun resetMovingAverage(currentRawRotation: Quaternion) {
-		movingAverage.resetQuats(currentRawRotation)
+		movingAverage = QuaternionMovingAverage(movingAverage.type, movingAverage.amount, currentRawRotation)
 	}
 
 	/**

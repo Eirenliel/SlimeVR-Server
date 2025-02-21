@@ -28,6 +28,7 @@ class QuaternionMovingAverage(
 	private var rotBuffer: CircularArrayList<Quaternion>? = null
 	private var latestQuaternion = IDENTITY
 	private var smoothingQuaternion = IDENTITY
+	private var temporalQuaternion = IDENTITY
 	private val fpsTimer = if (VRServer.instanceInitialized) VRServer.instance.fpsTimer else NanoTimer()
 	private var frameCounter = 0
 	private var lastAmt = 0f
@@ -50,7 +51,11 @@ class QuaternionMovingAverage(
 			predictFactor = PREDICT_MULTIPLIER * amount + PREDICT_MIN
 			rotBuffer = CircularArrayList(PREDICT_BUFFER)
 		}
-		resetQuats(initialRotation)
+
+		filteredQuaternion = initialRotation
+		latestQuaternion = initialRotation
+		smoothingQuaternion = initialRotation
+		temporalQuaternion = initialRotation
 	}
 
 	// Runs at up to 1000hz. We use a timer to make it framerate-independent
@@ -92,7 +97,7 @@ class QuaternionMovingAverage(
 			filteredQuaternion = smoothingQuaternion.interpR(latestQuaternion, amt)
 		} else {
 			// No filtering; just keep track of rotations (for going over 180 degrees)
-			filteredQuaternion = latestQuaternion.twinNearest(smoothingQuaternion)
+			filteredQuaternion = latestQuaternion.twinNearest(temporalQuaternion)
 		}
 
 		filteringImpact = latestQuaternion.angleToR(filteredQuaternion)
@@ -112,18 +117,9 @@ class QuaternionMovingAverage(
 			lastAmt = 0f
 			smoothingQuaternion = filteredQuaternion
 		} else {
-			smoothingQuaternion = filteredQuaternion
+			temporalQuaternion = filteredQuaternion
 		}
 
 		latestQuaternion = q
-	}
-
-	fun resetQuats(q: Quaternion) {
-		if (type == TrackerFilters.PREDICTION) {
-			rotBuffer?.clear()
-			latestQuaternion = q
-		}
-		filteredQuaternion = q
-		addQuaternion(q)
 	}
 }
