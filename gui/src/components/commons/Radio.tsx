@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Control, Controller } from 'react-hook-form';
 import { Typography } from './Typography';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 
 export function Radio({
   control,
@@ -12,6 +12,7 @@ export function Radio({
   children,
   // input props
   disabled,
+  variant = 'secondary',
   ...props
 }: {
   control: Control<any>;
@@ -20,19 +21,36 @@ export function Radio({
   value: string;
   description?: string | null;
   children?: ReactNode;
+  variant?: 'secondary' | 'none';
 } & React.HTMLProps<HTMLInputElement>) {
+  const variantClasses = useMemo(() => {
+    const variantsMap = {
+      secondary: classNames({
+        'bg-background-60 hover:bg-background-50': !disabled,
+        'bg-background-80': disabled,
+      }),
+      none: '',
+    };
+    return variantsMap[variant];
+  }, [variant, disabled]);
+
   return (
     <Controller
       control={control}
       name={name}
       render={({ field: { onChange, ref, name, value: checked } }) => (
         <label
-          className={classNames('w-full p-3 rounded-md flex gap-3 border-2', {
-            'border-accent-background-30': value == checked,
-            'border-transparent': value != checked,
-            'bg-background-60 cursor-pointer hover:bg-background-50': !disabled,
-            'bg-background-80 cursor-not-allowed': disabled,
-          })}
+          className={classNames(
+            'w-full rounded-md flex gap-3 border-2 group/radio',
+            variantClasses,
+            {
+              'border-accent-background-30': value == checked,
+              'border-transparent': value != checked,
+              'cursor-pointer': !disabled,
+              'cursor-not-allowed': disabled,
+              'p-3': variant !== 'none',
+            }
+          )}
         >
           <input
             type="radio"
@@ -48,7 +66,7 @@ export function Radio({
             checked={value == checked}
             {...props}
           />
-          <div className="flex flex-col gap-2 pointer-events-none">
+          <div className="flex flex-col gap-2 pointer-events-none w-full">
             {children ? children : <Typography bold>{label}</Typography>}
             {description && (
               <Typography variant="standard" color="secondary">

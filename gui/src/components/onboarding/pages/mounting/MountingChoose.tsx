@@ -1,16 +1,14 @@
 import { useOnboarding } from '@/hooks/onboarding';
 import { useLocalization } from '@fluent/react';
 import { useState } from 'react';
-import { SkipSetupWarningModal } from '@/components/onboarding/SkipSetupWarningModal';
 import classNames from 'classnames';
 import { Typography } from '@/components/commons/Typography';
 import { Button } from '@/components/commons/Button';
 
 export function MountingChoose() {
   const { l10n } = useLocalization();
-  const { applyProgress, skipSetup, state } = useOnboarding();
+  const { applyProgress, state } = useOnboarding();
   const [animated, setAnimated] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
 
   applyProgress(0.65);
 
@@ -137,11 +135,6 @@ export function MountingChoose() {
           )}
         </div>
       </div>
-      <SkipSetupWarningModal
-        accept={skipSetup}
-        onClose={() => setShowWarning(false)}
-        isOpen={showWarning}
-      ></SkipSetupWarningModal>
     </>
   );
 }

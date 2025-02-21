@@ -131,8 +131,13 @@ export function VRCOSCSettings() {
             <div className="flex flex-col pt-2 pb-4">
               <>
                 {l10n
-                  .getString('settings-osc-vrchat-description-v1')
+                  .getString('settings-osc-vrchat-description-v2')
                   .split('\n')
+                  .concat(
+                    l10n
+                      .getString('settings-osc-vrchat-description-guide')
+                      .split('\n')
+                  )
                   .map((line, i) => (
                     <Typography color="secondary" key={i}>
                       {line}

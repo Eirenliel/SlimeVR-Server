@@ -619,12 +619,14 @@ settings-osc-router-network-address-placeholder = IPV4 address
 ## OSC VRChat settings
 settings-osc-vrchat = VRChat OSC Trackers
 # This cares about multilines
-settings-osc-vrchat-description-v1 =
+settings-osc-vrchat-description-v2 =
     Change settings specific to the OSC Trackers standard used for sending
     tracking data to applications without SteamVR (ex. Quest standalone).
+# This cares about multilines
+settings-osc-vrchat-description-guide =
     Make sure to enable OSC in VRChat via the Action Menu under OSC > Enabled.
-    To allow receiving HMD and controller data from VRChat, go in your main menu's
-    settings under Tracking & IK > Allow Sending Head and Wrist VR Tracking OSC Data.
+
+    To allow receiving HMD and controller data from VRChat, go in your main menu's settings under Tracking & IK > Allow Sending Head and Wrist VR Tracking OSC Data.
 settings-osc-vrchat-enable = Enable
 settings-osc-vrchat-enable-description = Toggle the sending and receiving of data.
 settings-osc-vrchat-enable-label = Enable
@@ -815,6 +817,79 @@ onboarding-assignment_tutorial-sticker = Sticker
 onboarding-assignment_tutorial-second_step-v2 = 2. Attach the strap to your tracker, keeping the velcro side of the strap facing the same direction as the slime face of your tracker:
 onboarding-assignment_tutorial-second_step-continuation-v2 = The velcro side for the extension should be facing up like the following image:
 onboarding-assignment_tutorial-done = I put stickers and straps!
+
+## Usage reason choose
+onboarding-usage-choose = What are you gonna use SlimeVR for?
+onboarding-usage-choose-description = What are you gonna use SlimeVR for?
+onboarding-usage-choose-option-title = { $mode ->
+    *[VR] Virtual Reality
+    [VTUBING] VTuber
+    [MOCAP] Motion Capture
+}
+onboarding-usage-choose-option-label = { $mode ->
+    *[VR] For use with games and applications that use a headset
+    [VTUBING] For use with VTubing programs that use the VMC protocol
+    [MOCAP] For recording a whole body with precise tracking.
+}
+onboarding-usage-choose-option-description = { $mode ->
+    *[VR] Users of SteamVR or VR programs that use OSC can select this option to get right to it.
+    [VTUBING] VTubing programs work with SlimeVR using VMC (Virtual Motion Capture), this is what to pick for that!
+    [MOCAP] Many 3D programs can record live mocap for use in animation, and BVH recording is also supported directly in the app.
+}
+
+## VR usage choose
+onboarding-usage-vr-choose = Choose your VR setup
+onboarding-usage-vr-choose-description = There are different ways to connect SlimeVR to your virtual reality setup! You can decide which you will use here.
+onboarding-usage-vr-choose-steamvr = I use SteamVR
+onboarding-usage-vr-choose-steamvr-label = For PCVR
+# uses multiline
+onboarding-usage-vr-choose-steamvr-description =
+    SlimeVR emulates SteamVR trackers using the rotational data of the trackers and a human skeleton model, so SteamVR games and programs can use it for full body tracking.
+
+    SteamVR must be installed and a headset or positional head tracker connected to the SlimeVR server to use this method.
+onboarding-usage-vr-choose-steamvr-warning = The SteamVR driver is currently not connected, <b>please turn on SteamVR</b> or check <docs>the docs for more info</docs>.
+onboarding-usage-vr-choose-standalone = I use standalone
+onboarding-usage-vr-choose-standalone-label = For VRChat Quest/Pico users
+onboarding-usage-vr-choose-standalone-description =
+    Standalone use connects through OSC instead of SteamVR to provide full body tracking with SlimeVR.
+    Any PC that can run SlimeVR server can function like this, as well as phones, which are the recommended ways for best ergonomics.
+onboarding-usage-vr-standalone-title = Setting up VRChat
+onboarding-usage-vr-standalone-next = Done!
+
+## Mocap head usage choose
+onboarding-usage-mocap-head_choose = What kind of head tracking do you want?
+onboarding-usage-mocap-head_choose-description = You can use either a tracker or a headset for the head!
+
+onboarding-usage-mocap-head_choose-standalone = SlimeVR head tracker
+onboarding-usage-mocap-head_choose-standalone-label = Use an IMU tracker for tracking position
+onboarding-usage-mocap-head_choose-standalone-description =
+    This enables head tracking using a head mounted SlimeVR tracker.
+
+    This is much less precise in the way that if you walk and return to your starting point, you won't be on the same place on the recording.
+onboarding-usage-mocap-head_choose-standalone-button = Use IMU tracker
+
+onboarding-usage-mocap-head_choose-steamvr = SteamVR head tracking
+onboarding-usage-mocap-head_choose-steamvr-label = Use an HMD or a positional tracker for precision
+onboarding-usage-mocap-head_choose-steamvr-description =
+    Most accurate way to track the head, using true positional data as reference.
+
+    This allows for the best quality motion capture recordings as well as movements that require both feet to leave the floor at the same time.
+onboarding-usage-mocap-head_choose-steamvr-button = Use SteamVR
+
+## Mocap data mode choose
+onboarding-usage-mocap-data_choose = What kind of data format to use?
+onboarding-usage-mocap-data_choose-description = description
+
+onboarding-usage-mocap-data_choose-option-title = { $mode ->
+    *[BVH] BVH
+    [STEAMVR] SteamVR
+    [VMC] VMC
+}
+onboarding-usage-mocap-data_choose-option-label = { $mode ->
+    *[BVH] Natively supported on most animation programs
+    [STEAMVR] For programs that support OpenVR as a source of data
+    [VMC] Popular data protocol for VTubing
+}
 
 ## Tracker assignment setup
 onboarding-assign_trackers-back = Go Back to Wi-Fi Credentials

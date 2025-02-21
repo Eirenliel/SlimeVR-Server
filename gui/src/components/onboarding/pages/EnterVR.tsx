@@ -33,7 +33,7 @@ export function EnterVRPage() {
         </div>
         <div className="w-full py-4 flex flex-row">
           <div className="flex flex-grow">
-            <Button variant="secondary" to="/" onClick={skipSetup}>
+            <Button variant="secondary" onClick={skipSetup}>
               {l10n.getString('onboarding-skip')}
             </Button>
           </div>

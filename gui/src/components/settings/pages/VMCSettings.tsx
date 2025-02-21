@@ -22,7 +22,7 @@ import {
 } from '@/components/settings/SettingsPageLayout';
 import { error } from '@/utils/logging';
 
-interface VMCSettingsForm {
+export interface VMCSettingsForm {
   vmc: {
     oscSettings: {
       enabled: boolean;
@@ -36,7 +36,7 @@ interface VMCSettingsForm {
   };
 }
 
-const defaultValues = {
+export const DEFAULT_VMC_VALUES = {
   vmc: {
     oscSettings: {
       enabled: false,
@@ -55,7 +55,7 @@ export function VMCSettings() {
   const [modelName, setModelName] = useState<string | null>(null);
 
   const { reset, control, watch, handleSubmit } = useForm<VMCSettingsForm>({
-    defaultValues,
+    defaultValues: DEFAULT_VMC_VALUES,
   });
 
   const onSubmit = async (values: VMCSettingsForm) => {
@@ -99,7 +99,7 @@ export function VMCSettings() {
   }, []);
 
   useRPCPacket(RpcMessage.SettingsResponse, (settings: SettingsResponseT) => {
-    const formData: VMCSettingsForm = defaultValues;
+    const formData: VMCSettingsForm = DEFAULT_VMC_VALUES;
     if (settings.vmcOsc) {
       if (settings.vmcOsc.oscSettings) {
         formData.vmc.oscSettings.enabled = settings.vmcOsc.oscSettings.enabled;
@@ -299,7 +299,7 @@ export function VMCSettings() {
 const gltfHeaderStart = 0;
 const gltfHeaderEnd = 20;
 
-async function parseVRMFile(vrm: File): Promise<string | null> {
+export async function parseVRMFile(vrm: File): Promise<string | null> {
   const headerView = new DataView(
     await vrm.slice(gltfHeaderStart, gltfHeaderEnd).arrayBuffer()
   );

@@ -60,6 +60,14 @@ import { ScaledProportionsPage } from './components/onboarding/pages/body-propor
 import { EmptyLayout } from './components/EmptyLayout';
 import { AdvancedSettings } from './components/settings/pages/AdvancedSettings';
 import { FirmwareUpdate } from './components/firmware-update/FirmwareUpdate';
+import { UsageChoose } from './components/onboarding/pages/usage-reason/UsageChoose';
+import { VRUsageChoose } from './components/onboarding/pages/usage-reason/VRUsageChoose';
+import { StandaloneUsageSetup } from './components/onboarding/pages/usage-reason/StandaloneUsageSetup';
+import { HeadTrackingChoose } from './components/onboarding/pages/usage-reason/HeadTrackingChoose';
+import { MocapDataChoose } from './components/onboarding/pages/usage-reason/MocapDataChoose';
+import { MocapVMCSetup } from './components/onboarding/pages/usage-reason/MocapVMCSetup';
+import { MocapBVHSetup } from './components/onboarding/pages/usage-reason/MocapBVHSetup';
+import { MocapSteamSetup } from './components/onboarding/pages/usage-reason/MocapSteamSetup';
 
 export const GH_REPO = 'SlimeVR/SlimeVR-Server';
 export const VersionContext = createContext('');
@@ -145,6 +153,21 @@ function Layout() {
               path="assign-tutorial"
               element={<AssignmentTutorialPage />}
             />
+
+            <Route path="usage">
+              <Route path="choose" element={<UsageChoose />} />
+              <Route path="vr/choose" element={<VRUsageChoose />} />
+              <Route path="vr/standalone" element={<StandaloneUsageSetup />} />
+              <Route path="mocap/data/choose" element={<MocapDataChoose />} />
+              <Route
+                path="mocap/head-choose"
+                element={<HeadTrackingChoose />}
+              />
+              <Route path="mocap/data/vmc" element={<MocapVMCSetup />} />
+              <Route path="mocap/data/bvh" element={<MocapBVHSetup />} />
+              <Route path="mocap/data/steamvr" element={<MocapSteamSetup />} />
+            </Route>
+
             <Route path="trackers-assign" element={<TrackersAssignPage />} />
             <Route path="enter-vr" element={<EnterVRPage />} />
             <Route path="mounting/choose" element={<MountingChoose />}></Route>

@@ -54,7 +54,7 @@ export function Typography({
     tag,
     {
       className: classNames([
-        'transition-colors',
+        'transition-colors hyphens-auto',
         variant === 'mobile-title' &&
           'xs:text-main-title mobile:text-section-title',
         variant === 'main-title' && 'text-main-title',

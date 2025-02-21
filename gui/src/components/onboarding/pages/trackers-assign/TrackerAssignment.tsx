@@ -247,7 +247,7 @@ export function TrackersAssignPage() {
     }
   );
 
-  applyProgress(0.5);
+  applyProgress(0.55);
 
   const { closeChokerWarning, tryOpenChokerWarning, shouldShowChokerWarn } =
     useChokerWarning({

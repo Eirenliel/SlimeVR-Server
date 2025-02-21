@@ -2,13 +2,14 @@ package dev.slimevr.status
 
 import solarxr_protocol.rpc.StatusDataUnion
 import solarxr_protocol.rpc.StatusMessageT
+import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.CopyOnWriteArrayList
 import java.util.concurrent.atomic.AtomicInteger
 
 class StatusSystem {
 	private val listeners: MutableList<StatusListener> = CopyOnWriteArrayList()
-	private val statuses: MutableMap<Int, StatusDataUnion> = HashMap()
-	private val prioritizedStatuses: MutableSet<Int> = HashSet()
+	private val statuses: MutableMap<Int, StatusDataUnion> = ConcurrentHashMap()
+	private val prioritizedStatuses: MutableSet<Int> = ConcurrentHashMap.newKeySet()
 	private val idCounter = AtomicInteger(1)
 
 	fun addListener(listener: StatusListener) {

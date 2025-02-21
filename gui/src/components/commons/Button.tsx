@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import React, { ReactNode, useMemo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LoaderIcon, SlimeState } from './icon/LoaderIcon';
+import { XOR } from 'ts-xor';
 
 function ButtonContent({
   loading,
@@ -36,6 +37,25 @@ function ButtonContent({
   );
 }
 
+type ButtonBaseParams = {
+  children?: ReactNode;
+  icon?: ReactNode;
+  variant: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
+  loading?: boolean;
+  rounded?: boolean;
+} & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'onClick'>;
+
+type ButtonNavigateParams = { to: string; state?: any } & ButtonBaseParams;
+type ButtonScriptParams = {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+} & ButtonBaseParams;
+type ButtonSubmitParams = { type: 'submit' } & ButtonBaseParams;
+type ButtonParams = XOR<
+  ButtonNavigateParams,
+  ButtonScriptParams,
+  ButtonSubmitParams
+>;
+
 export function Button({
   children,
   variant,
@@ -46,15 +66,7 @@ export function Button({
   icon,
   rounded = false,
   ...props
-}: {
-  children?: ReactNode;
-  icon?: ReactNode;
-  variant: 'primary' | 'secondary' | 'tertiary' | 'quaternary';
-  to?: string;
-  loading?: boolean;
-  rounded?: boolean;
-  state?: any;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>) {
+}: ButtonParams) {
   const classes = useMemo(() => {
     const variantsMap = {
       primary: classNames({
