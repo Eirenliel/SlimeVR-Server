@@ -49,6 +49,50 @@ body_part-LEFT_HAND = Main gauche
 body_part-LEFT_UPPER_LEG = Cuisse gauche
 body_part-LEFT_LOWER_LEG = Cheville gauche
 body_part-LEFT_FOOT = Pied gauche
+body_part-LEFT_THUMB_METACARPAL = Métacarpien du pouce gauche
+body_part-LEFT_THUMB_PROXIMAL = Pouce gauche proximal
+body_part-LEFT_THUMB_DISTAL = Pouce gauche distal
+body_part-LEFT_INDEX_PROXIMAL = Index gauche proximal
+body_part-LEFT_INDEX_INTERMEDIATE = Index gauche intermédiaire
+body_part-LEFT_INDEX_DISTAL = Index gauche distal
+body_part-LEFT_MIDDLE_PROXIMAL = Majeur gauche proximal
+body_part-LEFT_MIDDLE_INTERMEDIATE = Majeur gauche intermédiaire
+body_part-LEFT_MIDDLE_DISTAL = Majeur gauche distal
+body_part-LEFT_RING_PROXIMAL = Annulaire gauche proximal
+body_part-LEFT_RING_INTERMEDIATE = Annulaire gauche intermédiaire
+body_part-LEFT_RING_DISTAL = Annulaire gauche distal
+body_part-LEFT_LITTLE_PROXIMAL = Auriculaire gauche proximal
+body_part-LEFT_LITTLE_INTERMEDIATE = Auriculaire gauche intermédiaire
+body_part-LEFT_LITTLE_DISTAL = Auriculaire gauche distal
+body_part-RIGHT_THUMB_METACARPAL = Métacarpien du pouce droit
+body_part-RIGHT_THUMB_PROXIMAL = Pouce droit proximal
+body_part-RIGHT_THUMB_DISTAL = Pouce droit distal
+body_part-RIGHT_INDEX_PROXIMAL = Index droit proximal
+body_part-RIGHT_INDEX_INTERMEDIATE = Index droit intermédiaire
+body_part-RIGHT_INDEX_DISTAL = Index droit distal
+body_part-RIGHT_MIDDLE_PROXIMAL = Majeur droit proximal
+body_part-RIGHT_MIDDLE_INTERMEDIATE = Majeur droit intermédiaire
+body_part-RIGHT_MIDDLE_DISTAL = Majeur droit distal
+body_part-RIGHT_RING_PROXIMAL = Annulaire droit proximal
+body_part-RIGHT_RING_INTERMEDIATE = Annulaire droit intermédiaire
+body_part-RIGHT_RING_DISTAL = Annulaire droit distal
+body_part-RIGHT_LITTLE_PROXIMAL = Auriculaire droit proximal
+body_part-RIGHT_LITTLE_INTERMEDIATE = Auriculaire droit intermédiaire
+body_part-RIGHT_LITTLE_DISTAL = Auriculaire droit distal
+
+## BoardType
+
+board_type-UNKNOWN = Inconnu
+board_type-NODEMCU = NodeMCU
+board_type-CUSTOM = Carte personnalisée
+board_type-WROOM32 = WROOM32
+board_type-WEMOSD1MINI = Wemos D1 Mini
+board_type-TTGO_TBASE = TTGO T-Base
+board_type-ESP01 = ESP-01
+board_type-SLIMEVR = SlimeVR
+board_type-LOLIN_C3_MINI = Lolin C3 Mini
+board_type-BEETLE32C3 = Beetle ESP32-C3
+board_type-ES32C3DEVKITM1 = Espressif ESP32-C3 DevKitM-1
 
 ## Proportions
 
@@ -86,6 +130,10 @@ reset-reset_all_warning =
     Êtes-vous sûr de vouloir faire cela ?
 reset-reset_all_warning-reset = Réinitialiser les proportions
 reset-reset_all_warning-cancel = Annuler
+reset-reset_all_warning_default =
+    <b>Avertissement:</b> Vous n’avez actuellement pas défini votre taille, ce qui
+    fera en sorte que les proportions seront basées sur une hauteur par défaut.
+    Êtes-vous sûr de vouloir faire cela ?
 reset-full = Réinitialisation complète
 reset-mounting = Réinitialiser l'alignement
 reset-yaw = Réinitialisation horizontale
@@ -204,6 +252,7 @@ tracker-infos-url = URL du capteur
 tracker-infos-version = Version du firmware
 tracker-infos-hardware_rev = Révision du hardware
 tracker-infos-hardware_identifier = ID Matériel
+tracker-infos-data_support = Prise en charge de données
 tracker-infos-imu = Capteur IMU
 tracker-infos-board_type = Carte principale
 tracker-infos-network_version = Version du protocole
@@ -244,6 +293,11 @@ tracker-settings-name_section-label = Nom personalisé
 tracker-settings-forget = Oublier capteur
 tracker-settings-forget-description = Supprime le capteur du serveur SlimeVR et l’empêche de s’y connecter jusqu’à ce que le serveur soit redémarré. La configuration du capteur ne sera pas perdue.
 tracker-settings-forget-label = Oublier capteur
+tracker-settings-update-unavailable = Ne peut pas être mis à jour (DIY)
+tracker-settings-update-up_to_date = À jour
+tracker-settings-update-available = { $versionName } est maintenant disponible
+tracker-settings-update = Mettre à jour maintenant
+tracker-settings-update-title = Version du firmware
 
 ## Tracker part card info
 
@@ -319,6 +373,7 @@ settings-sidebar-utils = Utilitaires
 settings-sidebar-serial = Console série
 settings-sidebar-appearance = Apparence
 settings-sidebar-notifications = Notifications
+settings-sidebar-firmware-tool = Outil de firmware DIY
 settings-sidebar-advanced = Avancé
 
 ## SteamVR settings
@@ -423,6 +478,7 @@ settings-general-fk_settings-leg_tweak-foot_plant-description = La correction de
 settings-general-fk_settings-leg_fk = Capture des jambes
 settings-general-fk_settings-leg_fk-reset_mounting_feet-description = Activer la réinitialisation de l'alignement des pieds en allant sur la pointe des pieds.
 settings-general-fk_settings-leg_fk-reset_mounting_feet = Réinitialisation de l'alignement des pieds
+settings-general-fk_settings-enforce_joint_constraints = Limites squelettiques
 settings-general-fk_settings-arm_fk = Capture des bras
 settings-general-fk_settings-arm_fk-description = Changez la façon dont les bras sont captés.
 settings-general-fk_settings-arm_fk-force_arms = Forcer les bras en provenance du casque VR
@@ -645,12 +701,6 @@ settings-osc-vmc-network-address-description = Choisissez l'adresse vers laquell
 settings-osc-vmc-network-address-placeholder = Adresse IPv4
 settings-osc-vmc-vrm = Modèle VRM
 settings-osc-vmc-vrm-description = Chargez un modèle VRM pour permettre l'ancrage à la tête et permettre une plus grande compatibilité avec d'autres applications
-settings-osc-vmc-vrm-model_unloaded = Aucun modèle chargé
-settings-osc-vmc-vrm-model_loaded =
-    { $titled ->
-        [true] Modèle chargé : { $name }
-       *[other] Modèle sans nom chargé
-    }
 settings-osc-vmc-vrm-file_select = Glissez et déposez un modèle à utiliser, ou <u>parcourir</u>.
 settings-osc-vmc-anchor_hip = Ancrage aux hanches
 settings-osc-vmc-anchor_hip-description = Ancrer la capture des mouvements aux hanches, utile pour le VTubing assis.
@@ -1020,20 +1070,11 @@ onboarding-automatic_proportions-requirements-descriptionv2 =
     Votre casque envoie sa position au serveur SlimeVR (cela signifie généralement que SteamVR est ouvert et connecté à SlimeVR en utilisant le pilote SteamVR de SlimeVR).
     La capture des mouvements fonctionne et représente correctement vos mouvements (ex. vous avez effectué une réinitialisation complète des capteurs et ils bougent dans le bon sens lorsque vous donnez des coups de pieds, vous penchez, vous assoyez, etc).
 onboarding-automatic_proportions-requirements-next = J'ai lu les exigences
-onboarding-automatic_proportions-check_height-title = Vérifiez votre taille
-onboarding-automatic_proportions-check_height-description = Nous utilisons votre taille comme la base de nos mesures en utilisant la hauteur de votre casque comme approximation de votre taille réelle, mais il est préférable de vérifier si elles sont correctes vous-même !
-# All the text is in bold!
-onboarding-automatic_proportions-check_height-calculation_warning = Veuillez appuyer sur le bouton en vous <u>tenant debout</u> pour calculer votre taille. Vous avez un délais de 3 secondes après avoir appuyé sur le bouton !
 onboarding-automatic_proportions-check_height-guardian_tip =
     Si vous utilisez un casque VR sans-fil, assurez-vous d’avoir votre guardien/
     limite activée pour que votre hauteur soit correcte !
-onboarding-automatic_proportions-check_height-fetch_height = Je suis debout !
 # Context is that the height is unknown
 onboarding-automatic_proportions-check_height-unknown = Inconnu
-# Shows an element below it
-onboarding-automatic_proportions-check_height-hmd_height1 = La hauteur de votre casque est
-# Shows an element below it
-onboarding-automatic_proportions-check_height-height1 = donc votre taille est
 onboarding-automatic_proportions-check_height-next_step = Ils sont bons
 onboarding-automatic_proportions-start_recording-title = Préparez-vous à bouger
 onboarding-automatic_proportions-start_recording-description = Nous allons maintenant enregistrer quelques positions et mouvements spécifiques. Ceux-ci seront inscris sur l’écran suivant. Soyez prêt à commencer dès que vous appuyez sur le bouton !
@@ -1070,6 +1111,12 @@ onboarding-automatic_proportions-error_modal-v2 =
      Veuillez <docs>consulter la documentation</docs> ou rejoindre notre <discord>Discord</discord> pour obtenir de l’aide ^_^
 onboarding-automatic_proportions-error_modal-confirm = Compris !
 
+## Tracker scaled proportions setup
+
+
+## Tracker scaled proportions reset
+
+
 ## Home
 
 home-no_trackers = Aucun capteur détecté ou attribué
@@ -1093,6 +1140,50 @@ status_system-StatusSteamVRDisconnected =
     }
 status_system-StatusTrackerError = Le capteur { $trackerName } a une erreur.
 status_system-StatusUnassignedHMD = Le casque VR devrait être attribué en tant que capteur de la tête.
+
+## Firmware tool globals
+
+firmware_tool-next_step = Prochaine étape
+firmware_tool-previous_step = Étape précédente
+firmware_tool-ok = Parfait
+firmware_tool-retry = Réessayer
+firmware_tool-loading = Chargement...
+
+## Firmware tool Steps
+
+firmware_tool = Outil de firmware DIY
+firmware_tool-description = Vous permet de configurer et flasher vos capteurs DIY
+firmware_tool-not_available = Oups, l'outil de firmware n'est pas disponible en ce moment. Revenez plus tard !
+firmware_tool-not_compatible = L’outil de firmware n'est pas compatible avec cette version de serveur. Veuillez mettre à jour votre serveur !
+firmware_tool-board_step = Sélectionnez votre carte
+firmware_tool-board_step-description = Sélectionnez l'une des cartes répertoriées ci-dessous.
+firmware_tool-board_pins_step = Vérifiez les broches
+firmware_tool-board_pins_step-description =
+    Veuillez vérifier que les broches sélectionnées sont correctes.
+    Si vous avez suivi la documentation de SlimeVR, les valeurs par défaut devraient être correctes.
+firmware_tool-board_pins_step-enable_led = Activer la LED
+firmware_tool-board_pins_step-led_pin =
+    .label = Broche LED
+    .placeholder = Entrez l'adresse de la broche LED
+firmware_tool-board_pins_step-battery_type = Sélectionnez le type de batterie
+firmware_tool-board_pins_step-battery_type-BAT_EXTERNAL = Batterie externe
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL = Batterie interne
+firmware_tool-board_pins_step-battery_type-BAT_INTERNAL_MCP3021 = MCP3021 interne
+firmware_tool-board_pins_step-battery_type-BAT_MCP3021 = MCP3021
+
+## firmware tool build status
+
+
+## Firmware update status
+
+
+## Dedicated Firmware Update Page
+
+firmware_update-changelog-title = Mise à jour vers { $version }
+firmware_update-looking_for_devices = Recherche d'appareils à mettre à jour...
+firmware_update-retry = Réessayer
+firmware_update-update = Mettre à jour les capteurs sélectionnés
+firmware_update-exit = Quitter
 
 ## Tray Menu
 
